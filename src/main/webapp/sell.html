@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>发布车辆 | 卡布达</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/sell.css" />
+    <link rel="stylesheet" href="css/bootstrapValidator.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link href="images/favicon.ico" rel="shortcut icon" />
+</head>
+
+<body>
+<!--顶部-->
+<script src="base/head.html"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 reg-head">
+            <h1>发布车辆</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 reg-body col-md-offset-3">
+            <form id="register-form" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">选择分类:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <select class="form-control for-xs" name="model"><option value="">请选择</option></select>
+                    </div>
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">选择品牌:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <select class="form-control" name="grand"><option value="">请选择</option></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">出厂年限:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <select class="form-control for-xs"><option value="">请选择</option></select>
+                    </div>
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">设备型号:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <input type="text" id="" class="form-control" name="IdCardNumber" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">使用小时:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <input class="form-control to_right for-xs" type="text"   name="" autocomplete="off" >
+                        <span class="unit"style="">
+                                ｜<label class="cur">万元</label>
+                        </span>
+                    </div>
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">吨位:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <input type="text" id="" class="form-control to_right" name="IdCardNumber" autocomplete="off">
+                        <span class="unit"style="">
+                                ｜<label class="cur">吨</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">联系人:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <input type="text" id="" class="form-control for-xs" name="IdCardNumber" autocomplete="off">
+                    </div>
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">联系电话:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <input type="text" id="" class="form-control" name="IdCardNumber" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label control-label">停放地点:</label>
+                    <div class="col-md-3 col-md-offset-0 col-xs-7 for-xs">
+                        <select class="form-control"><option value="">请选择省</option></select>
+                    </div>
+                    <div class="col-md-3 col-md-offset-0 col-xs-7 col-xs-offset-4 for-xs">
+                        <select class="form-control"><option value="">请选择市</option></select>
+                    </div>
+                    <div class="col-md-3 col-md-offset-0 col-xs-7 col-xs-offset-4">
+                        <select class="form-control"><option value="">请选择区</option></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">车辆照片:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <input type="file" multiple="true"  id="uploadpicture"  tabindex="-1" onchange="fileok(this)" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+                            <label id="selectfile" for="uploadpicture" class="btn btn-primary ">
+                                <span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span>
+                                <span class="buttonText">选择文件</span><span class="glyphicon glyphicon-ok" style="display:none;"></span>
+                            </label>
+                    </div>
+                    <div id="upload_btn" class="uploadify" style="height: 30px; width: 80px;">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">使用经历:</label>
+                    <div class="col-md-10 col-xs-7">
+                        <textarea class="form-control" ></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label control-label">是否出售:</label>
+                    <div style="margin-top: 7px">
+                        <input class="col-xs-1" type="radio" value="1" name="sell"/>
+                        <label class="col-xs-1 toleft">是</label>
+                        <input class="col-xs-1" type="radio" value="0" name="sell" checked="checked" />
+                        <label class="col-xs-1 toleft">否</label>
+                    </div>
+                </div>
+                <div class="sell_info form-group" style="display: none;">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">出售价格:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <input class="form-control to_right" type="text"   name="" autocomplete="off" >
+                        <span class="unit"style="">
+                                ｜<label class="cur">万元</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">是否出租:</label>
+                    <div style="margin-top: 7px">
+                        <input class="col-xs-1" type="radio" value="1" name="rent"/>
+                        <label class="col-xs-1 toleft">是</label>
+                        <input class="col-xs-1" type="radio" value="0" name="rent" checked="checked" />
+                        <label class="col-xs-1 toleft">否</label>
+                    </div>
+                </div>
+                <div class="rent_info form-group" style="display: none;">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">出租价格:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <input class="form-control to_right" type="text"   name="" autocomplete="off" >
+                        <span class="unit"style="">
+                                ｜<label class="cur">元/天</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group btn-area">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="register-btn">发布</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--底部-->
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrapValidator.min.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/bootstrap-filestyle.js"></script>
+<script src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script>
+    $(function(){
+        $("input[name=sell]").click(function(){
+           // console.log(this.value);
+            if(this.value=="1"){
+                $(".sell_info").fadeIn(500);
+            }
+            else{
+                $(".sell_info").fadeOut(500);
+            }
+        });
+        $("input[name=rent]").click(function(){
+            // console.log(this.value);
+            if(this.value=="1"){
+                $(".rent_info").fadeIn(500);
+            }
+            else{
+                $(".rent_info").fadeOut(500);
+            }
+        });
+
+        $('#register-form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                model: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择分类'
+                        }
+                    }
+                },
+                grand: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择品牌'
+                        }
+                    }
+                },
+                IdCardNumber: {
+                    validators: {
+                        stringLength: {
+                            min: 18,
+                            max: 18,
+                            message: '请输入正确的身份证号'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '请输入正确的身份证号'
+                        },
+                        notEmpty: {
+                            message: '请输入身份证号'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '请输入登录密码'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 20,
+                            message: '请输入6-20位密码'
+                        }
+                    }
+                },
+                confirmPassword: {
+                    validators: {
+                        notEmpty: {
+                            message: '请再次确认登陆密码'
+                        },
+                        identical: {
+                            field: 'password',
+                            message: '两次输入的密码不同!请重试'
+                        }
+                    }
+                },
+                phoneNumber: {
+                    validators: {
+                        phone: {
+                            country: 'CN',
+                            message: '请输入正确的手机号'
+                        },
+                        notEmpty: {
+                            message: '请输入手机号'
+                        }
+                    }
+                },
+                SMSCode: {
+                    validators: {
+                        notEmpty: {
+                            message: '请输入短信验证码'
+                        },
+                        stringLength: {
+                            min: 4,
+                            max: 4,
+                            message: '请输入正确的短信验证码'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '请输入正确的短信验证码'
+                        }
+                    }
+                }
+            }
+        })
+                .on('success.form.bv', function(e) {
+                    // Prevent form submission
+                    e.preventDefault();
+
+                    // Get the form instance
+                    var $form = $(e.target);
+
+                    // Get the BootstrapValidator instance
+                    var bv = $form.data('bootstrapValidator');
+
+                    callSubmit(baseUrlCjh()+"register","post",callback,$("#register-form"));
+                    //注册后的响应
+                    function callback(data){
+                        var obj = eval(data);
+                        if(obj.success=='1') {
+                            var name = document.getElementById('name').value;
+                            window.location.href= encodeURI("registerSuccess.html?name=" + name);
+                        }
+                        else {
+                            alert('注册失败！'+obj.message);
+                        }
+                    }
+                });
+    });
+    //上传头像
+    function fileok(sender){
+        if( !sender.value.match( /.jpg|.gif|.png|.bmp/i ) ){
+            topAlert('图片格式无效！','error');
+            return false;
+        }
+        var objPreview = document.getElementById('user_img');
+        if( sender.files && sender.files[0] ){
+            console.log(sender.files.length);
+            objPreview.src = window.URL.createObjectURL(sender.files[0]);
+        }
+    }
+    function uploadFile(){
+        var file=$('#uploadpicture').prop('files');
+        var formdata = new FormData();
+        formdata.append("fileToUpload", file[0]);
+
+        console.log(file[0]);
+        $.ajax({
+            type: "POST",
+            url:  root+"/fileHandler/uploadFile?flag=2",
+            contentType: false,
+            processData: false ,
+            data: formdata,
+            success:function(data) {
+                if (data.errorcode == 3000) {
+                    //$("#user_img").attr("src",root+'/ePlanFileSys'+data.result.info.path);
+                    modifyPortrait(data.result.info.path);
+                }
+            },
+        });
+    }
+</script>
+</body>
+</html>

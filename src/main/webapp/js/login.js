@@ -25,19 +25,6 @@ $(document).ready(function() {
         }
         else {
             $("#login-warning").html('');
-            callSubmit(baseUrlCjh()+"login","post",callback,$("#login-form"));
-            //注册后的响应
-            function callback(data){
-                var obj = eval(data);
-                if(obj.success=='1')//获取成功
-                {
-                    $('#loginModal').modal('hide');
-                    showPC();
-                }
-                else {
-                    $("#login-warning").html('用户名或密码错误，请重新输入！');
-                }
-            }
         }
     });
 
