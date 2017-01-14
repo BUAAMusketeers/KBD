@@ -85,6 +85,9 @@ body {
 
     }
 }
+.head-body h1{
+    margin-top:15px !important;
+}
 .head-body h1>a {
     color: #FD6F1A;
     margin: 0 10px;
@@ -101,6 +104,9 @@ body {
 }
 .head-title{
     color:#FD6F1A;
+}
+.citySelect{
+    padding-top:15px;
 }
 .head-body-logo {
     width:100px;
@@ -223,4 +229,8 @@ body {
 }
 .foot>.container-fluid>.col-md-1 {
     text-align: center;
+}
+
+.breadcrumb{
+    background-color:#fff;
 }

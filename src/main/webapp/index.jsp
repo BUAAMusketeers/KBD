@@ -8,6 +8,7 @@
     <title>test</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/cityselect.css">
     <link href="images/favicon.ico" rel="shortcut icon" />
 </head>
 
@@ -21,6 +22,10 @@
 <!--底部-->
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/cityselect.js"></script>
 <script src="js/login.js"></script>
+<script >
+    var test=new Vcity.CitySelector({input:'citySelect'});
+</script>
 </body>
 </html>

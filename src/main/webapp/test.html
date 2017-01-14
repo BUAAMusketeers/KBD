@@ -1,5 +1,21 @@
-var fun = function() {
-/*
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>test</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/cityselect.css"/>
+    <link rel="stylesheet" href="css/buyCar.css"/>
+    <link href="images/favicon.ico" rel="shortcut icon" />
+</head>
+
+<body>
+
+
+
+<!--顶部-->
 <div class="head-body">
     <div class="container">
         <div class="row">
@@ -91,8 +107,75 @@ var fun = function() {
     </div>
 </div>
 
-*/
-}
-var lines = new String(fun);
-document.write(lines.substring(lines.indexOf("/*") + 3,
-lines.lastIndexOf("*/")));
+<!--body-->
+<div  class="container">
+    <ol class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li class="active">买车</li>
+    </ol>
+    <div class="fliterBox">
+        <dl class="fliter-bd clearfix">
+            <dt>品牌：</dt>
+            <dd class="clickBrandWidget">
+                <a class="on" href="/bj/buy/" rel="nofollow">不限</a>
+                <a class="" href="/bj/buy/" rel="nofollow">宝马</a>
+                <a class="" href="/bj/buy/" rel="nofollow">奔驰</a>
+                <a>
+                    <div class="dropdown">
+                        <a id="dLabel" data-target="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            全部<span class="glyphicon glyphicon-chevron-down"></span>
+                            <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu cityBox" role="menu" aria-labelledby="dLabel">
+                            <ul>
+                                <li>A</li>
+                                <li>A</li>
+                                <li>A</li>
+                                <li>A</li>
+                                <li>A</li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+            </dd>
+        </dl>
+        <dl class="fliter-bd clearfix">
+            <dt>机型：</dt>
+            <dd class="clickBrandWidget">
+                <a class="on" href="/bj/buy/" rel="nofollow">不限</a>
+                <a class="" href="/bj/buy/" rel="nofollow">宝马</a>
+                <a class="" href="/bj/buy/" rel="nofollow">奔驰</a>
+
+            </dd>
+        </dl>
+
+    </div>
+    </div>
+   <!-- <div class="dropdown">
+        <a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown trigger
+            <span class="caret"></span>
+        </a>
+
+        <div class="dropdown-menu cityBox" role="menu" aria-labelledby="dLabel">
+            <ul>
+                <li>A</li>
+                <li>A</li>
+                <li>A</li>
+                <li>A</li>
+                <li>A</li>
+            </ul>
+        </div>
+    </div>-->
+</div>
+<!--底部-->
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/cityselect.js"></script>
+<script src="js/login.js"></script>
+<script >
+    var test=new Vcity.CitySelector({input:'citySelect'});
+</script>
+</body>
+</html>
