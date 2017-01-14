@@ -4,10 +4,11 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+    private static final long serialVersionUID = -3638141227947495527L;
     private int id;
-    private String username;
-    private String password;
     private String phoneNumber;
+    private String password;
+    private String name;           // 用户真实姓名
     private int sex;               // 性别, 0代表女性，1代表男性
     private int isDriver;          // 是否为驾驶员，0代表不是，1代表是
     private String model;          // 驾驶员所能驾驶的机型
@@ -34,12 +35,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {

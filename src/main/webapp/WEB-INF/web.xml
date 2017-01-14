@@ -5,15 +5,18 @@
          id="WebApp_ID" version="3.0">
 
     <display-name>KABUDA</display-name>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <!-- 设置Spring容器加载配置文件路径 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/spring-dao.xml</param-value>
+        <param-value>classpath:spring/spring-context.xml</param-value>
     </context-param>
 
+    <!-- 前端控制器 -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -28,11 +31,12 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!-- 设置监听，在web容器启动时自动装配ApplicationContext的配置信息-->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-
+    <!-- 字符编码过滤器 -->
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
