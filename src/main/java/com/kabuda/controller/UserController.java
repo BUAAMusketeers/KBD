@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
+
 @Controller
 @RequestMapping(path = "/user", method = RequestMethod.GET)
 public class UserController {
@@ -26,7 +28,12 @@ public class UserController {
     @RequestMapping(path = "save", method = RequestMethod.POST)
     public void insertUser(@RequestParam("phoneNumber") String phoneNumber,
                            @RequestParam("password") String password,
-                           @RequestParam("name") String name){
+                           @RequestParam("name") String name) throws UnsupportedEncodingException {
+        System.out.println("-----------------------------");
+        System.out.println(phoneNumber);
+        System.out.println(password);
+        System.out.println(name);
+        System.out.println("-----------------------------");
         User user = new User();
         user.setPhoneNumber(phoneNumber);
         user.setPassword(password);
