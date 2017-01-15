@@ -1,6 +1,9 @@
 package com.kabuda.controller;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Response;
 import com.kabuda.entity.User;
 import com.kabuda.service.UserService;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class UserController {
 
-    public final UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -25,6 +28,7 @@ public class UserController {
 
     /**
      * 登录
+     *
      * @param phoneNumber 电话号码
      * @param unencrypted 明文密码
      * @return 返回体
@@ -43,11 +47,10 @@ public class UserController {
                 return gson.toJson(new Response(1001, "用户不存在"));
 
             String password = Encrypt.SHA256(unencrypted);
-            if(!isUserExist.getPassword().equals(password))
+            if (!isUserExist.getPassword().equals(password))
                 return gson.toJson(new Response(1002, "密码不正确"));
 
-
-            return gson.toJson(new Response<User>(1000, "success", isUserExist));
+            return getResponse(isUserExist);
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(1004, "其它错误"));
@@ -95,20 +98,21 @@ public class UserController {
 
     /**
      * 判断手机号是否存在
+     *
      * @param phoneNumber 电话号码
      * @return 返回体
      */
     @ResponseBody
     @RequestMapping(path = "/user/phone", method = RequestMethod.POST)
-    public String isPhoneExist(String phoneNumber){
+    public String isPhoneExist(String phoneNumber) {
         Gson gson = new Gson();
         try {
-            if(StringUtils.isEmpty(phoneNumber)){
+            if (StringUtils.isEmpty(phoneNumber)) {
                 return gson.toJson(new Response(1002, "参数为空"));
             }
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
-            if(isUserExist == null)
+            if (isUserExist == null)
                 return gson.toJson(new Response(1000, "不存在"));
             else
                 return gson.toJson(new Response(1001, "已存在"));
@@ -116,5 +120,63 @@ public class UserController {
             e.printStackTrace();
             return gson.toJson(new Response(1003, "其它错误"));
         }
+    }
+
+
+    /**
+     * 修改密码
+     * @param id 用户id
+     * @param oldPassword 原密码
+     * @param newPassword 新密码
+     * @return json数据
+     */
+    @ResponseBody
+    @RequestMapping(path = "/user/changePassword", method = RequestMethod.POST)
+    public String changePassword(int id, String oldPassword, String newPassword) {
+        Gson gson = new Gson();
+        try {
+            if (StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
+                return gson.toJson(new Response(1002, "参数为空"));
+            }
+
+            User user = userService.getUserById(id);
+            if (!user.getPassword().equals(Encrypt.SHA256(oldPassword))) {
+                return gson.toJson(new Response(1001, "原密码不正确"));
+            }
+
+            user.setPassword(Encrypt.SHA256(newPassword));
+            userService.update(user);
+            return gson.toJson(new Response(1000, "success"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(1003, "其它错误"));
+        }
+    }
+
+
+    /**
+     * 用户是否为驾驶员返回不同的信息
+     *
+     * @param user 用户信息实体
+     * @return json数据
+     */
+    private static String getResponse(User user) {
+        //如果不是驾驶员，则不返回一些驾驶员相关的字段
+        if (user.getIsDriver() == 0) {
+            Gson gson = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
+                public boolean shouldSkipField(FieldAttributes f) {
+                    return f.getName().contains("model") || f.getName().contains("price")
+                            || f.getName().contains("drivingAge") || f.getName().contains("location");
+                }
+
+                public boolean shouldSkipClass(Class<?> clazz) {
+                    return false;
+                }
+            }).serializeNulls().create();
+            return gson.toJson(new Response<User>(1000, "success", user));
+        }
+        //如果是驾驶员返回全部字段
+        return new GsonBuilder().serializeNulls().create().toJson(new Response<User>(1000, "success", user));
     }
 }

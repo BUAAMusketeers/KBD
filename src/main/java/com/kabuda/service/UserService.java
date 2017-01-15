@@ -18,7 +18,7 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public User getUserById(String id) {
+    public User getUserById(int id) {
         return userDao.getUserById(id);
     }
 

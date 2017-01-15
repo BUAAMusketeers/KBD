@@ -6,7 +6,7 @@ import com.kabuda.entity.User;
 @MyBatisDao
 public interface UserDao extends Dao<User> {
 
-    User getUserById(String id);
+    User getUserById(int id);
 
     User getUserByPhoneNumber(String phoneNumber);
 

@@ -6,7 +6,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = -3638141227947495527L;
 
-    private  int id;
+    private int id;
     private String phoneNumber;
     private transient String password;
     private String name;           // 用户真实姓名
