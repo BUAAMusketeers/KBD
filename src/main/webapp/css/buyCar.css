@@ -1,3 +1,4 @@
+/*条件筛选*/
 .fliterBox{
     padding: 20px 20px 0;
     background: #f9f9f9;
@@ -22,7 +23,7 @@
     float: left;
 }
 .fliter-bd dd a.on, .fliter-bd dd a.on:hover {
-    background: #22ac38;
+    background: #FD6F1A !important;
     color: #fff;
     text-decoration: none;
 }
@@ -35,3 +36,90 @@
     float: left;
     margin: 0 8px 5px 0;
 }
+
+/*排序Box*/
+.seqBox{
+    margin: 10px 0 10px;
+}
+.seqBox .seqP{
+    color: #999;
+    line-height: 34px;
+}
+.seqBox .seqDiv button{
+    padding:8px 15px;
+}
+.seqBox .seqDiv button:hover {
+    color: #FD6F1A;
+}
+.seqBox .seqDiv .selected{
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    color:#FD6F1A;
+}
+
+/*carList*/
+.list ul,li,ol{
+    list-style: none;
+}
+.carList{
+
+}
+.carList .listBox{
+    padding:0 5px;
+}
+.carList .thumbnail{
+     padding:0px;
+}
+.carList .thumbnail:hover{
+    border:2px solid #FD6F1A;
+}
+.carList .thumbnail .infoDiv{
+    padding:0px 5px;
+}
+.carList .infoBox {
+    font-size: 16px;
+    line-height: 1em;
+    margin: 12px 0 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    width: 270px;
+    white-space: nowrap;
+}
+.carList .infoBox>a{
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.carList .infoBox>a:hover{
+    color: #FD6F1A;
+    text-decoration: none;
+
+}
+.carList .infoGray{
+    color: #999;
+}
+.verticalLine{
+    color: #ddd;
+    margin: 0 5px;
+    font-style: normal;
+}
+.carList .infoPrice{
+    color: #ddd;
+    margin-top:3px;
+
+}
+.carList .infoPrice>span{
+    margin-top:3px;
+    font-size: 22px;
+    color: #ff7e00;
+}
+
+
+/*分页*/
+.page {
+    text-align: center;
+    vertical-align: middle;
+}
+.page #id_set_page a{margin:0 3px;}
+.page #id_set_page span{margin:0 3px;}

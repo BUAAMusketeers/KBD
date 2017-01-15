@@ -109,32 +109,75 @@
 
 <!--body-->
 <div  class="container">
+    <!--导航-->
     <ol class="breadcrumb">
         <li><a href="#">首页</a></li>
         <li class="active">买车</li>
     </ol>
+    <!--条件过滤-->
     <div class="fliterBox">
         <dl class="fliter-bd clearfix">
             <dt>品牌：</dt>
             <dd class="clickBrandWidget">
+                <div>
                 <a class="on" href="/bj/buy/" rel="nofollow">不限</a>
                 <a class="" href="/bj/buy/" rel="nofollow">宝马</a>
                 <a class="" href="/bj/buy/" rel="nofollow">奔驰</a>
+                </div>
                 <a>
                     <div class="dropdown">
-                        <a id="dLabel" data-target="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            全部<span class="glyphicon glyphicon-chevron-down"></span>
+                        <a id="kwy" class="showBox">
+                            全部
                             <span class="caret"></span>
                         </a>
 
-                        <div class="dropdown-menu cityBox" role="menu" aria-labelledby="dLabel">
-                            <ul>
-                                <li>A</li>
-                                <li>A</li>
-                                <li>A</li>
-                                <li>A</li>
-                                <li>A</li>
-                            </ul>
+                        <div class="selectBox " id="kwyBox">
+                            <div class="itemListBox">
+                                <div class="itemBox">
+                                    <dl>
+                                        <dt>A</dt>
+                                        <dd>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">阿斯顿马丁</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="itemBox">
+                                    <dl>
+                                        <dt>A</dt>
+                                        <dd>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">阿斯顿马丁</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="itemBox">
+                                    <dl>
+                                        <dt>A</dt>
+                                        <dd>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">阿斯顿马丁</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                            <a href="#">宝马</a>
+                                        </dd>
+                                    </dl>
+                                </div>
+
+
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -146,36 +189,111 @@
                 <a class="on" href="/bj/buy/" rel="nofollow">不限</a>
                 <a class="" href="/bj/buy/" rel="nofollow">宝马</a>
                 <a class="" href="/bj/buy/" rel="nofollow">奔驰</a>
+                <a>
+                    <div class="dropdown">
+                        <a id="ksy" class="showBox">
+                            全部
+                            <span class="caret"></span>
+                        </a>
 
+                        <div class="selectBox" id="ksyBox">
+                            <ul>
+                                <li>A</li>
+                            </ul>
+                            <div class="hotCity">
+                                <div class="cityTab">
+                                    <dl>
+                                        <dt>A</dt>
+                                        <dd>
+                                            <a href="#">宝马</a>
+
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </dd>
         </dl>
-
     </div>
-    </div>
-   <!-- <div class="dropdown">
-        <a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown trigger
-            <span class="caret"></span>
-        </a>
 
-        <div class="dropdown-menu cityBox" role="menu" aria-labelledby="dLabel">
-            <ul>
-                <li>A</li>
-                <li>A</li>
-                <li>A</li>
-                <li>A</li>
-                <li>A</li>
-            </ul>
+    <!--排序方式-->
+    <div class="seqBox clearfix">
+        <p class="fr seqP">
+            共找到<b>456</b>辆
+        </p>
+        <div class="fl seqDiv">
+            <div class="btn-group">
+                <a type="button" class="btn btn-default selected">默认排序</a>
+                <a type="button" class="btn btn-default">价格<span class="glyphicon glyphicon-arrow-up"></span></a>
+                <a type="button" class="btn btn-default">价格<span class="glyphicon glyphicon-arrow-down"></span></a>
+                <a type="button" class="btn btn-default">车龄<span class="glyphicon glyphicon-arrow-up"></a>
+                <a type="button" class="btn btn-default">使用小时<span class="glyphicon glyphicon-arrow-up"></a>
+            </div>
         </div>
-    </div>-->
+    </div>
+    <!--图片展示-->
+    <div class="list">
+        <div class="row carList">
+            <div class="col-sm-6 col-md-3 listBox">
+                <div class="thumbnail">
+                    <img src="images/demo.jpg" alt="...">
+                    <div class="infoDiv">
+                        <p class="infoBox"><a>T现代车两全开T现代车两全开那个in爱姑娘IGN那个in爱姑娘IGN</a></p>
+                        <p class="infoGray">
+                            <span>2015年上牌</span>
+                            <em class="verticalLine">|</em>
+                            <span>使用25小时</span>
+                            <em class="verticalLine">|</em>
+                            <span>45吨</span>
+                        </p>
+                        <p class="infoPrice">
+                            价格：
+                            <span>14.6万</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--分页-->
+        <div class="page" id="id_set_page">
+
+        </div>
+    </div>
+
 </div>
+
+
 <!--底部-->
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/cityselect.js"></script>
+<script type="text/javascript" src="js/page.js"></script>
 <script src="js/login.js"></script>
 <script >
     var test=new Vcity.CitySelector({input:'citySelect'});
+    $(".showBox").hover(function(){
+        var boxName=this.id+"Box";
+        var div=document.getElementById(boxName);
+        div.style.display="block";
+    })
+    $(".selectBox").mouseleave(function () {
+        this.style.display="none";
+    })
+
+    var pagecallback = function(p) {
+        /*global["selectedPage"] = Number(p);
+        */
+        //window.location.href = root+"/productDetails?id="+proID+"&page="+global["selectedPage"];
+    }
+    var opt = {
+        selectedPage: Number(3),
+        total:        Number(8),
+        pageLength:   Number(6),
+        callback:     pagecallback
+    };
+    $("#id_set_page").Pagination(opt);
 </script>
 </body>
 </html>

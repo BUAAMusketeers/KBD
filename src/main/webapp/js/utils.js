@@ -1,6 +1,6 @@
-var field_array=["","IT互联网","房地产","金融","消费品","汽车制造","医疗化工"];
-var typename=["","委托","职业规划"];
-var order_state=["","待接单","正在服务","已结束","已拒绝"];
+var hotBrand=["","小松","卡特彼勒","日立","神钢","斗山","三一重工","沃尔沃","加藤"];
+var hotType=["","挖掘机","装载机","推土机","汽车起重机","破碎锤","混凝土泵车"];
+var letter=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 //截取URL参数
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");

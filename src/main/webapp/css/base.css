@@ -5,7 +5,15 @@
 body {
     padding:0;
 }
-
+.hide{
+    display:none;
+}
+.fr{
+    float:right;
+}
+.fl{
+    float:left;
+}
 /*--登录--*/
 .modal-content {
     margin-top: 70px;
@@ -231,6 +239,24 @@ body {
     text-align: center;
 }
 
+/*导航*/
 .breadcrumb{
     background-color:#fff;
 }
+/*selectBox*/
+.selectBox{width:380px;border:1px solid #B3CDC0;overflow:hidden;box-shadow:2px 2px 3px rgba(0,0,0,0.3); font:12px/1.5 tahoma,arial,\5b8b\4f53;background:#fff;text-align:left;
+    z-index: 999;position:absolute; top:20px; left:20px; display:none;}
+.selectBox ul{margin:0;padding:0;overflow:hidden;}
+.selectBox ul li:first-child{margin-left:5px;}
+.selectBox ul li{float:left;list-style:none;padding:5px;border-bottom:1px solid #DDD;cursor:pointer;display:inline;color:#FD6F1A;}
+.selectBox ul li.on{border-bottom-color:#FD6F1A;position:relative;}
+.hide{display:none;}
+p.tip{color:#999;line-height:20px;padding:5px;margin:0;text-indent:3px;}
+.itemListBox{border-top:1px solid #DDD;margin-top:-1px;clear:left;overflow-x:hidden;overflow-x:auto; height:200px;padding-bottom:10px;padding-top:10px;_margin-bottom:8px;}
+.itemBox{overflow:hidden;}
+.itemBox dl{margin:0;padding:0 0 0 10px;overflow:hidden;}
+.itemBox dl dt{float:left;padding-left:3px;color:#FD6F1A;margin-top:1px;text-indent:5px;font-family:"Lucida console","consolas","courier new";line-height:25px;font-size:14px;width:20px;}
+.itemBox dl dd{margin-left:2px;float:left;width:320px;}
+.itemBox dl dd a{padding-left:5px;line-height:25px;display:inline-block;color:#333;text-decoration:none;}
+.itemBox dl dd a:hover{color:#FD6F1A;}
+
