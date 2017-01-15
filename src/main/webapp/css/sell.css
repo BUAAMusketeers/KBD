@@ -44,7 +44,7 @@
 }
 
 /*--主体--*/
-.reg-body {
+.reg-body,.sell-body {
     margin-top: 20px;
     padding: 30px 10px 0 !important;
     min-height: 700px;
@@ -100,6 +100,15 @@
     .reg-suc-body h2{
         font-size: 24px;
     }
+
+}
+@media (min-width: 768px) {
+    .reg-body{
+        margin-left: 30% !important;
+    }
+    #register-btn{
+        width:90%;margin-left: 10%
+    }
 }
 .reg-suc-body p {
     font-size:16px;
@@ -143,10 +152,52 @@
 .toleft{
     margin-left: -2%;
 }
+.reg_toleft{
+    margin-left: -5%;
+}
 .to_right{
     padding-right: 35%;
 }
 .unit{
     position: absolute;
     top:6px;left:65%
+}
+
+@media (min-width: 768px) {
+    .modal-content {
+        height: 330px;
+    }
+}
+
+#model li{
+    float: left;
+    list-style: none;
+    margin-left: 5px;
+    margin-bottom: 15px;
+
+}
+#model li a{
+    color: #fff;
+    background-color: #FD6F1A;
+    border-color: #357ebd;
+    padding:2px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-decoration:none;
+    cursor:pointer;
+
+}
+
+#model li a :hover{
+    background-color: #FD521D;
+}
+
+#register-btn:hover{
+    background-color: #FD521D;
+}
+#register-btn[disabled]{
+    background-color: #FD521D;
+}
+.function_label{
+    margin-right: 5px;
 }

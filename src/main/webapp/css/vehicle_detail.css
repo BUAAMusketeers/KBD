@@ -1,0 +1,142 @@
+@charset "UTF-8";
+.arrow-next, .arrow-prew {
+    background: url(../images/detail_slideshow.18c641f4de83c9bb42c8fa52307ae2d7.png) no-repeat;
+    width: 50px;
+    height: 70px;
+    position: absolute;
+    top: 160px;
+    opacity: .5;
+    z-index: 10;
+    display: none;
+}
+
+.arrow-next {
+    right: 0;
+    background-position: -59px -131px;
+}
+.arrow-prew {
+    left: 0;
+    background-position: 0 -131px;
+    background-position-x: 0px;
+    background-position-y: -131px;
+}
+.dt-sumpic{
+    position: relative;
+}
+.slideshow li{
+    list-style: none;
+}
+.det-picside img{
+    width:100%;
+}
+.amount {
+    position: absolute;
+    background: rgba(0,0,0,.5);
+    height: 30px;
+    width: 60px;
+    line-height: 30px;
+    right: 0;
+    bottom: 0;
+    color: #fff;
+    font-size: 14px;
+    z-index: 10;
+    text-align: center;
+    filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#7F000000,endcolorstr=#7F000000);
+    margin: inherit;
+}
+.dt-thumb li{
+    float: left;
+}
+.tm-arrow-next, .tm-arrow-prew {
+    background: url(../images/detail_slideshow.18c641f4de83c9bb42c8fa52307ae2d7.png) no-repeat;
+    width: 26px;
+    height: 121px;
+    display: block;
+}
+.tm-arrow-next {
+    background-position: -36px 0;
+    float: right;
+}
+.tm-arrow-prew {
+    margin-right: 1px;
+    float: left;
+}
+.dt-transcont {
+    width: 100%;
+}
+.arrow-next:hover, .arrow-prew:hover {
+    opacity: .8;
+}
+.fc-org {
+    color: #f60;
+}
+.dt-thumb-img {
+    width: 546px;
+    float: left;
+    margin: 0 1px 0 0;
+}
+.dt-thumb-img li{
+}
+.dt-thumb {
+    float: left;
+    width: 90%;
+    height: 121px;
+    position: relative;
+    overflow: hidden;
+}
+.title{
+    float: left;
+}
+.vehicle_name{
+    font-size: 24px;
+}
+.vehicle_update{
+    padding-top: 10px;
+}
+.price{
+    margin-left: 30px;
+    font-size: 18px;
+}
+.pric_number{
+    color: #FD6F1A;
+}
+.device_inf {
+    width: 100%;
+    height: 105px;
+    background: #fbfbfb;
+    padding-top: 35px;
+    /* padding-left: 80px; */
+    text-align: center;
+}
+.d_inf {
+    display: inline-block;
+    height: 50px;
+    border-right: 2px solid #c5c5c5;
+    padding: 0 40px;
+}
+.d_inf div {
+    height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+}
+.vehicle{
+    height: 380px;
+}
+h4{
+    margin-left: 15px;
+}
+.deck {
+    height: 16px;
+    width: 4px;
+    font-size: 0;
+    background-color: #fd521d;
+    margin-right: 8px;
+    vertical-align: -2px;
+    display: inline-block;
+}
+.vehicle-info{
+    font-size: 16px;
+}
+.vehicle-info div{
+    margin-top: 15px;
+}
