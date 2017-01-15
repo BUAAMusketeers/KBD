@@ -7,10 +7,10 @@ public interface Dao<T> {
 
     T get(T entity);
 
-    T insert(T entity);
+    void insert(T entity);
 
-    T update(T entity);
+    void update(T entity);
 
-    T delete(T entity);
+    void delete(T entity);
 
 }

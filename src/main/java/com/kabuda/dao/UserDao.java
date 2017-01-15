@@ -1,11 +1,18 @@
 package com.kabuda.dao;
 
+import com.kabuda.dao.common.Dao;
 import com.kabuda.entity.User;
 
 @MyBatisDao
-public interface UserDao {
+public interface UserDao extends Dao<User> {
 
-    User getUser();
+    User getUserById(String id);
 
-    void insertUser(User user);
+    User getUserByPhoneNumber(String phoneNumber);
+
+    void insert(User user);
+
+    void update(User user);
+
+    void delete(User user);
 }

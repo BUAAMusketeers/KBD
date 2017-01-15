@@ -11,16 +11,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserService {
 
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
 
-    public User getUser(){
-        User user = userDao.getUser();
-        System.out.println(user);
-        return user;
+    @Autowired
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
     }
 
-    public void insertUser(User user){
-        userDao.insertUser(user);
+    public User getUserById(String id) {
+        return userDao.getUserById(id);
+    }
+
+    public User getUserByPhoneNumber(String phoneNumber) {
+        return userDao.getUserByPhoneNumber(phoneNumber);
+    }
+
+    public void insert(User user){
+        userDao.insert(user);
+    }
+
+    public void update(User user){
+        userDao.update(user);
+    }
+
+    public void delete(User user){
+        userDao.delete(user);
     }
 }
