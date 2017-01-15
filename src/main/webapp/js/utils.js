@@ -1,7 +1,7 @@
 var hotBrand=["","小松","卡特彼勒","日立","神钢","斗山","三一重工","沃尔沃","加藤"];
 var hotType=["","挖掘机","装载机","推土机","汽车起重机","破碎锤","混凝土泵车"];
-var letter=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-var context = "localhost:8088"
+var letter=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+var context="localhost:8080"
 //截取URL参数
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
