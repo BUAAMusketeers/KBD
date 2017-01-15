@@ -184,6 +184,8 @@
     $("#citySelect").attr("placeholder",city);
     loadBrand();
     loadType();
+    getBrandList
+    getTypeList();
     $(".showBox").hover(function(){
         var boxName=this.id+"Box";
         var div=document.getElementById(boxName);
@@ -239,11 +241,12 @@
                             '<span>45吨</span>' +
                             '</p>' +
                             '<p class="infoPrice"> 价格：' +
-                            '<span>14.6万</span>' +
+                            '<span>24.4万</span>' +
                             '</p>' +
                             '</div>' +
                             '</div>' +
                             '</div>';
+                            $("#carListBox").append(str);
                         }
 
 
@@ -257,7 +260,7 @@
         });
     }
     /*获取品牌列表*/
-    getBrandList(){
+    function getBrandList(){
         $.ajax({
             type: "POST",
             url:  root+"/car/getBrandList",
@@ -288,7 +291,7 @@
     }
     /*获取类型列表*/
     /*获取品牌列表*/
-    getTypeList(){
+    function getTypeList(){
         $.ajax({
             type: "POST",
             url:  root+"/car/getModelList",
