@@ -1,6 +1,6 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kabuda.entity.Response;
+import com.kabuda.entity.domain.Response;
 import com.kabuda.entity.User;
 import org.junit.Test;
 

@@ -1,6 +1,7 @@
 package com.kabuda.dao;
 
 import com.kabuda.dao.common.Dao;
+import com.kabuda.dao.common.MyBatisDao;
 import com.kabuda.entity.User;
 
 @MyBatisDao

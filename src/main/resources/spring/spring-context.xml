@@ -45,7 +45,7 @@
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <property name="basePackage" value="com.kabuda" />
-        <property name="annotationClass" value="com.kabuda.dao.MyBatisDao"/>
+        <property name="annotationClass" value="com.kabuda.dao.common.MyBatisDao"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

@@ -284,10 +284,10 @@
                                 if(value.length==11){
                                     $.ajax({
                                         type: "post",
-                                        url: context+"/user/phone",
-                                        data: JSON.stringify({ phoneNumber:value}),
+                                        url: "/user/phone",
+                                        data: { phoneNumber:value},
                                         delay: 2000,
-                                        dataType: "json",
+//                                        dataType: "json",
                                         success: function(data){
                                             if (typeof data == "string") {
                                                 data = JSON.parse(data);
