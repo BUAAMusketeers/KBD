@@ -23,7 +23,7 @@ public class BrandService {
         return brandDao.getBrandList();
     }
 
-    public List<Brand> getBrandListByLetter(){
-        return brandDao.getBrandListByLetter();
+    public List<Brand> getBrandListByLetter(String firstLetter){
+        return brandDao.getBrandListByLetter(firstLetter);
     }
 }

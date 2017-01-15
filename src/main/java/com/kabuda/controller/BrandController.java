@@ -2,9 +2,9 @@ package com.kabuda.controller;
 
 
 import com.google.gson.Gson;
-import com.kabuda.entity.Model;
+import com.kabuda.entity.Brand;
 import com.kabuda.entity.domain.Response;
-import com.kabuda.service.ModelService;
+import com.kabuda.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,28 +14,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Controller
-public class ModelController {
+public class BrandController {
 
-    private final ModelService modelService;
+    private final BrandService brandService;
 
     @Autowired
-    public ModelController(ModelService modelService) {
-        this.modelService = modelService;
+    public BrandController(BrandService brandService) {
+        this.brandService = brandService;
     }
 
     @ResponseBody
-    @RequestMapping(path = "/car/getModelList", method = RequestMethod.POST)
-    public String getModelList() {
+    @RequestMapping(path = "/car/getBrandList", method = RequestMethod.POST)
+    public String getBrandList(){
         Gson gson = new Gson();
         try {
-            List<List<Model>> data = new ArrayList<List<Model>>();
+            List<List<Brand>> data = new ArrayList<List<Brand>>();
             for(char i = 'A'; i <= 'Z'; i++){
-                List<Model> models = modelService.getModelListByLetter(String.valueOf(i));
-                data.add(models);
+                List<Brand> brands = brandService.getBrandListByLetter(String.valueOf(i));
+                data.add(brands);
             }
-            return gson.toJson(new Response<List<List<Model>>>(1000, "success", data));
+            return gson.toJson(new Response<List<List<Brand>>>(1000, "success", data));
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(1001, "其它错误"));

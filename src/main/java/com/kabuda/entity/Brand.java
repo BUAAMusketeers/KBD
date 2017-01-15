@@ -1,6 +1,8 @@
 package com.kabuda.entity;
 
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Brand implements Serializable{
@@ -9,8 +11,9 @@ public class Brand implements Serializable{
 
     private int id;
 
-    private String firstLetter;    // 品牌名称首字母
+    private transient String firstLetter;    // 品牌名称首字母
 
+    @SerializedName("name")
     private String brandName;     // 品牌名称
 
     public int getId() {
