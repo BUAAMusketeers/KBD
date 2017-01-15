@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kabuda.dao.BrandDao">
+
+    <select id="getModelList">
+        SELECT
+            id,
+            first_letter AS "firstLetter",
+            model_name AS "modelName"
+        FROM model
+    </select>
+
+    <select id="getModelListByLetter">
+        SELECT
+            id,
+            first_letter AS "firstLetter",
+            model_name AS "modelName"
+        FROM model WHERE first_letter = #{firstLetter}
+    </select>
+</mapper>

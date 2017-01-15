@@ -1,4 +1,4 @@
-package com.kabuda.entity;
+package com.kabuda.entity.domain;
 
 
 public class Response<T> {

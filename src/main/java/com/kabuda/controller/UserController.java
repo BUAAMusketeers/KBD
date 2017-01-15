@@ -4,17 +4,15 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kabuda.entity.Response;
+import com.kabuda.entity.domain.Response;
 import com.kabuda.entity.User;
 import com.kabuda.service.UserService;
 import com.kabuda.util.Encrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 public class UserController {
@@ -34,7 +32,7 @@ public class UserController {
      * @return 返回体
      */
     @ResponseBody
-    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public String login(String phoneNumber, @RequestParam("password") String unencrypted) {
         Gson gson = new Gson();
         try {
@@ -59,7 +57,7 @@ public class UserController {
 
 
     @ResponseBody
-    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    @RequestMapping(path = "/user/register", method = RequestMethod.POST)
     public String register(String phoneNumber, @RequestParam("password") String unencrypted, String name, Integer sex, Integer isDriver,
                            String model, Integer price, Integer drivingAge, String location) {
         Gson gson = new Gson();
@@ -125,7 +123,8 @@ public class UserController {
 
     /**
      * 修改密码
-     * @param id 用户id
+     *
+     * @param id          用户id
      * @param oldPassword 原密码
      * @param newPassword 新密码
      * @return json数据
@@ -135,7 +134,7 @@ public class UserController {
     public String changePassword(int id, String oldPassword, String newPassword) {
         Gson gson = new Gson();
         try {
-            if (StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
+            if (StringUtils.isEmpty(id) || StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
                 return gson.toJson(new Response(1002, "参数为空"));
             }
 
@@ -145,6 +144,52 @@ public class UserController {
             }
 
             user.setPassword(Encrypt.SHA256(newPassword));
+            userService.update(user);
+            return gson.toJson(new Response(1000, "success"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(1003, "其它错误"));
+        }
+    }
+
+
+    /**
+     * 用户修改个人信息
+     */
+    @ResponseBody
+    @RequestMapping(path = "/user/update", method = RequestMethod.POST)
+    public String update(int id, String name, Integer sex, Integer isDriver, String model,
+                         Integer price, Integer drivingAge, String location) {
+        Gson gson = new Gson();
+        try {
+            if (StringUtils.isEmpty(id)) {
+                return gson.toJson(new Response(1002, "参数为空"));
+            }
+            User user = userService.getUserById(id);
+            if (!StringUtils.isEmpty(name)) user.setName(name);
+            if (!StringUtils.isEmpty(sex)) user.setSex(sex);
+            if (!StringUtils.isEmpty(isDriver)) {
+                user.setIsDriver(isDriver);
+                if (isDriver == 1) {
+                    if (!StringUtils.isEmpty(model)) user.setModel(model);
+                    if (!StringUtils.isEmpty(price)) user.setPrice(price);
+                    if (!StringUtils.isEmpty(drivingAge)) user.setDrivingAge(drivingAge);
+                    if (!StringUtils.isEmpty(location)) user.setLocation(location);
+                } else {
+                    user.setModel(null);
+                    user.setPrice(-1);
+                    user.setDrivingAge(-1);
+                    user.setLocation(null);
+                }
+            }else{
+                if(user.getIsDriver() == 1){
+                    if (!StringUtils.isEmpty(model)) user.setModel(model);
+                    if (!StringUtils.isEmpty(price)) user.setPrice(price);
+                    if (!StringUtils.isEmpty(drivingAge)) user.setDrivingAge(drivingAge);
+                    if (!StringUtils.isEmpty(location)) user.setLocation(location);
+                }
+            }
             userService.update(user);
             return gson.toJson(new Response(1000, "success"));
 
