@@ -26,8 +26,8 @@ $(document).ready(function() {
         else {
             $.ajax({
                 type: "POST",
-                url:  context+"/login",
-                data: JSON.stringify({phoneNumber:username,password:password}),
+                url:  "/user/login",
+                data: {phoneNumber:username,password:password},
                 success:function(data) {
                     if (typeof data == "string") {
                         data = JSON.parse(data);
@@ -37,7 +37,7 @@ $(document).ready(function() {
 
                     }
                 },
-                datatype:"json"
+
             });
         }
     });

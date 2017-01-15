@@ -206,7 +206,7 @@
         $.ajax({
             type: "POST",
             url:  root+"/car/getCarList",
-            data: JSON.stringify({city:city,brand:brand,type:carType,sort:sort, limit:global["limit"], page:global["selectedPage"]}),
+            data: {city:city,brand:brand,type:carType,sort:sort, limit:global["limit"], page:global["selectedPage"]},
             success:function(data) {
                 if (typeof data == "string") {
                     data = JSON.parse(data);
