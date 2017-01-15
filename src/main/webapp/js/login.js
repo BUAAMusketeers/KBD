@@ -1,14 +1,14 @@
 
 $(document).ready(function() {
     //判断登录状态
-    callAjax(baseUrlCjh()+"isUserLoggedIn/","get",{},function(data){
+    /*callAjax(baseUrlCjh()+"isUserLoggedIn/","get",{},function(data){
         var obj= eval(data);
         if ( obj.loggedIn == '1' ) {
             showPC();
         } else {
             hidePC();
         }
-    });
+    });*/
 
     //登录
     $('#login-btn').click(function() {
@@ -24,7 +24,21 @@ $(document).ready(function() {
             $("#login-warning").html('请填写密码!');
         }
         else {
-            $("#login-warning").html('');
+            $.ajax({
+                type: "POST",
+                url:  context+"/login",
+                data: JSON.stringify({phoneNumber:username,password:password}),
+                success:function(data) {
+                    if (typeof data == "string") {
+                        data = JSON.parse(data);
+                    }
+                    if (data.status == 1000) {
+                        console.log("success log");
+
+                    }
+                },
+                datatype:"json"
+            });
         }
     });
 
