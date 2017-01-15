@@ -1,0 +1,10 @@
+.userpage_title{
+    padding:4px 0;
+    border-bottom: 2px solid #00AEAE;
+    color:#00AEAE;
+    font-weight:bold;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+    color: #fff;
+    background-color: #FD6F1A!important;
+}
