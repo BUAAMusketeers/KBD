@@ -180,20 +180,27 @@
         "limit": 16,
         "selectedPage": 1
     };
-    var test=new Vcity.CitySelector({input:'citySelect'});
-    $("#citySelect").attr("placeholder",city);
-    loadBrand();
-    loadType();
-    getBrandList
-    getTypeList();
-    $(".showBox").hover(function(){
-        var boxName=this.id+"Box";
-        var div=document.getElementById(boxName);
-        div.style.display="block";
-    })
-    $(".selectBox").mouseleave(function () {
-        this.style.display="none";
-    })
+    $(document).ready(function(){
+        var test=new Vcity.CitySelector({input:'citySelect'});
+        $("#citySelect").attr("placeholder",city);
+        loadBrand();
+        loadType();
+        getBrandList();
+        getTypeList();
+        $(".showBox").hover(function(){
+            var boxName=this.id+"Box";
+            var div=document.getElementById(boxName);
+            div.style.display="block";
+        },function(){
+            var boxName=this.id+"Box";
+            var div=document.getElementById(boxName);
+            div.style.display="none";
+        })
+        $(".selectBox").mouseleave(function () {
+            this.style.display="none";
+        })
+    });
+
 
     var pagecallback = function(p) {
         global["selectedPage"] = Number(p);
@@ -269,20 +276,23 @@
                     data = JSON.parse(data);
                 }
                 if (data.status == 1000) {
-                    if (data.result.total) {
+
                         var result = data.data;
                         for (var i = 0; i < 26; i++) {
                             var letterPre=letter[i];
                             var str='';
                             for(var j=0;j<result[i].length;j++){
-                                str+='<a onclick="brandClick('+result[i][j].id+','+result[i][j].name+')"></a>';
+                                str+='<a onclick="brandClick('+result[i][j].id+','+result[i][j].name+')">'+result[i][j].name+'</a>';
+
                             }
-                            var str0='<div class="itemBox"><dl><dt>'+letterPre+'</dt><dd>'+str+'</dd></dl></div>';
-                            $("#brandAllBox .itemListBox").append(str0);
+                            if(result[i].length){
+                                var str0='<div class="itemBox"><dl><dt>'+letterPre+'</dt><dd>'+str+'</dd></dl></div>';
+                                $("#brandAllBox .itemListBox").append(str0)
+                            }
                         }
 
 
-                    }
+
 
                 }
             },
@@ -290,7 +300,6 @@
         });
     }
     /*获取类型列表*/
-    /*获取品牌列表*/
     function getTypeList(){
         $.ajax({
             type: "POST",
@@ -300,24 +309,26 @@
                     data = JSON.parse(data);
                 }
                 if (data.status == 1000) {
-                    if (data.result.total) {
+
                         var result = data.data;
                         for (var i = 0; i < 26; i++) {
                             var letterPre=letter[i];
                             var str='';
                             for(var j=0;j<result[i].length;j++){
-                                str+='<a onclick="typeClick('+result[i][j].id+','+result[i][j].name+')"></a>';
+                                console.log(result[i][j].id);
+                                str+='<a onclick="typeClick('+result[i][j].id+','+result[i][j].name+')">'+result[i][j].name+'</a>';
                             }
-                            var str0='<div class="itemBox"><dl><dt>'+letterPre+'</dt><dd>'+str+'</dd></dl></div>';
-                            $("#typeAllBox .itemListBox").append(str0);
+                            if(result[i].length) {
+                                var str0 = '<div class="itemBox"><dl><dt>' + letterPre + '</dt><dd>' + str + '</dd></dl></div>';
+                                $("#typeAllBox .itemListBox").append(str0);
+                            }
                         }
 
 
-                    }
+
 
                 }
             },
-            datatype:"json"
         });
     }
     /*热门品牌*/
