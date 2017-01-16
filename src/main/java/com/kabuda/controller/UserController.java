@@ -201,6 +201,32 @@ public class UserController {
 
 
     /**
+     * 根据用户id获取用户信息
+     * @param id 用户id
+     * @return json数据
+     */
+    @ResponseBody
+    @RequestMapping(path = "/user/getInfo", method = RequestMethod.POST)
+    public String getInfo(Integer id){
+        Gson gson = new Gson();
+        try {
+            if (StringUtils.isEmpty(id)) {
+                return gson.toJson(new Response(1002, "缺少必要信息"));
+            }
+
+            User isUserExist = userService.getUserById(id);
+            if (isUserExist == null)
+                return gson.toJson(new Response(1001, "用户不存在"));
+
+            return getResponse(isUserExist);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(1003, "其它错误"));
+        }
+    }
+
+
+    /**
      * 用户是否为驾驶员返回不同的信息
      *
      * @param user 用户信息实体
