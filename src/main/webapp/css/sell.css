@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+ul{
+    list-style: none;
+}
 /*--顶部--*/
 .reg-head {
     height: 90px;
@@ -201,3 +204,69 @@
 .function_label{
     margin-right: 5px;
 }
+
+.img-group li {
+    width: 110px;
+    height: 133px;
+    padding: 4px 6px 0 0;
+    float: left;
+    display: inline;
+    margin: 6px 5px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+.img-group li .img{
+    width: 108px;
+    height: 108px;
+    text-align: center;
+    box-shadow: 1px 1px 1px 1px #ccc;
+}
+.img-group li .img img{
+    width: 100%;
+    height: 72px;
+    margin-top: 19px;
+    -webkit-transition: transform 0.2s;
+    -moz-transition: transform 0.2s;
+    -ms-transition: transform 0.2s;
+    -o-transition: transform 0.2s;
+    transition: transform 0.2s;
+}
+.img-group li .set{
+    width: 108px;
+    height: 20px;
+    padding: 3px 4px;
+    box-shadow: 1px 1px 1px 1px #ccc;
+    background: #fff;
+}
+.set span{
+    margin-top: 1px;
+    width: 30px;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    color: #888;
+    background: url(../images/bg.png) -165px -137px no-repeat;
+    cursor: pointer;
+    float: left;
+    display: inline;
+}
+.btn-close {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: url(../images/bg.png) -4px -169px no-repeat;
+    cursor: pointer;
+}
+.btn-close:hover {
+    background-position: -24px -169px;
+}
+#model {
+    height: 95px;
+    overflow-y:scroll;
+}
+#model ul{
+    padding: 0;
+}
+

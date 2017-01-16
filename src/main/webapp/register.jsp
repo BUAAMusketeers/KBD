@@ -88,7 +88,7 @@
                                             <h4 class="modal-title">选择机型</h4>
                                         </div>
                                         <div class="modal-body clearfix">
-                                            <p class="form-control-static">
+                                            <p>
                                                 <small>最多可以选择三项: </small>
                                                 <label class="function_selected"></label>
                                             </p>
@@ -98,12 +98,6 @@
                                             <div class="tab-content function_select" id="functionlist2">
                                                 <div role="tabpanel" class="tab-pane active" id="model">
                                                     <ul>
-                                                        <li><a onclick="addfunction(this)">挖掘机</a></li>
-                                                        <li><a onclick="addfunction(this)">压土机</a></li>
-                                                        <li><a onclick="addfunction(this)">装载机</a></li>
-                                                        <li><a onclick="addfunction(this)">压路机</a></li>
-                                                        <li><a onclick="addfunction(this)">洒水机</a></li>
-                                                        <li><a onclick="addfunction(this)">升降机</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -188,15 +182,22 @@
     $(function(){
         $.ajax({
             type: "post",
-            url: context+"/user/phone",
-            data: JSON.stringify({ phoneNumber:"13141462644"}),
+            url: "/car/getModelList",
             delay: 2000,
-            dataType: "json",
             success: function(data){
                 if (typeof data == "string") {
                     data = JSON.parse(data);
                 }
-                console.log(data);
+                if(data.status==1000){
+                    var result = data.data;
+                    for (var i = 0; i < 26; i++) {
+                        var str='';
+                        for(var j=0;j<result[i].length;j++){
+                            str="<li><a onclick='addfunction(this)' value="+result[i][j].id+">"+result[i][j].name+"</a></li>";
+                            $("#model ul").append(str);
+                        }
+                    }
+                }
             }
         });
         /*--头像切换--*/
@@ -277,29 +278,6 @@
                         },
                         notEmpty: {
                             message: '请输入手机号'
-                        },
-                        callback:{
-                            message: '该手机号已注册',
-                            callback: function(value, validator) {
-                                if(value.length==11){
-                                    $.ajax({
-                                        type: "post",
-                                        url: "/user/phone",
-                                        data: { phoneNumber:value},
-                                        delay: 2000,
-//                                        dataType: "json",
-                                        success: function(data){
-                                            if (typeof data == "string") {
-                                                data = JSON.parse(data);
-                                            }
-                                            if(data.status==1000){
-                                                return true;
-                                            }
-                                            return false;
-                                        }
-                                    });
-                                }
-                            }
                         }
                     }
                 },
@@ -357,7 +335,8 @@
                                 var ifDriver = $("input[name='ifDriver']:checked").val();
                                 if(ifDriver=="0")
                                     return true;
-                                if(num_fun>0&&num_fun<4)
+                                var num_model = $("#function_selected_out").children().length;
+                                if(num_model>0&num_model<4)
                                     return true;
                                 return false;
                             }
@@ -409,27 +388,25 @@
             },
         });
     }
-    var num_fun=0;
     function add_function_out(){
         $(".function_selected").html($("#function_selected_out").html());
     }
     function addfunction(self){
-        if(num_fun>=3){
+        var num_model= $(".function_selected").children().length;
+        if(num_model>=3){
             alert("最多只能选3个职能");
             return;
         }
-        num_fun++;
-        $('#register-form').bootstrapValidator('revalidateField', 'mobelList');//重新验证机型列表
         var str='<span class="label label-info function_label">'+$(self).html()+'<a onclick="removefunction(this)" >&times;</a></span>';
         $(".function_selected").append(str);
     }
     function removefunction(self){
-        num_fun--;
-        $('#register-form').bootstrapValidator('revalidateField', 'mobelList');//重新验证机型列表
         $(self).parent('.function_label').remove();
+        $('#register-form').bootstrapValidator('revalidateField', 'mobelList');//重新验证机型列表
     }
     function submit_function(){
         $("#function_selected_out").html($(".function_selected").html());
+        $('#register-form').bootstrapValidator('revalidateField', 'mobelList');//重新验证机型列表
     }
 </script>
 </body>

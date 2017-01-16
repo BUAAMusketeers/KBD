@@ -84,6 +84,18 @@
                         <select class="form-control"><option value="">请选择区</option></select>
                     </div>
                 </div>
+                <div class="form-group img-group">
+                    <ul id="img-group">
+                        <li class="picList">
+                            <div class="img">
+                                <img src="http://img.tiebaobei.com/img/170115/213655d858b53dbbd87dc9b9d0502e26_2.jpg" deg="0">
+                                <input type="hidden" id="imageIdIpt" value="170115/213655d858b53dbbd87dc9b9d0502e26.jpg" name="image1">
+                            </div>
+                            <div class="set first"><span class="on fl">首图</span></div>
+                            <i class="btn-close"></i>
+                        </li>
+                    </ul>
+                </div>
                 <div class="form-group">
                     <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">车辆照片:</label>
                     <div class="col-md-4 col-xs-7">
@@ -296,10 +308,17 @@
             topAlert('图片格式无效！','error');
             return false;
         }
-        var objPreview = document.getElementById('user_img');
         if( sender.files && sender.files[0] ){
             console.log(sender.files.length);
-            objPreview.src = window.URL.createObjectURL(sender.files[0]);
+            var src = window.URL.createObjectURL(sender.files[0]);
+            var str = '<li class="picList">'+
+                    '<div class="img">'+
+                    '<img src="'+src+'" deg="0">'+
+                    '</div>'+
+                    '<div class="set"><span class="on fl">首图</span></div>'+
+                    '<i class="btn-close"></i>'+
+                    '</li>';
+            $("#img-group").append(str);
         }
     }
     function uploadFile(){
