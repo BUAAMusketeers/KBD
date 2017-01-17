@@ -4,6 +4,8 @@ import com.kabuda.entity.domain.Response;
 import com.kabuda.entity.User;
 import org.junit.Test;
 
+import java.util.Calendar;
+
 public class TestGson {
 
     @Test
@@ -16,5 +18,10 @@ public class TestGson {
         Gson gson = new GsonBuilder().create();
         String result = gson.toJson(response);
         System.out.println(result);
+    }
+
+    @Test
+    public void testDate(){
+        System.out.println(Calendar.getInstance().getTime().toString());
     }
 }

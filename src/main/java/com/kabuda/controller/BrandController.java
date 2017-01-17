@@ -2,6 +2,7 @@ package com.kabuda.controller;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Brand;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.service.BrandService;
@@ -27,7 +28,7 @@ public class BrandController {
     @ResponseBody
     @RequestMapping(path = "/car/getBrandList", method = RequestMethod.POST)
     public String getBrandList(){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             List<List<Brand>> data = new ArrayList<List<Brand>>();
             for(char i = 'A'; i <= 'Z'; i++){

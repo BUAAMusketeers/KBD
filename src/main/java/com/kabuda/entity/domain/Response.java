@@ -3,9 +3,9 @@ package com.kabuda.entity.domain;
 
 public class Response<T> {
 
-    public int status;
-    public String message;
-    public T data;
+    protected int status;
+    protected String message;
+    private T data;
 
     public Response() {
     }

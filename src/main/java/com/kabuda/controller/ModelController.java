@@ -2,6 +2,7 @@ package com.kabuda.controller;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Model;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.service.ModelService;
@@ -28,7 +29,7 @@ public class ModelController {
     @ResponseBody
     @RequestMapping(path = "/car/getModelList", method = RequestMethod.POST)
     public String getModelList() {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             List<List<Model>> data = new ArrayList<List<Model>>();
             for(char i = 'A'; i <= 'Z'; i++){
