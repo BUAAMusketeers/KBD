@@ -3,15 +3,18 @@ package com.kabuda.entity.domain;
 
 import java.util.List;
 
-public class VehicleResponse extends Response{
+public class VehicleResponse{
 
+    private int status;
+    private String message;
     private Result result;
 
     public VehicleResponse() {
     }
 
     public VehicleResponse(int status, String message, int total, List<VehicleBean> data) {
-        super(status, message);
+        this.status = status;
+        this.message = message;
         this.result = new Result(total, data);
     }
 

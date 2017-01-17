@@ -16,6 +16,7 @@
     <select id="getVehicleList" resultType="com.kabuda.entity.domain.VehicleBean">
         SELECT
             vehicle.id AS id,
+            user_id AS userId,
             brand.brand_name AS brandName,
             model.model_name AS modelName,
             location_id AS locationId,
@@ -40,10 +41,10 @@
         LEFT JOIN location ON vehicle.location_id = location.id
         WHERE vehicle.brand_id = #{brand} AND vehicle.model_id = #{model}
             AND vehicle.location_id = #{city}
-        <if test="isSell == 1">
+        <if test="sellOrRent == 1">
             AND vehicle.sell = 1 AND vehicle.sell_state = 0
         </if>
-        <if test="isSell == 2">
+        <if test="sellOrRent == 2">
             AND vehicle.rent = 1 AND vehicle.rent_state = 0
         </if>
         LIMIT #{offset}, #{limit}

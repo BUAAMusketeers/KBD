@@ -5,6 +5,8 @@ import com.kabuda.dao.common.Dao;
 import com.kabuda.dao.common.MyBatisDao;
 import com.kabuda.entity.Vehicle;
 import com.kabuda.entity.domain.VehicleBean;
+import com.kabuda.entity.domain.VehicleRequest;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +20,7 @@ public interface VehicleDao extends Dao<Vehicle>{
      */
     int getVehicleCount(int type);
 
-    List<VehicleBean> getCarList(Map<String, String> map); //int city, int brand, int model, int sort, int limit, int offset, String keyword, int isSell
+    List<VehicleBean> getVehicleList(VehicleRequest vehicleRequest); //int city, int brand, int model, int sort, int limit, int offset, String keyword, int isSell
 
     VehicleBean getVehicleInfoById(int id);
 

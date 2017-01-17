@@ -3,6 +3,7 @@ package com.kabuda.service;
 import com.kabuda.dao.VehicleDao;
 import com.kabuda.entity.Vehicle;
 import com.kabuda.entity.domain.VehicleBean;
+import com.kabuda.entity.domain.VehicleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +26,8 @@ public class VehicleService {
         return vehicleDao.getVehicleCount(type);
     }
 
-    public List<VehicleBean> getCarList(Map<String, String> map) {
-        return vehicleDao.getCarList(map);
+    public List<VehicleBean> getVehicleList(VehicleRequest vehicleRequest) {
+        return vehicleDao.getVehicleList(vehicleRequest);
     }
 
     public VehicleBean getVehicleInfoById(int id){

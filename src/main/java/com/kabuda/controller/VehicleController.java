@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Vehicle;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.entity.domain.VehicleBean;
+import com.kabuda.entity.domain.VehicleRequest;
 import com.kabuda.entity.domain.VehicleResponse;
 import com.kabuda.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class VehicleController {
@@ -28,7 +31,9 @@ public class VehicleController {
         this.vehicleService = vehicleService;
     }
 
-
+    /**
+     * 获取出售车辆列表
+     */
     @ResponseBody
     @RequestMapping(path = "/car/getSellList", method = RequestMethod.POST)
     public String getSellList(Integer city, Integer brand, Integer model, Integer sort,
@@ -36,18 +41,19 @@ public class VehicleController {
         return getCarList(city, brand, model, sort, limit, page, keyword, 1);
     }
 
-
+    /**
+     * 获取出租车辆列表
+     */
     @ResponseBody
     @RequestMapping(path = "/car/getRentList", method = RequestMethod.POST)
     public String getRentList(Integer city, Integer brand, Integer model, Integer sort,
                               Integer limit, Integer page, String keyword) {
-        return getCarList(city, brand, model, sort, limit, page, keyword, 0);
+        return getCarList(city, brand, model, sort, limit, page, keyword, 2);
     }
 
 
     /**
      * 返回车辆列表
-     *
      * @param city    城市id
      * @param brand   品牌id
      * @param model   机型id
@@ -55,11 +61,11 @@ public class VehicleController {
      * @param limit   每一页数量
      * @param page    第几页
      * @param keyword 关键字
-     * @param isSell  1表示出售，0表示出租
+     * @param sellOrRent  1表示出售，2表示出租
      * @return 车辆列表
      */
     private String getCarList(Integer city, Integer brand, Integer model, Integer sort,
-                              Integer limit, Integer page, String keyword, int isSell) {
+                              Integer limit, Integer page, String keyword, int sellOrRent) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if (StringUtils.isEmpty(city) || StringUtils.isEmpty(brand) || StringUtils.isEmpty(model) || StringUtils.isEmpty(sort) ||
@@ -67,25 +73,41 @@ public class VehicleController {
                 return gson.toJson(new Response(1001, "缺少参数信息"));
             }
 
-            int vehicleCount = vehicleService.getVehicleCount(isSell);
+            int vehicleCount = vehicleService.getVehicleCount(sellOrRent);
             int offset = (page - 1) * limit;
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("city", city.toString());
-            map.put("brand", brand.toString());
-            map.put("model", model.toString());
-            map.put("sort", sort.toString());
-            map.put("limit", limit.toString());
-            map.put("offset", String.valueOf(offset));
-            map.put("keyword", keyword);
-            map.put("isSell", String.valueOf(isSell));
-            List<VehicleBean> carList = vehicleService.getCarList(map);
-            return gson.toJson(new VehicleResponse(1000, "success", vehicleCount, carList));
+            VehicleRequest vehicleRequest = new VehicleRequest(city, brand, model, sort, keyword, offset, limit, sellOrRent);
+            List<VehicleBean> carList = vehicleService.getVehicleList(vehicleRequest);
+            return carListJson(vehicleCount, carList, sellOrRent);
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(1002, "其它错误"));
         }
     }
 
+    private String carListJson(int vehicleCount, List<VehicleBean> carList, int sellOrRent){
+        ExclusionStrategy exclusionStrategy = new ExclusionStrategy() {
+            public boolean shouldSkipField(FieldAttributes f) {
+                return f.getName().equals("userId") || f.getName().equals("equipmentNumber") ||
+                        f.getName().equals("description") || f.getName().contains("contact") ||
+                        f.getName().equals("releaseDate") || f.getName().equals("isSell") ||
+                        f.getName().equals("isRent") || f.getName().contains("State");
+            }
+            public boolean shouldSkipClass(Class<?> clazz) {
+                return false;
+            }
+        };
+        if(sellOrRent == 1){
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").setVersion(0).setExclusionStrategies(exclusionStrategy)
+                    .serializeNulls().setPrettyPrinting().create();
+            return gson.toJson(new VehicleResponse(1000, "success", vehicleCount, carList));
+        }
+        if(sellOrRent == 2){
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").setVersion(4).setExclusionStrategies(exclusionStrategy)
+                    .serializeNulls().setPrettyPrinting().create();
+            return gson.toJson(new VehicleResponse(1000, "success", vehicleCount, carList));
+        }
+        return null;
+    }
 
     /**
      * @param id 车辆id
@@ -151,7 +173,7 @@ public class VehicleController {
 
             Date releaseDate = Calendar.getInstance().getTime();
             Vehicle vehicle = new Vehicle(userId, modelId, brandId, locationId, usedHours, vehicleAge, equipmentNumber,
-                    description, contact, contactPhone, tonnage, isSell, isRent, -1, -1, -1, -1, releaseDate, null);
+                    description, contact, contactPhone, tonnage, isSell, isRent, -1, -1, -1, -1, releaseDate, releaseDate);
             if (isSell == 1) {
                 if (StringUtils.isEmpty(sellState) || StringUtils.isEmpty(sellPrice)) {
                     return gson.toJson(new Response(1001, "缺少参数"));

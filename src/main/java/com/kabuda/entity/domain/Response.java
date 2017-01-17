@@ -3,8 +3,8 @@ package com.kabuda.entity.domain;
 
 public class Response<T> {
 
-    protected int status;
-    protected String message;
+    private int status;
+    private String message;
     private T data;
 
     public Response() {
