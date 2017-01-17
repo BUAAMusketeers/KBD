@@ -34,15 +34,17 @@
             rent_price AS rentPrice,
             release_date AS releaseDate,
             update_date AS updateDate
-        FROM vehicle, brand, model
-        WHERE vehicle.brand_id = brand.id AND vehicle.model_id = model.id
-            AND vehicle.brand_id = #{brand} AND vehicle.model_id = #{model}
+        FROM vehicle
+        LEFT JOIN model ON vehicle.model_id = model.id
+        LEFT JOIN brand ON vehicle.brand_id = brand.id
+        LEFT JOIN location ON vehicle.location_id = location.id
+        WHERE vehicle.brand_id = #{brand} AND vehicle.model_id = #{model}
             AND vehicle.location_id = #{city}
         <if test="isSell == 1">
-            AND vehicle.sell = '1' AND vehicle.sell_state = '0'
+            AND vehicle.sell = 1 AND vehicle.sell_state = 0
         </if>
         <if test="isSell == 2">
-            AND vehicle.rent = '1' AND vehicle.rent_state = '0'
+            AND vehicle.rent = 1 AND vehicle.rent_state = 0
         </if>
         LIMIT #{offset}, #{limit}
         <!--<if test="">-->
@@ -54,6 +56,7 @@
     <select id="getVehicleInfoById" resultType="com.kabuda.entity.domain.VehicleBean">
         SELECT
         vehicle.id AS id,
+        user_id AS userId,
         brand.brand_name AS brandName,
         model.model_name AS modelName,
         location.city AS location,

@@ -13,6 +13,7 @@ public class VehicleBean implements Serializable {
     private static final long serialVersionUID = -3850434682061542198L;
 
     private int id;
+    private int userId;
     @SerializedName("brand")
     private String brandName;         // 所属品牌
     @SerializedName("model")
@@ -47,6 +48,14 @@ public class VehicleBean implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getModelName() {
