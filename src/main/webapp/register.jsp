@@ -38,7 +38,9 @@
                 </div>
             </div>
             <form id="register-form" class="form-horizontal">
-                <input type="hidden" id="sex" name="gender" value="1">
+                <input type="hidden" id="sex" name="sex" value="1">
+                <input type="hidden"  name="model" value="">
+                <input type="hidden"  name="location" value="">
                 <div class="form-group">
                     <label class="col-xs-4 control-label">真实姓名:</label>
                     <div class="col-xs-8">
@@ -66,9 +68,9 @@
                 <div class="form-group">
                     <label class="col-xs-4 control-label">驾驶员注册:</label>
                     <div style="margin-top: 7px">
-                        <input class="col-xs-2" type="radio" value="1" name="ifDriver"/>
+                        <input class="col-xs-2" type="radio" value="1" name="isDriver"/>
                         <label class="col-xs-1 reg_toleft">是</label>
-                        <input class="col-xs-2" type="radio" value="0" name="ifDriver" checked="checked" />
+                        <input class="col-xs-2" type="radio" value="0" name="isDriver" checked="checked" />
                         <label class="col-xs-1 reg_toleft">否</label>
                     </div>
                 </div>
@@ -88,7 +90,7 @@
                                             <h4 class="modal-title">选择机型</h4>
                                         </div>
                                         <div class="modal-body clearfix">
-                                            <p>
+                                            <p style="width:100%">
                                                 <small>最多可以选择三项: </small>
                                                 <label class="function_selected"></label>
                                             </p>
@@ -206,18 +208,18 @@
             document.getElementById('m-span').className = 'span-active';
             document.getElementById('f-img').className = 'img-circle';
             document.getElementById('f-span').className = '';
-            document.getElementsByName('sex').value = '1';
+            document.getElementsByName('sex').value = "1";
         });
         $('#f-img').click(function(){
             document.getElementById('m-img').className = 'img-circle';
             document.getElementById('m-span').className = '';
             document.getElementById('f-img').className = 'img-circle img-active';
             document.getElementById('f-span').className = 'span-active';
-            document.getElementsByName('sex').value = '2';
+            document.getElementsByName('sex').value = "0";
         });
 
         //是否显示驾驶员信息
-        $("input[name=ifDriver]").click(function(){
+        $("input[name=isDriver]").click(function(){
             if(this.value=="1"){
                 $(".driver_info").fadeIn(500);
                 $('#register-form').bootstrapValidator('resetForm',false);
@@ -286,8 +288,8 @@
                         callback:{
                             message: '请选择驾驶年龄',
                             callback: function(value, validator) {
-                                var ifDriver = $("input[name='ifDriver']:checked").val();
-                                if(ifDriver=="0")
+                                var isDriver = $("input[name='isDriver']:checked").val();
+                                if(isDriver=="0")
                                     return true;
                                 if(value=="")
                                     return false;
@@ -301,8 +303,8 @@
                         callback:{
                             message: '请选择省份',
                             callback: function(value, validator) {
-                                var ifDriver = $("input[name='ifDriver']:checked").val();
-                                if(ifDriver=="0")
+                                var isDriver = $("input[name='isDriver']:checked").val();
+                                if(isDriver=="0")
                                     return true;
                                 if(value=="")
                                     return false;
@@ -316,8 +318,8 @@
                         callback:{
                             message: '请填写正确形式的预期佣金',
                             callback: function(value, validator) {
-                                var ifDriver = $("input[name='ifDriver']:checked").val();
-                                if(ifDriver=="0")
+                                var isDriver = $("input[name='isDriver']:checked").val();
+                                if(isDriver=="0")
                                     return true;
                                 var reg = new RegExp("^[0-9]*$");
                                 if(!reg.test(value)||value=="")
@@ -332,8 +334,8 @@
                         callback:{
                             message: '驾驶机型数量为1至3个',
                             callback: function(value, validator) {
-                                var ifDriver = $("input[name='ifDriver']:checked").val();
-                                if(ifDriver=="0")
+                                var isDriver = $("input[name='isDriver']:checked").val();
+                                if(isDriver=="0")
                                     return true;
                                 var num_model = $("#function_selected_out").children().length;
                                 if(num_model>0&num_model<4)
@@ -342,7 +344,7 @@
                             }
                         }
                     }
-                },
+                }
             }
         })
                 .on('success.form.bv', function(e) {
@@ -352,7 +354,39 @@
                     var $form = $(e.target);
                     // Get the BootstrapValidator instance
                     var bv = $form.data('bootstrapValidator');
-
+                    var modelList="";
+                    $("#function_selected_out").children("span").each(function(){
+                        modelList = modelList + $(this).attr("value") + ",";
+                    });
+                    $('input[name="model"]').val(modelList);
+                    var location = $('select[name="city"] option:selected').val();
+                    if( location != ""){
+                        $('input[name="location"]').val(location);
+                    }else{
+                        location = $('select[name="province"] option:selected').val();
+                        $('input[name="location"]').val(location);
+                    }
+                    console.log($('#register-form').serialize());
+                    $.ajax({
+                        type: "post",
+                        url: "/user/register",
+                        data:$('#register-form').serialize(),
+                        success: function(data){
+                            if (typeof data == "string") {
+                                data = JSON.parse(data);
+                            }
+                            if(data.status==1000){
+                                alert("register sucess!");
+                            }else if(data.status==1001){
+                                alert("手机号已注册！");
+                            }else{
+                                alert("ddas");
+                            }
+                        },
+                        error:function(error){
+                            alert("connection error!");
+                        }
+                    });
 
                 });
     });
@@ -397,8 +431,15 @@
             alert("最多只能选3个职能");
             return;
         }
-        var str='<span class="label label-info function_label">'+$(self).html()+'<a onclick="removefunction(this)" >&times;</a></span>';
-        $(".function_selected").append(str);
+        var flag = true;
+        $(".function_selected").children("span").each(function(){
+            if($(this).attr("value")==$(self).attr("value"))
+                flag=false;
+        })
+        if(flag==true){
+            var str='<span class="label label-info function_label" value="'+$(self).attr("value")+'">'+$(self).html()+'<a onclick="removefunction(this)" >&times;</a></span>';
+            $(".function_selected").append(str);
+        }
     }
     function removefunction(self){
         $(self).parent('.function_label').remove();
