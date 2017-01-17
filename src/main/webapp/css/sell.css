@@ -3,6 +3,9 @@
 ul{
     list-style: none;
 }
+select.form-control{
+    padding-right: inherit !important;
+}
 /*--顶部--*/
 .reg-head {
     height: 90px;
@@ -73,12 +76,8 @@ ul{
     font-size:18px;
     margin: 10px 0;
     transition: all 0.15s ease-in-out;
-    background-color: #377bee;
     border: none;
     border-radius: 4px;
-}
-#push-btn:hover{
-    background-color: #0066CC;
 }
 #sentMobile {
     margin-left:-15px;
@@ -195,10 +194,10 @@ ul{
     background-color: #FD521D;
 }
 
-#register-btn:hover{
+#push-btn:hover,#register-btn:hover{
     background-color: #FD521D;
 }
-#register-btn[disabled]{
+#register-btn[disabled],#push-btn[disabled]{
     background-color: #FD521D;
 }
 .function_label{

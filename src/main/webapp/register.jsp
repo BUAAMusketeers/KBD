@@ -376,11 +376,11 @@
                                 data = JSON.parse(data);
                             }
                             if(data.status==1000){
-                                alert("register sucess!");
+                                alert("注册成功!");
                             }else if(data.status==1001){
                                 alert("手机号已注册！");
                             }else{
-                                alert("ddas");
+                                alert("信息不完整！");
                             }
                         },
                         error:function(error){
