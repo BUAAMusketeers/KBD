@@ -1,7 +1,8 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kabuda.entity.domain.Response;
 import com.kabuda.entity.User;
+import com.kabuda.entity.domain.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -23,5 +24,10 @@ public class TestGson {
     @Test
     public void testDate(){
         System.out.println(Calendar.getInstance().getTime().toString());
+    }
+
+    @Test
+    public void testStringUtils(){
+
     }
 }

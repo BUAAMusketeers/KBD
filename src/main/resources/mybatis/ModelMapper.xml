@@ -17,4 +17,12 @@
             model_name AS "modelName"
         FROM model WHERE first_letter = #{firstLetter}
     </select>
+    
+    <select id="getModelById" resultType="com.kabuda.entity.Model">
+        SELECT
+            id,
+            first_letter AS firstLetter,
+            model_name AS modelName
+        FROM model WHERE id = #{id}
+    </select>
 </mapper>

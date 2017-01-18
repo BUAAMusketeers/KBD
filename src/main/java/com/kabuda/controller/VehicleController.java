@@ -68,6 +68,7 @@ public class VehicleController {
                               Integer limit, Integer page, String keyword, int sellOrRent) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            keyword = keyword.trim();
             if (StringUtils.isEmpty(city) || StringUtils.isEmpty(brand) || StringUtils.isEmpty(model) || StringUtils.isEmpty(sort) ||
                     StringUtils.isEmpty(limit) || StringUtils.isEmpty(page) || StringUtils.isEmpty(keyword)) {
                 return gson.toJson(new Response(1001, "缺少参数信息"));
@@ -163,6 +164,10 @@ public class VehicleController {
                              Double sellPrice, Double rentPrice) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            equipmentNumber = equipmentNumber.trim();
+            description = description.trim();
+            contact = contact.trim();
+            contactPhone = contactPhone.trim();
             if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(modelId) || StringUtils.isEmpty(brandId) ||
                     StringUtils.isEmpty(locationId) || StringUtils.isEmpty(usedHours) || StringUtils.isEmpty(vehicleAge) ||
                     StringUtils.isEmpty(tonnage) || StringUtils.isEmpty(equipmentNumber) || StringUtils.isEmpty(description) ||
@@ -212,6 +217,10 @@ public class VehicleController {
                             Double sellPrice, Double rentPrice) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            equipmentNumber = equipmentNumber.trim();
+            description = description.trim();
+            contact = contact.trim();
+            contactPhone = contactPhone.trim();
             if (StringUtils.isEmpty(id) || StringUtils.isEmpty(isSell) || StringUtils.isEmpty(isRent)) {
                 return gson.toJson(new Response(1001, "缺少参数"));
             }

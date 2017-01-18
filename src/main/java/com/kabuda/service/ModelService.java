@@ -20,6 +20,10 @@ public class ModelService {
         this.modelDao = modelDao;
     }
 
+    public Model getModelById(int id){
+        return modelDao.getModelById(id);
+    }
+
     public List<Model> getModelList(){
         return modelDao.getModelList();
     }

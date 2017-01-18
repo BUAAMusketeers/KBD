@@ -4,8 +4,10 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kabuda.entity.Model;
 import com.kabuda.entity.User;
 import com.kabuda.entity.domain.Response;
+import com.kabuda.service.ModelService;
 import com.kabuda.service.UserService;
 import com.kabuda.util.Encrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +18,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Controller
 public class UserController {
 
     private final UserService userService;
 
+    private final ModelService modelService;
+
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ModelService modelService) {
         this.userService = userService;
+        this.modelService = modelService;
     }
 
     /**
@@ -36,9 +45,11 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
-    public String login(String phoneNumber, @RequestParam("password") String unencrypted) {
+    public String login(String phoneNumber, @RequestParam("password") String unencrypted, HttpSession session) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create(); // TODO: 2017/1/17 驾驶机型数组
         try {
+            phoneNumber = phoneNumber.trim();
+            unencrypted = unencrypted.trim();
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted)) {
                 return gson.toJson(new Response(1003, "缺少必要信息"));
             }
@@ -51,6 +62,8 @@ public class UserController {
             if (!isUserExist.getPassword().equals(password))
                 return gson.toJson(new Response(1002, "密码不正确"));
 
+            session.setAttribute("user", isUserExist);
+            session.setMaxInactiveInterval(1800);
             return getResponse(isUserExist);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,8 +76,12 @@ public class UserController {
     @RequestMapping(path = "/user/register", method = RequestMethod.POST)
     public String register(String phoneNumber, @RequestParam("password") String unencrypted, String name, Integer sex, Integer isDriver,
                            String model, Integer price, Integer drivingAge, @RequestParam(value = "location", required = false) Integer locationId) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create(); // TODO: 2017/1/17 model驾驶机型
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            phoneNumber = phoneNumber.trim();
+            unencrypted = unencrypted.trim();
+            name = name.trim();
+            model = model.trim();
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted) || StringUtils.isEmpty(name)
                     || StringUtils.isEmpty(sex) || StringUtils.isEmpty(isDriver)) {
                 return gson.toJson(new Response(1002, "缺少必要信息"));
@@ -108,6 +125,7 @@ public class UserController {
     public String isPhoneExist(String phoneNumber) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            phoneNumber = phoneNumber.trim();
             if (StringUtils.isEmpty(phoneNumber)) {
                 return gson.toJson(new Response(1002, "参数为空"));
             }
@@ -137,6 +155,8 @@ public class UserController {
     public String changePassword(Integer id, String oldPassword, String newPassword) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            oldPassword = oldPassword.trim();
+            newPassword = newPassword.trim();
             if (StringUtils.isEmpty(id) || StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
                 return gson.toJson(new Response(1002, "参数为空"));
             }
@@ -164,8 +184,10 @@ public class UserController {
     @RequestMapping(path = "/user/update", method = RequestMethod.POST)
     public String update(Integer id, String name, Integer sex, Integer isDriver, String model,
                          Integer price, Integer drivingAge, @RequestParam(value = "location", required = false) Integer locationId) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/17 model问题
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            name = name.trim();
+            model = model.trim();
             if (StringUtils.isEmpty(id)) {
                 return gson.toJson(new Response(1002, "参数为空"));
             }
@@ -248,10 +270,36 @@ public class UserController {
                 public boolean shouldSkipClass(Class<?> clazz) {
                     return false;
                 }
-            }).serializeNulls().create();
+            }).serializeNulls().setPrettyPrinting().create();
             return gson.toJson(new Response<User>(1000, "success", user));
         }
+
         //如果是驾驶员返回全部字段
-        return new GsonBuilder().serializeNulls().create().toJson(new Response<User>(1000, "success", user));
+        user.setModelNameList(getModelNameList(user));
+        return new GsonBuilder().serializeNulls().setExclusionStrategies(new ExclusionStrategy() {
+            public boolean shouldSkipField(FieldAttributes f) {
+                return f.getName().equals("model");
+            }
+
+            public boolean shouldSkipClass(Class<?> clazz) {
+                return false;
+            }
+        }).setPrettyPrinting().create().toJson(new Response<User>(1000, "success", user));
+    }
+
+    /**
+     * 根据user中的model设置modelNameList的值
+     */
+    private List<String> getModelNameList(User user){
+        List<String> modelNameList = new ArrayList<String>();
+        String model = user.getModel();
+        String[] models = model.split(",");
+        for (String m : models){
+            if(!StringUtils.isEmpty(m.trim())){
+                Model modelById = modelService.getModelById(Integer.valueOf(m));
+                modelNameList.add(modelById.getModelName());
+            }
+        }
+        return modelNameList;
     }
 }

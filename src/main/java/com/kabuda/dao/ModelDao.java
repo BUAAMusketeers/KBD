@@ -10,6 +10,8 @@ import java.util.List;
 @MyBatisDao
 public interface ModelDao extends Dao<Model> {
 
+    Model getModelById(int id);
+
     List<Model> getModelList();
 
     List<Model> getModelListByLetter(String firstLetter);

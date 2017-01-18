@@ -1,6 +1,7 @@
 package com.kabuda.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
 
@@ -13,6 +14,7 @@ public class User implements Serializable {
     private int sex;                    // 性别, 0代表女性，1代表男性
     private int isDriver;               // 是否为驾驶员，0代表不是，1代表是
     private String model;               // 驾驶员所能驾驶的机型
+    private List<String> modelNameList; // 驾驶员所能驾驶的机型列表
     private int price;                  // 驾驶员价格   元/天
     private int drivingAge;             // 驾驶年龄
     private transient int locationId;   // 驾驶员地址的id
@@ -56,6 +58,14 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<String> getModelNameList() {
+        return modelNameList;
+    }
+
+    public void setModelNameList(List<String> modelNameList) {
+        this.modelNameList = modelNameList;
     }
 
     public String getPassword() {
