@@ -5,7 +5,6 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Location;
-import com.kabuda.entity.User;
 import com.kabuda.entity.domain.LocationResponse;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.service.LocationService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -34,7 +32,7 @@ public class LocationController {
 
     @ResponseBody
     @RequestMapping(path = "/getProvinceList", method = RequestMethod.POST)
-    public String getProvinceList(HttpServletRequest request){
+    public String getProvinceList(){
         Gson gson = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
             public boolean shouldSkipField(FieldAttributes f) {
                 return f.getName().equals("city") || f.getName().equals("county");
@@ -45,10 +43,6 @@ public class LocationController {
             }
         }).setPrettyPrinting().create();
         try {
-            User user = (User) request.getSession().getAttribute("user");
-            if(user == null){
-                return gson.toJson(new Response(1010, "用户未登录"));
-            }
 
             List<Location> provinceList = locationService.getProvinceList();
             int total = 0;
@@ -65,7 +59,7 @@ public class LocationController {
 
     @ResponseBody
     @RequestMapping(path = "/getCityList", method = RequestMethod.POST)
-    public String getCityList (String province, HttpServletRequest request){
+    public String getCityList (String province){
         Gson gson = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
             public boolean shouldSkipField(FieldAttributes f) {
                 return f.getName().equals("province") || f.getName().equals("county");
@@ -76,10 +70,6 @@ public class LocationController {
             }
         }).setPrettyPrinting().create();
         try {
-            User user = (User) request.getSession().getAttribute("user");
-            if(user == null){
-                return gson.toJson(new Response(1010, "用户未登录"));
-            }
 
             if(StringUtils.isEmpty(province)){
                 return gson.toJson(new Response(1001, "参数为空"));
@@ -100,7 +90,7 @@ public class LocationController {
 
     @ResponseBody
     @RequestMapping(path = "/getCountyList", method = RequestMethod.POST)
-    public String getCountyList  (String city, HttpServletRequest request){
+    public String getCountyList  (String city){
         Gson gson = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
             public boolean shouldSkipField(FieldAttributes f) {
                 return f.getName().equals("province") || f.getName().equals("city");
@@ -111,10 +101,6 @@ public class LocationController {
             }
         }).setPrettyPrinting().create();
         try {
-            User user = (User) request.getSession().getAttribute("user");
-            if(user == null){
-                return gson.toJson(new Response(1010, "用户未登录"));
-            }
 
             if(StringUtils.isEmpty(city)){
                 return gson.toJson(new Response(1001, "参数为空"));

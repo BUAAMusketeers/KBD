@@ -36,4 +36,16 @@
         FROM location
         WHERE location_level = '3' AND city = #{parentCity}
     </select>
+    
+    <select id="getCityByName" resultType="com.kabuda.entity.Location">
+        SELECT
+            id,
+            location_code AS locationCode,
+            province,
+            city,
+            county,
+            location_level AS locationLevel
+        FROM location
+        WHERE location_level = '2' AND city = #{curCity}
+    </select>
 </mapper>

@@ -47,10 +47,24 @@
         <if test="sellOrRent == 2">
             AND vehicle.rent = 1 AND vehicle.rent_state = 0
         </if>
+        <if test="keyword != null">
+            AND ((brand.brand_name LIKE %#{keyword}%) OR (model.model_name LIKE %#{keyword}%) OR (vehicle.description LIKE %#{keyword}%))
+        </if>
         LIMIT #{offset}, #{limit}
-        <!--<if test="">-->
-            <!--sort keyword-->
-        <!--</if>-->
+        <if test="sort == 1">
+            <if test="sellOrRent == 1"> ORDER BY sell_price ASC </if>
+            <if test="sellOrRent == 2"> ORDER BY rent_price ASC </if>
+        </if>
+        <if test="sort == 1">
+            <if test="sellOrRent == 1"> ORDER BY sell_price DESC </if>
+            <if test="sellOrRent == 2"> ORDER BY rent_price DESC </if>
+        </if>
+        <if test="sort == 3">
+            ORDER BY used_hours ASC
+        </if>
+        <if test="sort == 4">
+            ORDER BY vehicle_age ASC
+        </if>
     </select>
 
 

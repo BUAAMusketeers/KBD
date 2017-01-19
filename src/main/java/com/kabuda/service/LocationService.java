@@ -31,4 +31,8 @@ public class LocationService {
     public List<Location> getCountyList(String parentCity){
         return locationDao.getCountyList(parentCity);
     }
+
+    public Location getCityByName(String curCity){
+        return locationDao.getCityByName(curCity);
+    }
 }
