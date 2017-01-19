@@ -70,10 +70,10 @@ public class LocationController {
             }
         }).setPrettyPrinting().create();
         try {
-
             if(StringUtils.isEmpty(province)){
                 return gson.toJson(new Response(1001, "参数为空"));
             }
+            province = province.trim();
 
             List<Location> cityList = locationService.getCityList(province);
             int total = 0;
@@ -101,10 +101,10 @@ public class LocationController {
             }
         }).setPrettyPrinting().create();
         try {
-
             if(StringUtils.isEmpty(city)){
                 return gson.toJson(new Response(1001, "参数为空"));
             }
+            city = city.trim();
 
             List<Location> countyList = locationService.getCountyList(city);
             int total = 0;

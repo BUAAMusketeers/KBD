@@ -51,11 +51,11 @@ public class UserController {
     public String login(String phoneNumber, @RequestParam("password") String unencrypted, HttpSession session) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            phoneNumber = phoneNumber.trim();
-            unencrypted = unencrypted.trim();
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
+            phoneNumber = phoneNumber.trim();
+            unencrypted = unencrypted.trim();
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
             if (isUserExist == null)
@@ -81,14 +81,14 @@ public class UserController {
                            String model, Integer price, Integer drivingAge, @RequestParam(value = "location", required = false) Integer locationId) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            phoneNumber = phoneNumber.trim();
-            unencrypted = unencrypted.trim();
-            name = name.trim();
-            model = model.trim();
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted) || StringUtils.isEmpty(name)
                     || StringUtils.isEmpty(sex) || StringUtils.isEmpty(isDriver)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
+            phoneNumber = phoneNumber.trim();
+            unencrypted = unencrypted.trim();
+            name = name.trim();
+            model = model.trim();
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
             if (isUserExist != null) {
@@ -139,10 +139,10 @@ public class UserController {
     public String isPhoneExist(String phoneNumber) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            phoneNumber = phoneNumber.trim();
             if (StringUtils.isEmpty(phoneNumber)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
+            phoneNumber = phoneNumber.trim();
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
             if (isUserExist == null)
@@ -171,11 +171,12 @@ public class UserController {
             if(user == null){
                 return gson.toJson(new Response(1010, "用户未登录"));
             }
-            oldPassword = oldPassword.trim();
-            newPassword = newPassword.trim();
+
             if (StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
+            oldPassword = oldPassword.trim();
+            newPassword = newPassword.trim();
 
             if (!user.getPassword().equals(Encrypt.SHA256(oldPassword))) {
                 return gson.toJson(new Response(1006, "原密码不正确"));
@@ -205,14 +206,13 @@ public class UserController {
             if(user == null){
                 return gson.toJson(new Response(1010, "用户未登录"));
             }
-            name = name.trim();
-            model = model.trim();
-            if (!StringUtils.isEmpty(name)) user.setName(name);
+
+            if (!StringUtils.isEmpty(name)) user.setName(name.trim());
             if (!StringUtils.isEmpty(sex)) user.setSex(sex);
             if (!StringUtils.isEmpty(isDriver)) {
                 user.setIsDriver(isDriver);
                 if (isDriver == 1) {
-                    if (!StringUtils.isEmpty(model)) user.setModel(model);
+                    if (!StringUtils.isEmpty(model)) user.setModel(model.trim());
                     if (!StringUtils.isEmpty(price)) user.setPrice(price);
                     if (!StringUtils.isEmpty(drivingAge)) user.setDrivingAge(drivingAge);
                     if (!StringUtils.isEmpty(locationId)) user.setLocationId(locationId);
@@ -224,7 +224,7 @@ public class UserController {
                 }
             } else {
                 if (user.getIsDriver() == 1) {
-                    if (!StringUtils.isEmpty(model)) user.setModel(model);
+                    if (!StringUtils.isEmpty(model)) user.setModel(model.trim());
                     if (!StringUtils.isEmpty(price)) user.setPrice(price);
                     if (!StringUtils.isEmpty(drivingAge)) user.setDrivingAge(drivingAge);
                     if (!StringUtils.isEmpty(locationId)) user.setLocationId(locationId);

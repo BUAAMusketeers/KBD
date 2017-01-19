@@ -75,11 +75,12 @@ public class VehicleController {
                               Integer limit, Integer page, String keyword, int sellOrRent) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            keyword = keyword.trim();
             if (StringUtils.isEmpty(city) || StringUtils.isEmpty(brand) || StringUtils.isEmpty(model) || StringUtils.isEmpty(sort) ||
                     StringUtils.isEmpty(limit) || StringUtils.isEmpty(page) || StringUtils.isEmpty(keyword)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
+            city = city.trim();
+            keyword = keyword.trim();
 
             Location cityByName = locationService.getCityByName(city);
             if(cityByName == null){
@@ -182,10 +183,7 @@ public class VehicleController {
                 return gson.toJson(new Response(1010, "用户未登录"));
             }
             int userId = user.getId();
-            equipmentNumber = equipmentNumber.trim();
-            description = description.trim();
-            contact = contact.trim();
-            contactPhone = contactPhone.trim();
+
             if (StringUtils.isEmpty(model) || StringUtils.isEmpty(brand) ||
                     StringUtils.isEmpty(location) || StringUtils.isEmpty(usedHours) || StringUtils.isEmpty(vehicleAge) ||
                     StringUtils.isEmpty(tonnage) || StringUtils.isEmpty(equipmentNumber) || StringUtils.isEmpty(description) ||
@@ -193,6 +191,10 @@ public class VehicleController {
                     StringUtils.isEmpty(isRent)) {
                 return gson.toJson(new Response(1001, "缺少参数"));
             }
+            equipmentNumber = equipmentNumber.trim();
+            description = description.trim();
+            contact = contact.trim();
+            contactPhone = contactPhone.trim();
 
             Date releaseDate = Calendar.getInstance().getTime();
             Vehicle vehicle = new Vehicle(userId, model, brand, location, usedHours, vehicleAge, equipmentNumber,
@@ -235,10 +237,6 @@ public class VehicleController {
                             Double sellPrice, Double rentPrice) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            equipmentNumber = equipmentNumber.trim();
-            description = description.trim();
-            contact = contact.trim();
-            contactPhone = contactPhone.trim();
             if (StringUtils.isEmpty(id) || StringUtils.isEmpty(isSell) || StringUtils.isEmpty(isRent)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
@@ -272,10 +270,10 @@ public class VehicleController {
             if (!StringUtils.isEmpty(usedHours)) vehicleById.setUsedHours(usedHours);
             if (!StringUtils.isEmpty(vehicleAge)) vehicleById.setVehicleAge(vehicleAge);
             if (!StringUtils.isEmpty(tonnage)) vehicleById.setTonnage(tonnage);
-            if (!StringUtils.isEmpty(equipmentNumber)) vehicleById.setEquipmentNumber(equipmentNumber);
-            if (!StringUtils.isEmpty(description)) vehicleById.setDescription(description);
-            if (!StringUtils.isEmpty(contact)) vehicleById.setContact(contact);
-            if (!StringUtils.isEmpty(contactPhone)) vehicleById.setContactPhone(contactPhone);
+            if (!StringUtils.isEmpty(equipmentNumber)) vehicleById.setEquipmentNumber(equipmentNumber.trim());
+            if (!StringUtils.isEmpty(description)) vehicleById.setDescription(description.trim());
+            if (!StringUtils.isEmpty(contact)) vehicleById.setContact(contact.trim());
+            if (!StringUtils.isEmpty(contactPhone)) vehicleById.setContactPhone(contactPhone.trim());
 
             vehicleById.setUpdateDate(Calendar.getInstance().getTime());
             vehicleService.update(vehicleById);
