@@ -76,6 +76,7 @@
             //console.log(data.url);
         }).on("fileuploaded", function(event, outData) {
             console.log(outData.response);
+            addFirstImg();
         });
     }
     function addFirstImg(){

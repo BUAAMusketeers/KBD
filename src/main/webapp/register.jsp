@@ -1,21 +1,25 @@
+<%@ page import="com.kabuda.entity.User" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
+<%
+    User user = (User)request.getSession().getAttribute("user");
+%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>注册 | 卡布达</title>
-    <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/bootstrapValidator.min.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/sell.css" />
     <link href="images/favicon.ico" rel="shortcut icon" />
 </head>
 
 <body>
 <!--顶部-->
-<script src="base/head.jsp"></script>
+<jsp:include page="base/head.jsp"></jsp:include>
 <div class="container">
     <div class="row">
         <div class="col-md-12 reg-head">
@@ -83,11 +87,11 @@
                                 <button type="button" class="btn btn-primary btn-sm"  data-toggle="modal"  data-target="#myModal" onclick="add_function_out()">添加机型</button>
                             </p>
                             <div class="modal fade " tabindex="-1" role="dialog"  id="myModal">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content model-content">
-                                        <div class="modal-header">
+                                <div class="modal-dialog">
+                                    <div class="modal-content  model-content login-content">
+                                        <div class="modal-header login-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title">选择机型</h4>
+                                            <h4 class="modal-title login-title">选择机型</h4>
                                         </div>
                                         <div class="modal-body clearfix">
                                             <p style="width:100%">
@@ -135,16 +139,13 @@
                     <div class="form-group">
                         <label class="col-xs-4 control-label">驾驶地址:</label>
                         <div class="col-xs-4">
-                            <select class="form-control" name="province" style="padding-right: 10%">
+                            <select class="form-control" name="province" id="location_province" onchange="javascript:showMyCity('location', this.value)" style="padding-right: 10%">
                                 <option value="">请选择省</option>
-                                <option value="10010">北京</option>
-                                <option value="10020">上海</option>
                             </select>
                         </div>
                         <div class="col-xs-4">
-                            <select class="form-control" name="city" style="padding-right: 10%">
+                            <select class="form-control" name="city" id="location_city" style="padding-right: 10%">
                                 <option value="">请选择市</option>
-                                <option value="10010">北京</option>
                             </select>
                         </div>
                     </div>
@@ -179,7 +180,7 @@
 <script src="js/utils.js"></script>
 <script src="js/bootstrap-filestyle.js"></script>
 <script src="js/jquery.form.js"></script>
-<script type="text/javascript" src="js/jquery.form.js"></script>
+<script src="js/login.js"></script>
 <script>
     $(function(){
         $.ajax({
@@ -204,6 +205,9 @@
                 alert("connection error!");
             }
         });
+        initProvinceList();
+
+
         /*--头像切换--*/
         $('#m-img').click(function(){
             document.getElementById('m-img').className = 'img-circle img-active';
@@ -378,7 +382,7 @@
                                 data = JSON.parse(data);
                             }
                             if(data.status==1000){
-                                alert("注册成功!");
+                                windows.location.href="user.jsp";
                             }else if(data.status==1001){
                                 alert("手机号已注册！");
                             }else{

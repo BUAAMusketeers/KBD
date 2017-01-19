@@ -1,26 +1,34 @@
+<%@ page import="com.kabuda.entity.User" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
+<%
+    User user = (User)request.getSession().getAttribute("user");
+%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>发布车辆 | 卡布达</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrapValidator.min.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/sell.css" />
-    <link rel="stylesheet" href="css/bootstrapValidator.min.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link href="images/favicon.ico" rel="shortcut icon" />
 </head>
 
 <body>
 <!--顶部-->
-<script src="base/head.jsp"></script>
+<jsp:include page="base/head.jsp"></jsp:include>
 <div class="container">
-    <div class="row">
-        <div class="col-md-12 reg-head">
-            <h1>发布车辆</h1>
-        </div>
+    <ol class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li><a href="user.jsp">个人信息</a></li>
+        <li><a href="carManage.jsp">车辆管理</a></li>
+        <li class="active">发布车辆</li>
+    </ol>
+    <div class="reg-head" style="margin-top: -50px">
+        <h1>发布车辆</h1>
     </div>
 </div>
 
@@ -42,7 +50,9 @@
                 <div class="form-group">
                     <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">出厂年限:</label>
                     <div class="col-md-4 col-xs-7">
-                        <select class="form-control for-xs" name="vehicleAge"><option value="">请选择</option></select>
+                        <select class="form-control for-xs" name="vehicleAge">
+                            <option value="">请选择</option>
+                        </select>
                     </div>
                     <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">设备型号:</label>
                     <div class="col-md-4 col-xs-7">
@@ -78,13 +88,13 @@
                 <div class="form-group">
                     <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label control-label">停放地点:</label>
                     <div class="col-md-3 col-md-offset-0 col-xs-7 for-xs">
-                        <select class="form-control" name="province"><option value="">请选择省</option></select>
+                        <select class="form-control" name="province" id="location_province" onchange="javascript:showMyCity('location', this.value)"><option value="">请选择省</option></select>
                     </div>
                     <div class="col-md-3 col-md-offset-0 col-xs-7 col-xs-offset-4 for-xs">
-                        <select class="form-control" name="city"><option value="">请选择市</option></select>
+                        <select class="form-control" name="city" id="location_city" onchange="javascript:showMyCounty('location', this.value)"><option value="">请选择市</option></select>
                     </div>
                     <div class="col-md-3 col-md-offset-0 col-xs-7 col-xs-offset-4">
-                        <select class="form-control" name="county"><option value="">请选择区</option></select>
+                        <select class="form-control" name="county" id="location_county"><option value="">请选择区</option></select>
                     </div>
                 </div>
                 <!--<div class="form-group img-group">-->
@@ -173,6 +183,11 @@
 <script src="js/sell.js" ></script>
 <script>
     $(function(){
+        for(var i=1997; i<=2017;i++){
+            var str = "<option value='"+i+"'>"+i+"</option>";
+            $("select[name='vehicleAge']").append(str);
+        }
+        initProvinceList();
         initModelList();
         initBrandList();
         $("input[name=isSell]").click(function(){
