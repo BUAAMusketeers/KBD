@@ -4,12 +4,14 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kabuda.entity.Location;
 import com.kabuda.entity.User;
 import com.kabuda.entity.Vehicle;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.entity.domain.VehicleBean;
 import com.kabuda.entity.domain.VehicleRequest;
 import com.kabuda.entity.domain.VehicleResponse;
+import com.kabuda.service.LocationService;
 import com.kabuda.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,9 +30,12 @@ public class VehicleController {
 
     private final VehicleService vehicleService;
 
+    private final LocationService locationService;
+
     @Autowired
-    public VehicleController(VehicleService vehicleService) {
+    public VehicleController(VehicleService vehicleService, LocationService locationService) {
         this.vehicleService = vehicleService;
+        this.locationService = locationService;
     }
 
     /**
@@ -38,7 +43,7 @@ public class VehicleController {
      */
     @ResponseBody
     @RequestMapping(path = "/car/getSellList", method = RequestMethod.POST)
-    public String getSellList(Integer city, Integer brand, Integer model, Integer sort,
+    public String getSellList(String city, Integer brand, Integer model, Integer sort,
                               Integer limit, Integer page, String keyword) {
         return getCarList(city, brand, model, sort, limit, page, keyword, 1);
     }
@@ -48,7 +53,7 @@ public class VehicleController {
      */
     @ResponseBody
     @RequestMapping(path = "/car/getRentList", method = RequestMethod.POST)
-    public String getRentList(Integer city, Integer brand, Integer model, Integer sort,
+    public String getRentList(String city, Integer brand, Integer model, Integer sort,
                               Integer limit, Integer page, String keyword) {
         return getCarList(city, brand, model, sort, limit, page, keyword, 2);
     }
@@ -59,26 +64,33 @@ public class VehicleController {
      * @param city    城市id
      * @param brand   品牌id
      * @param model   机型id
-     * @param sort    排序方式
+     * @param sort    排序方式  0默认 1价格升序 2价格降序 3使用时间升序 4车龄升序
      * @param limit   每一页数量
      * @param page    第几页
      * @param keyword 关键字
      * @param sellOrRent  1表示出售，2表示出租
      * @return 车辆列表
      */
-    private String getCarList(Integer city, Integer brand, Integer model, Integer sort,
+    private String getCarList(String city, Integer brand, Integer model, Integer sort,
                               Integer limit, Integer page, String keyword, int sellOrRent) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            keyword = keyword.trim();
             if (StringUtils.isEmpty(city) || StringUtils.isEmpty(brand) || StringUtils.isEmpty(model) || StringUtils.isEmpty(sort) ||
                     StringUtils.isEmpty(limit) || StringUtils.isEmpty(page) || StringUtils.isEmpty(keyword)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
+            city = city.trim();
+            keyword = keyword.trim();
+
+            Location cityByName = locationService.getCityByName(city);
+            if(cityByName == null){
+                return gson.toJson(new Response(1012, "城市不存在"));
+            }
+            int cityId = cityByName.getId();
 
             int vehicleCount = vehicleService.getVehicleCount(sellOrRent);
             int offset = (page - 1) * limit;
-            VehicleRequest vehicleRequest = new VehicleRequest(city, brand, model, sort, keyword, offset, limit, sellOrRent);
+            VehicleRequest vehicleRequest = new VehicleRequest(cityId, brand, model, sort, keyword, offset, limit, sellOrRent);
             List<VehicleBean> carList = vehicleService.getVehicleList(vehicleRequest);
             return carListJson(vehicleCount, carList, sellOrRent);
         } catch (Exception e) {
@@ -171,10 +183,7 @@ public class VehicleController {
                 return gson.toJson(new Response(1010, "用户未登录"));
             }
             int userId = user.getId();
-            equipmentNumber = equipmentNumber.trim();
-            description = description.trim();
-            contact = contact.trim();
-            contactPhone = contactPhone.trim();
+
             if (StringUtils.isEmpty(model) || StringUtils.isEmpty(brand) ||
                     StringUtils.isEmpty(location) || StringUtils.isEmpty(usedHours) || StringUtils.isEmpty(vehicleAge) ||
                     StringUtils.isEmpty(tonnage) || StringUtils.isEmpty(equipmentNumber) || StringUtils.isEmpty(description) ||
@@ -182,6 +191,10 @@ public class VehicleController {
                     StringUtils.isEmpty(isRent)) {
                 return gson.toJson(new Response(1001, "缺少参数"));
             }
+            equipmentNumber = equipmentNumber.trim();
+            description = description.trim();
+            contact = contact.trim();
+            contactPhone = contactPhone.trim();
 
             Date releaseDate = Calendar.getInstance().getTime();
             Vehicle vehicle = new Vehicle(userId, model, brand, location, usedHours, vehicleAge, equipmentNumber,
@@ -224,10 +237,6 @@ public class VehicleController {
                             Double sellPrice, Double rentPrice) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            equipmentNumber = equipmentNumber.trim();
-            description = description.trim();
-            contact = contact.trim();
-            contactPhone = contactPhone.trim();
             if (StringUtils.isEmpty(id) || StringUtils.isEmpty(isSell) || StringUtils.isEmpty(isRent)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
@@ -261,10 +270,10 @@ public class VehicleController {
             if (!StringUtils.isEmpty(usedHours)) vehicleById.setUsedHours(usedHours);
             if (!StringUtils.isEmpty(vehicleAge)) vehicleById.setVehicleAge(vehicleAge);
             if (!StringUtils.isEmpty(tonnage)) vehicleById.setTonnage(tonnage);
-            if (!StringUtils.isEmpty(equipmentNumber)) vehicleById.setEquipmentNumber(equipmentNumber);
-            if (!StringUtils.isEmpty(description)) vehicleById.setDescription(description);
-            if (!StringUtils.isEmpty(contact)) vehicleById.setContact(contact);
-            if (!StringUtils.isEmpty(contactPhone)) vehicleById.setContactPhone(contactPhone);
+            if (!StringUtils.isEmpty(equipmentNumber)) vehicleById.setEquipmentNumber(equipmentNumber.trim());
+            if (!StringUtils.isEmpty(description)) vehicleById.setDescription(description.trim());
+            if (!StringUtils.isEmpty(contact)) vehicleById.setContact(contact.trim());
+            if (!StringUtils.isEmpty(contactPhone)) vehicleById.setContactPhone(contactPhone.trim());
 
             vehicleById.setUpdateDate(Calendar.getInstance().getTime());
             vehicleService.update(vehicleById);
