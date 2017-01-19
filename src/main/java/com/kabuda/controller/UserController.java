@@ -51,23 +51,23 @@ public class UserController {
             phoneNumber = phoneNumber.trim();
             unencrypted = unencrypted.trim();
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted)) {
-                return gson.toJson(new Response(1003, "缺少必要信息"));
+                return gson.toJson(new Response(1001, "参数为空"));
             }
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
             if (isUserExist == null)
-                return gson.toJson(new Response(1001, "用户不存在"));
+                return gson.toJson(new Response(1002, "用户不存在"));
 
             String password = Encrypt.SHA256(unencrypted);
             if (!isUserExist.getPassword().equals(password))
-                return gson.toJson(new Response(1002, "密码不正确"));
+                return gson.toJson(new Response(1003, "密码不正确"));
 
             session.setAttribute("user", isUserExist);
             session.setMaxInactiveInterval(1800);
             return getResponse(isUserExist);
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1004, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 
@@ -84,12 +84,12 @@ public class UserController {
             model = model.trim();
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted) || StringUtils.isEmpty(name)
                     || StringUtils.isEmpty(sex) || StringUtils.isEmpty(isDriver)) {
-                return gson.toJson(new Response(1002, "缺少必要信息"));
+                return gson.toJson(new Response(1001, "参数为空"));
             }
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
             if (isUserExist != null) {
-                Response response = new Response(1001, "用户已存在");
+                Response response = new Response(1004, "用户已存在");
                 return gson.toJson(response);
             }
 
@@ -109,7 +109,7 @@ public class UserController {
             return gson.toJson(new Response(1000, "success"));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1003, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 
@@ -127,17 +127,17 @@ public class UserController {
         try {
             phoneNumber = phoneNumber.trim();
             if (StringUtils.isEmpty(phoneNumber)) {
-                return gson.toJson(new Response(1002, "参数为空"));
+                return gson.toJson(new Response(1001, "参数为空"));
             }
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
             if (isUserExist == null)
                 return gson.toJson(new Response(1000, "不存在"));
             else
-                return gson.toJson(new Response(1001, "已存在"));
+                return gson.toJson(new Response(1005, "手机号码已存在"));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1003, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 
@@ -158,12 +158,12 @@ public class UserController {
             oldPassword = oldPassword.trim();
             newPassword = newPassword.trim();
             if (StringUtils.isEmpty(id) || StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
-                return gson.toJson(new Response(1002, "参数为空"));
+                return gson.toJson(new Response(1001, "参数为空"));
             }
 
             User user = userService.getUserById(id);
             if (!user.getPassword().equals(Encrypt.SHA256(oldPassword))) {
-                return gson.toJson(new Response(1001, "原密码不正确"));
+                return gson.toJson(new Response(1006, "原密码不正确"));
             }
 
             user.setPassword(Encrypt.SHA256(newPassword));
@@ -172,7 +172,7 @@ public class UserController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1003, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 
@@ -189,7 +189,7 @@ public class UserController {
             name = name.trim();
             model = model.trim();
             if (StringUtils.isEmpty(id)) {
-                return gson.toJson(new Response(1002, "参数为空"));
+                return gson.toJson(new Response(1001, "参数为空"));
             }
             User user = userService.getUserById(id);
             if (!StringUtils.isEmpty(name)) user.setName(name);
@@ -220,7 +220,7 @@ public class UserController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1003, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 
@@ -237,17 +237,17 @@ public class UserController {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/19 userId session
         try {
             if (StringUtils.isEmpty(id)) {
-                return gson.toJson(new Response(1002, "缺少必要信息"));
+                return gson.toJson(new Response(1001, "参数为空"));
             }
 
             User isUserExist = userService.getUserById(id);
             if (isUserExist == null)
-                return gson.toJson(new Response(1001, "用户不存在"));
+                return gson.toJson(new Response(1002, "用户不存在"));
 
             return getResponse(isUserExist);
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1003, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 

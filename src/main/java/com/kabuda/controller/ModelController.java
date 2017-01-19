@@ -39,7 +39,7 @@ public class ModelController {
             return gson.toJson(new Response<List<List<Model>>>(1000, "success", data));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1001, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 }

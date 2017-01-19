@@ -71,7 +71,7 @@ public class VehicleController {
             keyword = keyword.trim();
             if (StringUtils.isEmpty(city) || StringUtils.isEmpty(brand) || StringUtils.isEmpty(model) || StringUtils.isEmpty(sort) ||
                     StringUtils.isEmpty(limit) || StringUtils.isEmpty(page) || StringUtils.isEmpty(keyword)) {
-                return gson.toJson(new Response(1001, "缺少参数信息"));
+                return gson.toJson(new Response(1001, "参数为空"));
             }
 
             int vehicleCount = vehicleService.getVehicleCount(sellOrRent);
@@ -81,7 +81,7 @@ public class VehicleController {
             return carListJson(vehicleCount, carList, sellOrRent);
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1002, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 
@@ -120,13 +120,13 @@ public class VehicleController {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if(StringUtils.isEmpty(id)){
-                return gson.toJson(new Response(1001, "缺少参数"));
+                return gson.toJson(new Response(1001, "参数为空"));
             }
             VehicleBean vehicleBean = vehicleService.getVehicleInfoById(id);
             return carInfoJson(vehicleBean);
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1003, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 
@@ -195,13 +195,13 @@ public class VehicleController {
             }
 
             if (vehicleService.getVehicleByEN(equipmentNumber) != null) {
-                return gson.toJson(new Response(1002, "已存在该车辆"));
+                return gson.toJson(new Response(1007, "该车辆已存在"));
             }
             vehicleService.insert(vehicle);
             return gson.toJson(new Response(1000, "success"));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1003, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
     }
 
@@ -222,14 +222,14 @@ public class VehicleController {
             contact = contact.trim();
             contactPhone = contactPhone.trim();
             if (StringUtils.isEmpty(id) || StringUtils.isEmpty(isSell) || StringUtils.isEmpty(isRent)) {
-                return gson.toJson(new Response(1001, "缺少参数"));
+                return gson.toJson(new Response(1001, "参数为空"));
             }
 
             Vehicle vehicleById = vehicleService.getVehicleById(id);
             vehicleById.setIsSell(isSell);
             if (isSell == 1) {
                 if (StringUtils.isEmpty(sellState) || StringUtils.isEmpty(sellPrice)) {
-                    return gson.toJson(new Response(1001, "缺少参数"));
+                    return gson.toJson(new Response(1001, "参数为空"));
                 }
                 vehicleById.setSellState(sellState);
                 vehicleById.setSellPrice(sellPrice);
@@ -240,7 +240,7 @@ public class VehicleController {
             vehicleById.setIsRent(isRent);
             if (isRent == 1) {
                 if (StringUtils.isEmpty(rentState) || StringUtils.isEmpty(rentPrice)) {
-                    return gson.toJson(new Response(1001, "缺少参数"));
+                    return gson.toJson(new Response(1001, "参数为空"));
                 }
                 vehicleById.setRentState(rentState);
                 vehicleById.setRentPrice(rentPrice);
@@ -264,7 +264,7 @@ public class VehicleController {
             return gson.toJson(new Response(1000, "success"));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1003, "其它错误"));
+            return gson.toJson(new Response(1100, "其它错误"));
         }
 
     }
@@ -290,7 +290,7 @@ public class VehicleController {
 //            return gson.toJson(new Response(1000, "success"));
 //        } catch (Exception e) {
 //            e.printStackTrace();
-//            return gson.toJson(new Response(1003, "其它错误"));
+//            return gson.toJson(new Response(1100, "其它错误"));
 //        }
 //    }
 //
