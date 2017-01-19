@@ -5,7 +5,12 @@
   Time: 0:05
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.kabuda.entity.User" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" %>
+<%
+    User user = (User)request.getSession().getAttribute("user");
+%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -24,7 +29,8 @@
 
 
 <!--顶部-->
-<script src="base/head.html"></script>
+<jsp:include page="base/head.jsp"></jsp:include>
+
 
 <!--body-->
 <div class="container">
@@ -38,7 +44,7 @@
         <li role="presentation" ><a id="info_2" href="#edit-information" aria-controls="edit-information" role="tab" data-toggle="tab">修改个人信息</a></li>
         <li role="presentation" ><a id="info_3" href="#edit-picture" aria-controls="edit-picture" role="tab" data-toggle="tab">头像上传</a></li>
         <li role="presentation" ><a id="info_4" href="#edit-password" aria-controls="edit-password" role="tab" data-toggle="tab">修改密码</a></li>
-        <li role="presentation" ><a id="info_5" href="" >车辆管理</a></li>
+        <li role="presentation" ><a id="info_5" href="carManage.jsp" >车辆管理</a></li>
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class=" col-xs-10 tab-pane"  id="user-information">
@@ -167,10 +173,11 @@
     var tabId=getQueryString("id")?getQueryString("id"):1;
     //var tabInfo=document.getElementById("info_"+tabId);
     $("#info_"+tabId).trigger("click");
+    var id=<%=user.getId() %>;
+    $(document).ready(function () {
+        getUserInfo(id);
 
-
-
-    getUserInfo(15);
+    });
     function getUserInfo(id){
         $.ajax({
             type: "POST",
@@ -238,15 +245,15 @@
         var formdata = new FormData();
         formdata.append("fileToUpload", file[0]);
 
-        console.log(file[0]);
+        //console.log(file[0]);
         $.ajax({
             type: "POST",
-            url:  root+"/fileHandler/uploadFile?flag=2",
+            url:  "file/upload?type=1",
             contentType: false,
             processData: false ,
             data: formdata,
             success:function(data) {
-                if (data.errorcode == 3000) {
+                if (data.status == 1000) {
                     //$("#user_img").attr("src",root+'/ePlanFileSys'+data.result.info.path);
                     modifyPortrait(data.result.info.path);
                 }
@@ -277,14 +284,15 @@
             return;
         }
         var pra={
-            oldpassword:$("#oldpassword").val(),
-            password:$("#newpassword").val(),
-            repassword:$("#renewpassword").val()
+
+            oldPassword:$("#oldpassword").val(),
+            newPassword:$("#newpassword").val(),
+
         }
         $.ajax({
             type: "POST",
-            url:  root+"/user/modifyPassword",
-            data: JSON.stringify(pra),
+            url:  "/user/changePassword",
+            data: pra,
             success:function(data) {
                 if (data.errorcode == 3000) {
                     topAlert("密码修改成功",'success');

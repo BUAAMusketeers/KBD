@@ -17,7 +17,7 @@
 
 
 <!--顶部-->
-<script src="base/head.html"></script>
+<jsp:include page="base/head.jsp"></jsp:include>
 
 <!--底部-->
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>

@@ -114,25 +114,42 @@
         <li><a href="#">首页</a></li>
         <li class="active">个人信息</li>
     </ol>
-    <ul class="nav nav-pills nav-stacked col-xs-2">
-        <li role="presentation" ><a id="info_a" href="#user-information" aria-controls="user-information" role="tab" data-toggle="tab">个人资料</a></li>
-        <li role="presentation" ><a id="info_b" href="#edit-information" aria-controls="edit-information" role="tab" data-toggle="tab">修改个人信息</a></li>
-        <li role="presentation" ><a id="info_d" href="#edit-picture" aria-controls="edit-picture" role="tab" data-toggle="tab">车辆管理</a></li>
-        <li role="presentation" ><a id="info_c" href="#edit-password" aria-controls="edit-password" role="tab" data-toggle="tab">修改密码</a></li>
+    <ul class="nav nav-pills nav-stacked col-md-2 col-xs-12">
+        <li role="presentation" ><a id="info_1" href="#user-information" aria-controls="user-information" role="tab" data-toggle="tab">个人资料</a></li>
+        <li role="presentation" ><a id="info_2" href="#edit-information" aria-controls="edit-information" role="tab" data-toggle="tab">修改个人信息</a></li>
+        <li role="presentation" ><a id="info_3" href="#edit-picture" aria-controls="edit-picture" role="tab" data-toggle="tab">头像上传</a></li>
+        <li role="presentation" ><a id="info_4" href="#edit-password" aria-controls="edit-password" role="tab" data-toggle="tab">修改密码</a></li>
+        <li role="presentation" ><a id="info_5" href="#manageCar" aria-controls="edit-password" role="tab" data-toggle="tab" >车辆管理</a></li>
     </ul>
     <div class="tab-content">
-        <div role="tabpanel" class=" col-xs-10 tab-pane"  id="user-information">
-            <h4 class="userpage_title">个人资料</h4>
-            <div>
-                344
+
+        <div role="tabpanel" class=" col-md-10 col-xs-12 tab-pane"  id="manageCar">
+            <h4 class="userpage_title">车辆管理<small><a class="fr"><span class="glyphicon glyphicon-plus"></span>添加车辆</a></small></h4>
+            <div class="">
+                <div class="table-responsive ">
+                    <table id="carList" class="table table-condensed table-hover ">
+                        <tr>
+                            <th class="col-xs-1">#</th>
+                            <th class="col-xs-2">类型</th>
+                            <th class="col-xs-3">品牌</th>
+                            <th class="col-xs-3">状态</th>
+                            <th class="col-xs-1">编辑</th>
+                            <th class="col-xs-1">删除</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>挖掘机</td>
+                            <td>奔驰</td>
+                            <td><span class="label label-primary">出租</span><span class="label label-primary">出租</span></td>
+                            <td><a>编辑</a></td>
+                            <td><a><span class="glyphicon glyphicon-remove delete_x"></span></a></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
-        <div role="tabpanel" class=" col-xs-10 tab-pane"  id="edit-information">
-            <h4 class="userpage_title">修改个人信息</h4>
-            <div>
-                344
-            </div>
-        </div>
+
+
     </div>
 
 </div>
@@ -143,8 +160,17 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/cityselect.js"></script>
 <script type="text/javascript" src="js/page.js"></script>
+<script type="text/javascript" src="js/utils.js"></script>
+<script src="js/bootstrap-filestyle.js"></script>
 <script src="js/login.js"></script>
 <script >
+    //var tabInfo=document.getElementById("info_"+tabId);
+    $("#info_5").trigger("click");
+
+
+
+
+
 
 </script>
 </body>

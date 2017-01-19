@@ -9,3 +9,14 @@
     background-color: #FD6F1A!important;
 }
 .headportrait{width:150px;height:150px; margin-bottom:10px; overflow: hidden;}
+/*响应式table兼容firefox*/
+@-moz-document url-prefix() {
+    fieldset { display: table-cell; }
+}
+
+table a{
+    cursor:pointer;
+}
+table .label{
+    margin-right:5px;
+}

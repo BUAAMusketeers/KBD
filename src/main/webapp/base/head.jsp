@@ -1,18 +1,22 @@
-var fun = function() {
-/*
+<%@ page import="com.kabuda.entity.User" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" %>
+<%
+User user = (User)request.getSession().getAttribute("user");
+%>
 <div class="head-body">
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-xs-12 head-title">
                 <h1 class="col-md-6 col-xs-6"><a href="index.html">kabuda</a></h1>
                 <div class="col-md-5 col-xs-6 citySelect">
-                    <input type="text" class="form-control" id="citySelect" placeholder="北京市">
+                    <input type="text" class="form-control" id="citySelect" placeholder="北京市">成都市
                 </div>
             </div>
             <div class="col-md-5 col-xs-12 head-search">
                 <div class="input-group">
                     <input type="text" id="cityInput" class="form-control" placeholder="搜索您想要的车" >
-                    <span class="input-group-btn"><button class="btn" type="button">搜索</button></span>
+                    <span class="input-group-btn"><button class="btn" id="searchCarBtn" type="button">搜索</button></span>
                 </div>
             </div>
             <div class="col-md-3">
@@ -42,10 +46,13 @@ var fun = function() {
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <% if(user==null){ %>
                     <li><a href="#" data-target="#loginModal" data-toggle="modal" id="nav-login"><span class="glyphicon glyphicon-user"></span> 登录</a></li>
-                    <li><a href="register.html" id="nav-register"><span class="glyphicon glyphicon-cloud"></span> 注册</a></li>
-                    <li><a href="user_center.html" id="nav-pc" style="display:none"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
-                    <li><a href="#" id="nav-logout" style="display:none"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
+                    <li><a href="register.jsp" id="nav-register"><span class="glyphicon glyphicon-cloud"></span> 注册</a></li>
+                    <% }else{ %>
+                    <li><a href="user.jsp" id="nav-pc" ><span class="glyphicon glyphicon-user"></span> <%=user.getName()%></a></li>
+                    <li><a href="/user/logout" id="nav-logout" ><span class="glyphicon glyphicon-off"></span> 退出</a></li>
+                    <%}%>
                 </ul>
             </div>
         </nav>
@@ -81,7 +88,7 @@ var fun = function() {
                             </li>
                             <li class="btn-area">
                                 <button type="button" class="btn btn-primary btn-lg btn-block" id="login-btn">登录</button>
-                                <p>第一次登录？<a href="register.html">立即注册</a></p>
+                                <p>第一次登录？<a href="register.jsp">立即注册</a></p>
                             </li>
                         </ul>
                     </form>
@@ -91,8 +98,3 @@ var fun = function() {
     </div>
 </div>
 
-*/
-}
-var lines = new String(fun);
-document.write(lines.substring(lines.indexOf("/*") + 3,
-lines.lastIndexOf("*/")));

@@ -9,7 +9,11 @@ $(document).ready(function() {
             hidePC();
         }
     });*/
-
+    $("#searchCarBtn").click(function () {
+        var keywords=$("#cityInput").val();
+        var city=$("#citySelect").val();
+        window.location.href="buyCar.jsp?city="+city+"&keywords="+keywords;
+    });
     //登录
     $('#login-btn').click(function() {
         var username = document.getElementById('username').value;
@@ -33,8 +37,7 @@ $(document).ready(function() {
                         data = JSON.parse(data);
                     }
                     if (data.status == 1000) {
-                        console.log("success log");
-
+                        location.reload();
                     }
                 },
 
@@ -43,15 +46,15 @@ $(document).ready(function() {
     });
 
     //退出登录
-    $('#nav-logout').click(function() {
+    /*$('#nav-logout').click(function() {
         callAjax(baseUrlCjh()+"logout/","get",{},function(data){
             var obj= eval(data);
             if ( obj.message == '已登出') {
-                hidePC();
+
                 alert('退出登录成功！');
             }
         });
-    });
+    });*/
 });
 
 

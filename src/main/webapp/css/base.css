@@ -125,7 +125,7 @@ body {
 .citySelect{
     padding-top:20px;
 }
-@media all(min-width:768px) {
+@media (min-width:768px) {
     .citySelect{
         padding-top:15px;
     }
@@ -274,4 +274,8 @@ p.tip{color:#999;line-height:20px;padding:5px;margin:0;text-indent:3px;}
 .itemBox dl dd{margin-left:2px;float:left;width:320px;}
 .itemBox dl dd a{padding-left:5px;line-height:25px;display:inline-block;color:#333;text-decoration:none; cursor: pointer;}
 .itemBox dl dd a:hover{color:#FD6F1A;}
+/*删除按钮*/
+.delete_x{
+    color:#c03;
+}
 

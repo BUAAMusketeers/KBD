@@ -25,7 +25,7 @@
 
 
 <!--顶部-->
-<script src="base/head.html"></script>
+<jsp:include page="base/head.jsp"></jsp:include>
 
 <!--body-->
 <div  class="container">
@@ -171,7 +171,7 @@
 <script type="text/javascript" src="js/login.js"></script>
 <script >
 
-    var city=Number(getQueryString("city"));
+
     var brand=0;
     var carType=0;
     var root="";
@@ -182,7 +182,11 @@
     };
     $(document).ready(function(){
         var test=new Vcity.CitySelector({input:'citySelect'});
-        $("#citySelect").attr("placeholder",city);
+        var city=getQueryString("city")?getQueryString("city"):"成都市";
+        var keywords=getQueryString("keyword");
+        $("#cityInput").val(keywords);
+        $("#citySelect").val(city);
+        getCarList();
         loadBrand();
         loadType();
         getBrandList();
@@ -194,7 +198,10 @@
         },function(){
             var boxName=this.id+"Box";
             var div=document.getElementById(boxName);
-            div.style.display="none";
+            if(div.contains(window.event.srcElement)){
+                div.style.display="none";
+
+            }
         })
         $(".selectBox").mouseleave(function () {
             this.style.display="none";
@@ -209,11 +216,11 @@
 
 
     function getCarList(){
-
+        var keyword=$("#citySelect").val();
         $.ajax({
             type: "POST",
             url:  root+"/car/getCarList",
-            data: {city:city,brand:brand,type:carType,sort:sort, limit:global["limit"], page:global["selectedPage"]},
+            data: {city:city,brand:brand,type:carType,sort:sort, keyword:keyword,limit:global["limit"], page:global["selectedPage"]},
             success:function(data) {
                 if (typeof data == "string") {
                     data = JSON.parse(data);

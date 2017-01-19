@@ -9,20 +9,7 @@ function getQueryString(name) {
     if (r != null) return decodeURIComponent(r[2]); return null;
  }
 
-//logout
-function logout(role){
-    $.ajax({
-        type: "POST",
-        url:  root+"/user/logOut",
-        data: JSON.stringify({role:role}),
-        success:function(data) {
-            if (data.errorcode == 3000) {
 
-            }
-        },
-        datatype: "json"
-    });
-}
 function convertTime(nS) {
     return new Date(parseInt(nS) ).format("yyyy-MM-dd hh:mm");
 }
