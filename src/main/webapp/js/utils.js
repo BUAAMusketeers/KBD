@@ -109,3 +109,141 @@ function topAlert(word,type,time) {
 	   });
 	},time || 2000);
 }
+
+/**
+ * 根据 locationCode 选择省份下拉框
+ * 注：使用本方法的前提为省份、城市、区县下拉框的id前缀相同，且后缀分别为"_province"、"_city"、"_county"。
+ * 例：省份、城市、区县下拉框的id分别为"location_province"、"location_city"、"location_county"
+ * @param idPrefix 下拉框的id前缀，例：若省份下拉框的id为location_province, idPrefix为'location'
+ * @param locationCode 地区代码
+ */
+function showMyProvince(idPrefix, locationCode) {
+    var provinceCode = locationCode.substring(0, 2);
+    $("#" + idPrefix + "_province").val(provinceCode + '0000');
+
+    if (provinceCode == "11" || provinceCode == "12" || provinceCode == "31" || provinceCode == "50") {
+        // 如果是直辖市，且城市代码为空，则自动选择该城市
+        if (locationCode.substring(2, 4) == '00')
+            locationCode = provinceCode + '01' + locationCode.substring(4, 6);
+    }
+    showMyCity(idPrefix, locationCode);
+}
+
+/**
+ * 根据选择的省份初始化城市下拉框，并根据 locationCode 选择城市下拉框
+ * @param idPrefix 下拉框的id前缀，例：若城市下拉框的id为location_city, idPrefix为'location'
+ * @param locationCode 地区代码
+ */
+function showMyCity(idPrefix, locationCode) {
+    var $citySelect = $("#" + idPrefix + "_city");
+    if (locationCode != '' && locationCode != '0') {
+        var $seletedProvince=$("#location_province option:selected").text();
+        $.ajax({
+            type : "post",
+            url : "/location/getCityList",
+            data : {
+                "province" : $seletedProvince
+            },
+            success : function(data) {
+                if (typeof data == "string") {
+                    data = JSON.parse(data);
+                }
+                $citySelect.find("option").not(":first").remove();
+                var result = data.result;
+                if (result == null) {
+                    $citySelect.append($("<option>").text($("#" + idPrefix + "_province option:selected").text()).val(locationCode));
+                    $citySelect.val(locationCode);
+                    showMyCounty(idPrefix, locationCode);
+                    return;
+                } else
+                    for (var i = 0; i < result.total; i++) {
+                        $citySelect.append($("<option>").text(result.data[i].city).val(result.data[i].locationCode));// 向清空的列表中增加新值
+                    }
+                // 若locationCode精确到城市或区县级别，自动选择城市下拉框，并初始化区县下拉框
+                var provinceCode = locationCode.substring(0, 2);
+                if (locationCode.substring(2, 4) != '00') {
+                    // 如果是直辖市，城市下拉框选择直辖市（代码为provinceCode+'01'的城市）
+                    // 此处因为直辖市的区县代码分为'XX01YY'和'XX02YY'两种，但是城市下拉框中只有'XX0100'的选项
+                    if (provinceCode == "11" || provinceCode == "12" || provinceCode == "31" || provinceCode == "50") {
+                        $citySelect.val(locationCode.substring(0, 2) + '0100');
+                    } else {
+                        $citySelect.val(locationCode.substring(0, 4) + '00');
+                    }
+                    showMyCounty(idPrefix, locationCode);
+                } else {
+                    // 如果选择的省份是市辖区，自动选择城市下拉框，并填充区县下拉框
+                    if (provinceCode == "11" || provinceCode == "12" || provinceCode == "31" || provinceCode == "50") {
+                        $citySelect.val(locationCode.substring(0, 2) + '0100')
+                        showMyCounty(idPrefix, locationCode.substring(0, 2) + '01' + locationCode.substring(4, 6));
+                    } else
+                        $("#" + idPrefix + "_county").find("option").not(":first").remove();
+                }
+            }
+
+        });
+    } else {
+        $citySelect.find("option").not(":first").remove();
+        $("#" + idPrefix + "_county").find("option").not(":first").remove();
+    }
+}
+
+/**
+ * 根据选择的省份和城市初始化区县下拉框，并根据 locationCode 选择城市下拉框
+ * @param idPrefix 下拉框的id前缀，例：若区县下拉框的id为location_county, idPrefix为'location'
+ * @param locationCode 地区代码
+ */
+function showMyCounty(idPrefix, locationCode) {
+    var $countySelect = $("#" + idPrefix + "_county");
+    if (locationCode != '' && locationCode != '0') {
+        var $seletedCity=$("#location_city option:selected").text();
+        $.ajax({
+            type : "post",
+            url : "/location/getCountyList",
+            data : {
+                "location_city" : $seletedCity
+            },
+            success : function(data) {
+                if (typeof data == "string") {
+                    data = JSON.parse(data);
+                }
+                $countySelect.find("option").not(":first").remove();
+                var result = data.result;
+                if (result == null){
+                    $countySelect.append($("<option>").text($("#" + idPrefix + "_city option:selected").text()).val(locationCode));
+                }
+                else{
+                    for (var i = 0; i < data.length; i++) {
+                        $countySelect.append($("<option>").text(result.data[i].county).val(result.data[i].locationCode));// 向清空的列表中增加新值
+                    }
+                    $countySelect.val(locationCode);
+                }
+            }
+
+        });
+    } else {
+        $countySelect.find("option").not(":first").remove();
+    }
+}
+
+function initProvinceList(){
+    //初始化省份列表
+    $.ajax({
+        type: "post",
+        url: "/location/getProvinceList ",
+        success: function(data){
+            if (typeof data == "string") {
+                data = JSON.parse(data);
+            }
+            if(data.status==1000){
+                var result = data.result;
+                for (var i = 0; i < result.total; i++) {
+                    var str="<option value='"+result.data[i].locationCode+"'>"+result.data[i].province+"</option>";
+                    $("#location_province").append(str);
+                }
+            }
+        },
+        error:function(error){
+            alert("connection error!");
+        }
+    });
+}
