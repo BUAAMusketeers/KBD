@@ -65,4 +65,38 @@
           active = #{isActive}
         WHERE id = #{id}
     </update>
+
+
+    <select id="getUserCarsCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM vehicle WHERE user_id = #{id}
+    </select>
+
+    <select id="getUserCarsList" resultType="com.kabuda.entity.domain.VehicleBean">
+        SELECT
+            vehicle.id AS id,
+            user_id AS userId,
+            brand.brand_name AS brandName,
+            model.model_name AS modelName,
+            location.city AS location,
+            used_hours AS usedHours,
+            vehicle_age AS vehicleAge,
+            equipment_number AS equipmentNumber,
+            description,
+            contact,
+            contact_phone AS contactPhone,
+            tonnage,
+            sell AS isSell,
+            rent AS isRent,
+            sell_state AS sellState,
+            rent_state AS rentState,
+            sell_price AS sellPrice,
+            rent_price AS rentPrice,
+            release_date AS releaseDate,
+            update_date AS updateDate
+        FROM vehicle
+        LEFT JOIN model ON vehicle.model_id = model.id
+        LEFT JOIN brand ON vehicle.brand_id = brand.id
+        LEFT JOIN location ON vehicle.location_id = location.id
+        WHERE vehicle.user_id = #{id}
+    </select>
 </mapper>

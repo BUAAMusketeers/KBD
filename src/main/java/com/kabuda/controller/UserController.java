@@ -7,6 +7,8 @@ import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Model;
 import com.kabuda.entity.User;
 import com.kabuda.entity.domain.Response;
+import com.kabuda.entity.domain.VehicleBean;
+import com.kabuda.entity.domain.VehicleResponse;
 import com.kabuda.service.ModelService;
 import com.kabuda.service.UserService;
 import com.kabuda.util.Encrypt;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +114,21 @@ public class UserController {
             e.printStackTrace();
             return gson.toJson(new Response(1100, "其它错误"));
         }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(path = "/user/logout", method = RequestMethod.POST)
+    public String logout(HttpServletRequest request){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            request.getSession().removeAttribute("user");
+            return gson.toJson(new Response(1000, "success"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(1100, "其它错误"));
+        }
+
     }
 
 
@@ -301,5 +319,30 @@ public class UserController {
             }
         }
         return modelNameList;
+    }
+
+
+    /**
+     * 获取用户的车辆列表
+     */
+    @ResponseBody
+    @RequestMapping(path = "/user/getCarList", method = RequestMethod.POST)
+    public String getUserCarList(HttpServletRequest request){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            User user = (User) request.getSession().getAttribute("user");
+            int userId = user.getId();
+            int userCarsCount = userService.getUserCarsCount(userId);
+            List<VehicleBean> userCarsList = userService.getUserCarsList(userId);
+            return getUserCarListGson(userCarsCount, userCarsList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(1100, "其它错误"));
+        }
+    }
+
+    private String getUserCarListGson(int userCarsCount, List<VehicleBean> userCarsList){
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").serializeNulls().setPrettyPrinting().create();
+        return gson.toJson(new VehicleResponse(1000, "success", userCarsCount, userCarsList));
     }
 }

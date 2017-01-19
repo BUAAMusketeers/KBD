@@ -3,9 +3,12 @@ package com.kabuda.service;
 
 import com.kabuda.dao.UserDao;
 import com.kabuda.entity.User;
+import com.kabuda.entity.domain.VehicleBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service("userService")
 @Transactional
@@ -36,5 +39,13 @@ public class UserService {
 
     public void delete(User user){
         userDao.delete(user);
+    }
+
+    public int getUserCarsCount(int id){
+        return userDao.getUserCarsCount(id);
+    }
+
+    public List<VehicleBean> getUserCarsList(int id){
+        return userDao.getUserCarsList(id);
     }
 }
