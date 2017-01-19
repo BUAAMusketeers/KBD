@@ -76,11 +76,11 @@ public class VehicleController {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if (StringUtils.isEmpty(city) || StringUtils.isEmpty(brand) || StringUtils.isEmpty(model) || StringUtils.isEmpty(sort) ||
-                    StringUtils.isEmpty(limit) || StringUtils.isEmpty(page) || StringUtils.isEmpty(keyword)) {
+                    StringUtils.isEmpty(limit) || StringUtils.isEmpty(page)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
             city = city.trim();
-            keyword = keyword.trim();
+            keyword = StringUtils.isEmpty(keyword)? keyword : keyword.trim();
 
             Location cityByName = locationService.getCityByName(city);
             if(cityByName == null){
