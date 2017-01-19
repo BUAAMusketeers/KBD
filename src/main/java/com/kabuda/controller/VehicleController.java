@@ -88,10 +88,14 @@ public class VehicleController {
             }
             int cityId = cityByName.getId();
 
-            int vehicleCount = vehicleService.getVehicleCount(sellOrRent);
+            //int vehicleCount = vehicleService.getVehicleCount(sellOrRent);
             int offset = (page - 1) * limit;
             VehicleRequest vehicleRequest = new VehicleRequest(cityId, brand, model, sort, keyword, offset, limit, sellOrRent);
             List<VehicleBean> carList = vehicleService.getVehicleList(vehicleRequest);
+            int vehicleCount = 0;
+            if(carList != null){
+                vehicleCount = carList.size();
+            }
             return carListJson(vehicleCount, carList, sellOrRent);
         } catch (Exception e) {
             e.printStackTrace();
