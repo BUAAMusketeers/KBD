@@ -77,8 +77,10 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(path = "/user/register", method = RequestMethod.POST)
-    public String register(String phoneNumber, @RequestParam("password") String unencrypted, String name, Integer sex, Integer isDriver,
-                           String model, Integer price, Integer drivingAge, @RequestParam(value = "location", required = false) Integer locationId) {
+    public String register(String phoneNumber, @RequestParam("password") String unencrypted, String name, Integer sex,
+                           Integer isDriver, String model, Integer price, Integer drivingAge,
+                           @RequestParam(value = "location", required = false) Integer locationId,
+                           HttpSession session) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted) || StringUtils.isEmpty(name)
@@ -109,6 +111,9 @@ public class UserController {
                 if (!StringUtils.isEmpty(locationId)) user.setLocationId(locationId);
                 userService.insert(user);
             }
+
+            session.setAttribute("user", user);
+            session.setMaxInactiveInterval(1800); // 30 minutes
             return gson.toJson(new Response(1000, "success"));
         } catch (Exception e) {
             e.printStackTrace();
