@@ -26,7 +26,11 @@ public class FileController {
     @RequestMapping("/upload")
     public String upload(HttpServletRequest request) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String realPath = ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/");
+        String realPath = ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/") + "file";
+        File filePath = new File(realPath);
+        if(!filePath.exists() && !filePath.isDirectory()){
+            filePath.mkdir();
+        }
         try {
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
             //判断 request 是否有文件上传,即多部分请求
@@ -45,12 +49,11 @@ public class FileController {
                         if(!StringUtils.isEmpty(myFileName.trim())){
                             System.out.println(myFileName);
                             //重命名上传后的文件名
-                            String fileName = "demoUpload" + file.getOriginalFilename();
+                            String fileName = file.getOriginalFilename();
                             //定义上传路径
-                            String path = "/" + fileName;
+                            String path = filePath + "\\" + fileName;
                             File localFile = new File(path);
                             file.transferTo(localFile);
-
                         }
                     }else{
                         return gson.toJson(new Response(1100, "其它错误"));
@@ -61,7 +64,7 @@ public class FileController {
                 }
                 return gson.toJson(new Response(1000, "success"));
             }
-            return gson.toJson(new Response(2000, "test"));
+            return gson.toJson(new Response(1011, "不是文件上传请求"));
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(1100, "其它错误"));
