@@ -116,19 +116,15 @@ public class UserController {
         }
     }
 
-
-    @ResponseBody
-    @RequestMapping(path = "/user/logout", method = RequestMethod.POST)
+    @RequestMapping(path = "/user/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             request.getSession().removeAttribute("user");
-            return gson.toJson(new Response(1000, "success"));
+            return "index";
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return "index";
         }
-
     }
 
 

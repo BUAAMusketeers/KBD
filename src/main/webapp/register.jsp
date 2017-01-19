@@ -84,7 +84,7 @@
                             </p>
                             <div class="modal fade " tabindex="-1" role="dialog"  id="myModal">
                                 <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
+                                    <div class="modal-content model-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title">选择机型</h4>
@@ -185,7 +185,6 @@
         $.ajax({
             type: "post",
             url: "/car/getModelList",
-            delay: 2000,
             success: function(data){
                 if (typeof data == "string") {
                     data = JSON.parse(data);
@@ -200,6 +199,9 @@
                         }
                     }
                 }
+            },
+            error:function(error){
+                alert("connection error!");
             }
         });
         /*--头像切换--*/
