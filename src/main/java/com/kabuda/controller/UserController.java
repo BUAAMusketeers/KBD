@@ -66,7 +66,7 @@ public class UserController {
                 return gson.toJson(new Response(1003, "密码不正确"));
 
             session.setAttribute("user", isUserExist);
-            session.setMaxInactiveInterval(1800);
+            session.setMaxInactiveInterval(1800); // 30 minutes
             return getResponse(isUserExist);
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,24 +162,25 @@ public class UserController {
 
     /**
      * 修改密码
-     *
-     * @param id          用户id
      * @param oldPassword 原密码
      * @param newPassword 新密码
      * @return json数据
      */
     @ResponseBody
     @RequestMapping(path = "/user/changePassword", method = RequestMethod.POST)
-    public String changePassword(Integer id, String oldPassword, String newPassword) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/19 userid session
+    public String changePassword(String oldPassword, String newPassword, HttpServletRequest request) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            User user = (User) request.getSession().getAttribute("user");
+            if(user == null){
+                return gson.toJson(new Response(1010, "用户未登录"));
+            }
             oldPassword = oldPassword.trim();
             newPassword = newPassword.trim();
-            if (StringUtils.isEmpty(id) || StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
+            if (StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
 
-            User user = userService.getUserById(id);
             if (!user.getPassword().equals(Encrypt.SHA256(oldPassword))) {
                 return gson.toJson(new Response(1006, "原密码不正确"));
             }
@@ -200,16 +201,16 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(path = "/user/update", method = RequestMethod.POST)
-    public String update(Integer id, String name, Integer sex, Integer isDriver, String model,
-                         Integer price, Integer drivingAge, @RequestParam(value = "location", required = false) Integer locationId) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/19 userid session
+    public String update(String name, Integer sex, Integer isDriver, String model, Integer price, Integer drivingAge,
+                         @RequestParam(value = "location", required = false) Integer locationId, HttpServletRequest request) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            User user = (User) request.getSession().getAttribute("user");
+            if(user == null){
+                return gson.toJson(new Response(1010, "用户未登录"));
+            }
             name = name.trim();
             model = model.trim();
-            if (StringUtils.isEmpty(id)) {
-                return gson.toJson(new Response(1001, "参数为空"));
-            }
-            User user = userService.getUserById(id);
             if (!StringUtils.isEmpty(name)) user.setName(name);
             if (!StringUtils.isEmpty(sex)) user.setSex(sex);
             if (!StringUtils.isEmpty(isDriver)) {
@@ -234,6 +235,8 @@ public class UserController {
                 }
             }
             userService.update(user);
+            request.getSession().removeAttribute("user");
+            request.getSession().setAttribute("user", user);
             return gson.toJson(new Response(1000, "success"));
 
         } catch (Exception e) {
@@ -245,24 +248,18 @@ public class UserController {
 
     /**
      * 根据用户id获取用户信息
-     *
-     * @param id 用户id
      * @return json数据
      */
     @ResponseBody
     @RequestMapping(path = "/user/getInfo", method = RequestMethod.POST)
-    public String getInfo(Integer id) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/19 userId session
+    public String getInfo(HttpServletRequest request) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            if (StringUtils.isEmpty(id)) {
-                return gson.toJson(new Response(1001, "参数为空"));
+            User user = (User) request.getSession().getAttribute("user");
+            if(user == null){
+                return gson.toJson(new Response(1010, "用户未登录"));
             }
-
-            User isUserExist = userService.getUserById(id);
-            if (isUserExist == null)
-                return gson.toJson(new Response(1002, "用户不存在"));
-
-            return getResponse(isUserExist);
+            return getResponse(user);
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(1100, "其它错误"));
@@ -331,6 +328,9 @@ public class UserController {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             User user = (User) request.getSession().getAttribute("user");
+            if(user == null){
+                return gson.toJson(new Response(1010, "用户未登录"));
+            }
             int userId = user.getId();
             int userCarsCount = userService.getUserCarsCount(userId);
             List<VehicleBean> userCarsList = userService.getUserCarsList(userId);

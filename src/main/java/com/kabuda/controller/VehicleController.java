@@ -4,6 +4,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kabuda.entity.User;
 import com.kabuda.entity.Vehicle;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.entity.domain.VehicleBean;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -158,17 +160,22 @@ public class VehicleController {
      */
     @ResponseBody
     @RequestMapping(path = "/car/publishCar", method = RequestMethod.POST)
-    public String publishCar(Integer user, Integer model, Integer brand, Integer location, Integer usedHours,
+    public String publishCar(Integer model, Integer brand, Integer location, Integer usedHours,
                              Integer vehicleAge, Integer tonnage, String equipmentNumber, String description, String contact,
                              String contactPhone, Integer isSell, Integer isRent, Integer sellState, Integer rentState,
-                             Double sellPrice, Double rentPrice) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();   // TODO: 2017/1/19 userid seesion
+                             Double sellPrice, Double rentPrice, HttpServletRequest request) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            User user = (User) request.getSession().getAttribute("user");
+            if(user == null){
+                return gson.toJson(new Response(1010, "用户未登录"));
+            }
+            int userId = user.getId();
             equipmentNumber = equipmentNumber.trim();
             description = description.trim();
             contact = contact.trim();
             contactPhone = contactPhone.trim();
-            if (StringUtils.isEmpty(user) || StringUtils.isEmpty(model) || StringUtils.isEmpty(brand) ||
+            if (StringUtils.isEmpty(model) || StringUtils.isEmpty(brand) ||
                     StringUtils.isEmpty(location) || StringUtils.isEmpty(usedHours) || StringUtils.isEmpty(vehicleAge) ||
                     StringUtils.isEmpty(tonnage) || StringUtils.isEmpty(equipmentNumber) || StringUtils.isEmpty(description) ||
                     StringUtils.isEmpty(contact) || StringUtils.isEmpty(contactPhone) || StringUtils.isEmpty(isSell) ||
@@ -177,7 +184,7 @@ public class VehicleController {
             }
 
             Date releaseDate = Calendar.getInstance().getTime();
-            Vehicle vehicle = new Vehicle(user, model, brand, location, usedHours, vehicleAge, equipmentNumber,
+            Vehicle vehicle = new Vehicle(userId, model, brand, location, usedHours, vehicleAge, equipmentNumber,
                     description, contact, contactPhone, tonnage, isSell, isRent, -1, -1, -1, -1, releaseDate, releaseDate);
             if (isSell == 1) {
                 if (StringUtils.isEmpty(sellState) || StringUtils.isEmpty(sellPrice)) {
