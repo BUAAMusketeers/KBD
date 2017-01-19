@@ -217,10 +217,11 @@
 
     function getCarList(){
         var keyword=$("#citySelect").val();
+        var city=$("#citySelect").val();
         $.ajax({
             type: "POST",
-            url:  root+"/car/getCarList",
-            data: {city:city,brand:brand,type:carType,sort:sort, keyword:keyword,limit:global["limit"], page:global["selectedPage"]},
+            url:  "/car/getSellList",
+            data: {city:city,brand:brand,model:carType,sort:sort, keyword:keyword,limit:global["limit"], page:global["selectedPage"]},
             success:function(data) {
                 if (typeof data == "string") {
                     data = JSON.parse(data);
