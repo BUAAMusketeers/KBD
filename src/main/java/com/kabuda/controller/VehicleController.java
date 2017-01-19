@@ -158,18 +158,18 @@ public class VehicleController {
      */
     @ResponseBody
     @RequestMapping(path = "/car/publishCar", method = RequestMethod.POST)
-    public String publishCar(Integer userId, Integer modelId, Integer brandId, Integer locationId, Integer usedHours,
+    public String publishCar(Integer user, Integer model, Integer brand, Integer location, Integer usedHours,
                              Integer vehicleAge, Integer tonnage, String equipmentNumber, String description, String contact,
                              String contactPhone, Integer isSell, Integer isRent, Integer sellState, Integer rentState,
                              Double sellPrice, Double rentPrice) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();   // TODO: 2017/1/19 userid seesion
         try {
             equipmentNumber = equipmentNumber.trim();
             description = description.trim();
             contact = contact.trim();
             contactPhone = contactPhone.trim();
-            if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(modelId) || StringUtils.isEmpty(brandId) ||
-                    StringUtils.isEmpty(locationId) || StringUtils.isEmpty(usedHours) || StringUtils.isEmpty(vehicleAge) ||
+            if (StringUtils.isEmpty(user) || StringUtils.isEmpty(model) || StringUtils.isEmpty(brand) ||
+                    StringUtils.isEmpty(location) || StringUtils.isEmpty(usedHours) || StringUtils.isEmpty(vehicleAge) ||
                     StringUtils.isEmpty(tonnage) || StringUtils.isEmpty(equipmentNumber) || StringUtils.isEmpty(description) ||
                     StringUtils.isEmpty(contact) || StringUtils.isEmpty(contactPhone) || StringUtils.isEmpty(isSell) ||
                     StringUtils.isEmpty(isRent)) {
@@ -177,7 +177,7 @@ public class VehicleController {
             }
 
             Date releaseDate = Calendar.getInstance().getTime();
-            Vehicle vehicle = new Vehicle(userId, modelId, brandId, locationId, usedHours, vehicleAge, equipmentNumber,
+            Vehicle vehicle = new Vehicle(user, model, brand, location, usedHours, vehicleAge, equipmentNumber,
                     description, contact, contactPhone, tonnage, isSell, isRent, -1, -1, -1, -1, releaseDate, releaseDate);
             if (isSell == 1) {
                 if (StringUtils.isEmpty(sellState) || StringUtils.isEmpty(sellPrice)) {
@@ -211,7 +211,7 @@ public class VehicleController {
      */
     @ResponseBody
     @RequestMapping(path = "/car/updateCar", method = RequestMethod.POST)
-    public String updateCar(Integer id, Integer modelId, Integer brandId, Integer locationId, Integer usedHours,
+    public String updateCar(Integer id, Integer model, Integer brand, Integer location, Integer usedHours,
                             Integer vehicleAge, Integer tonnage, String equipmentNumber, String description, String contact,
                             String contactPhone, Integer isSell, Integer isRent, Integer sellState, Integer rentState,
                             Double sellPrice, Double rentPrice) {
@@ -248,9 +248,9 @@ public class VehicleController {
                 vehicleById.setRentState(-1);
                 vehicleById.setRentPrice(-1);
             }
-            if (!StringUtils.isEmpty(modelId)) vehicleById.setModelId(modelId);
-            if (!StringUtils.isEmpty(brandId)) vehicleById.setBrandId(brandId);
-            if (!StringUtils.isEmpty(locationId)) vehicleById.setLocationId(locationId);
+            if (!StringUtils.isEmpty(model)) vehicleById.setModelId(model);
+            if (!StringUtils.isEmpty(brand)) vehicleById.setBrandId(brand);
+            if (!StringUtils.isEmpty(location)) vehicleById.setLocationId(location);
             if (!StringUtils.isEmpty(usedHours)) vehicleById.setUsedHours(usedHours);
             if (!StringUtils.isEmpty(vehicleAge)) vehicleById.setVehicleAge(vehicleAge);
             if (!StringUtils.isEmpty(tonnage)) vehicleById.setTonnage(tonnage);

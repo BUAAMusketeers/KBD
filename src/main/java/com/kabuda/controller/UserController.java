@@ -46,7 +46,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public String login(String phoneNumber, @RequestParam("password") String unencrypted, HttpSession session) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create(); // TODO: 2017/1/17 驾驶机型数组
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             phoneNumber = phoneNumber.trim();
             unencrypted = unencrypted.trim();
@@ -153,7 +153,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(path = "/user/changePassword", method = RequestMethod.POST)
     public String changePassword(Integer id, String oldPassword, String newPassword) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/19 userid session
         try {
             oldPassword = oldPassword.trim();
             newPassword = newPassword.trim();
@@ -184,7 +184,7 @@ public class UserController {
     @RequestMapping(path = "/user/update", method = RequestMethod.POST)
     public String update(Integer id, String name, Integer sex, Integer isDriver, String model,
                          Integer price, Integer drivingAge, @RequestParam(value = "location", required = false) Integer locationId) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/19 userid session
         try {
             name = name.trim();
             model = model.trim();
@@ -234,7 +234,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(path = "/user/getInfo", method = RequestMethod.POST)
     public String getInfo(Integer id) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create(); // TODO: 2017/1/17 model 数组返回
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/19 userId session
         try {
             if (StringUtils.isEmpty(id)) {
                 return gson.toJson(new Response(1002, "缺少必要信息"));
