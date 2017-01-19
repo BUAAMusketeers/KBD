@@ -33,19 +33,25 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="10485760000"/>
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+
     <!--<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
-        <!--<property name="templateLoaderPath" value="/"/>-->
+    <!--<property name="templateLoaderPath" value="/"/>-->
     <!--</bean>-->
     <!--<bean id="htmlViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">-->
-        <!--<property name="suffix" value=".html"/>-->
-        <!--<property name="order" value="0"/>-->
-        <!--<property name="contentType" value="text/html;charset=UTF-8"/>-->
+    <!--<property name="suffix" value=".html"/>-->
+    <!--<property name="order" value="0"/>-->
+    <!--<property name="contentType" value="text/html;charset=UTF-8"/>-->
     <!--</bean>-->
 
     <!-- 静态资源(js/image)的访问 -->
-    <mvc:resources location="/js/" mapping="/js/**" />
-    <mvc:resources location="/css/" mapping="/css/**" />
-    <mvc:resources location="/base/" mapping="/base/**" />
-    <mvc:resources location="/fonts/" mapping="/fonts/**" />
-    <mvc:resources location="/images/" mapping="/images/**" />
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/base/" mapping="/base/**"/>
+    <mvc:resources location="/fonts/" mapping="/fonts/**"/>
+    <mvc:resources location="/images/" mapping="/images/**"/>
 </beans>
