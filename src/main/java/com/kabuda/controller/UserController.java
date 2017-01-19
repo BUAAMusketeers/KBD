@@ -125,10 +125,10 @@ public class UserController {
     public String logout(HttpServletRequest request){
         try {
             request.getSession().removeAttribute("user");
-            return "index";
+            return "redirect:/index.jsp";
         } catch (Exception e) {
             e.printStackTrace();
-            return "index";
+            return "redirect:/index.jsp";
         }
     }
 
