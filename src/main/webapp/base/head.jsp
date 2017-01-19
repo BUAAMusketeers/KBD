@@ -10,7 +10,7 @@ User user = (User)request.getSession().getAttribute("user");
             <div class="col-md-4 col-xs-12 head-title">
                 <h1 class="col-md-6 col-xs-6"><a href="index.html">kabuda</a></h1>
                 <div class="col-md-5 col-xs-6 citySelect">
-                    <input type="text" class="form-control" id="citySelect" placeholder="北京市">成都市
+                    <input type="text" class="form-control" id="citySelect" placeholder="北京市">
                 </div>
             </div>
             <div class="col-md-5 col-xs-12 head-search">

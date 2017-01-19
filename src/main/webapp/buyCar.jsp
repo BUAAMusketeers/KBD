@@ -183,7 +183,7 @@
     $(document).ready(function(){
         var test=new Vcity.CitySelector({input:'citySelect'});
         var city=getQueryString("city")?getQueryString("city"):"成都市";
-        var keywords=getQueryString("keyword");
+        var keywords=getQueryString("keyword")?getQueryString("keyword"):"";
         $("#cityInput").val(keywords);
         $("#citySelect").val(city);
         getCarList();
@@ -216,8 +216,9 @@
 
 
     function getCarList(){
-        var keyword=$("#citySelect").val();
+        var keyword=$("#cityInput").val();
         var city=$("#citySelect").val();
+        //console.log(keyword);
         $.ajax({
             type: "POST",
             url:  "/car/getSellList",
