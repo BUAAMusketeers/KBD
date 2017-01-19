@@ -24,11 +24,11 @@ body {
     }
 }
 /*--登录--*/
-.modal-content {
+.login-content {
     margin-top: 70px;
 }
 @media (min-width: 768px) {
-    .modal-content {
+    .login-content {
         height: 285px;
         width:350px !important;
         left: 50%;
@@ -37,7 +37,7 @@ body {
         margin-left: -175px;
     }
 }
-.modal-header {
+.login-header {
 
     border-bottom:1px solid #FD6F1A!important;
     height: 55px;
@@ -77,7 +77,7 @@ body {
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
 }
-.modal-title {
+.login-title {
     width:100px!important;
     float:left;
 }
@@ -125,7 +125,7 @@ body {
 .citySelect{
     padding-top:20px;
 }
-@media all(min-width:768px) {
+@media all (min-width:768px) {
     .citySelect{
         padding-top:15px;
     }

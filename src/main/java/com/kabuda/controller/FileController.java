@@ -14,7 +14,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.Iterator;
+import java.util.*;
 
 
 @Controller
@@ -24,7 +24,7 @@ public class FileController {
 
     @ResponseBody
     @RequestMapping("/upload")
-    public String upload(HttpServletRequest request) {
+    public String upload(HttpServletRequest request,String id) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String realPath = ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/") + "file";
         File filePath = new File(realPath);
@@ -54,6 +54,32 @@ public class FileController {
                             String path = filePath + "\\" + fileName;
                             File localFile = new File(path);
                             file.transferTo(localFile);
+                            Map result =  new HashMap();
+                            List<String> strings = new ArrayList<String>();
+                            strings.add("test1");
+                            strings.add("test2");
+                            result.put("initialPreview",strings);
+
+
+
+                            List arrayList = new ArrayList();
+
+                            Map initialPreviewConfig = new HashMap();
+                            initialPreviewConfig.put("url","delete-url");
+                            initialPreviewConfig.put("key","1,0");
+                            initialPreviewConfig.put("size",88000);
+                            initialPreviewConfig.put("caption","test.jpg");
+
+                            Map initialPreviewConfig1 = new HashMap();
+                            initialPreviewConfig1.put("url","delete-url");
+                            initialPreviewConfig1.put("key","1,0");
+                            initialPreviewConfig1.put("size",88000);
+
+                            arrayList.add(initialPreviewConfig);
+                            arrayList.add(initialPreviewConfig1);
+
+                            result.put("initialPreviewConfig",arrayList);
+                            return gson.toJson(result);
                         }
                     }else{
                         return gson.toJson(new Response(1100, "其它错误"));

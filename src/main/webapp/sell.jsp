@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -26,6 +28,7 @@
     <div class="row">
         <div class="col-md-6 sell-body col-md-offset-3">
             <form id="register-form" class="form-horizontal">
+                <input type="hidden"  name="location" value="">
                 <div class="form-group">
                     <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">选择分类:</label>
                     <div class="col-md-4 col-xs-7">
@@ -167,8 +170,11 @@
 <script src="js/bootstrap-filestyle.js"></script>
 <script src="js/jquery.form.js"></script>
 <script type="text/javascript" src="js/jquery.form.js"></script>
+<script src="js/sell.js" ></script>
 <script>
     $(function(){
+        initModelList();
+        initBrandList();
         $("input[name=isSell]").click(function(){
             if(this.value=="1"){
                 $(".sell_info").fadeIn(500);
@@ -326,8 +332,31 @@
 
                     // Get the BootstrapValidator instance
                     var bv = $form.data('bootstrapValidator');
+                    var location = $('select[name="county"] option:selected').val();
+                    $('input[name="location"]').val(location);
+                    $.ajax({
+                        type: "post",
+                        url: "/car/publishCar",
+                        data:$('#register-form').serialize(),
+                        success: function(data){
+                            if (typeof data == "string") {
+                                data = JSON.parse(data);
+                            }
+                            if(data.status==1000){
+                                alert("发布成功!");
+                            }else{
+                                alert("信息不完整！");
+                            }
+                        },
+                        error:function(error){
+                            alert("connection error!");
+                        }
+                    });
                 });
     });
+    function a() {
+        alert("test");
+    }
     //上传头像
     function fileok(sender){
         if( !sender.value.match( /.jpg|.gif|.png|.bmp/i ) ){
