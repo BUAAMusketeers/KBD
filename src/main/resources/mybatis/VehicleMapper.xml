@@ -48,7 +48,7 @@
             AND vehicle.rent = 1 AND vehicle.rent_state = 0
         </if>
         <if test="keyword != null">
-            AND ((brand.brand_name LIKE %#{keyword}%) OR (model.model_name LIKE %#{keyword}%) OR (vehicle.description LIKE %#{keyword}%))
+            AND ((brand.brand_name LIKE CONCAT('%', #{keyword}, '%')) OR (model.model_name LIKE CONCAT('%', #{keyword}, '%')) OR (vehicle.description LIKE CONCAT('%', #{keyword}, '%')))
         </if>
         LIMIT #{offset}, #{limit}
         <if test="sort == 1">
