@@ -220,7 +220,9 @@ public class VehicleController {
             if (vehicleService.getVehicleByEN(equipmentNumber) != null) {
                 return gson.toJson(new Response(1007, "该车辆已存在"));
             }
-            int id = vehicleService.insert(vehicle);
+
+            vehicleService.insert(vehicle);
+            int id = vehicle.getId();
             Map<String, Integer> hashMap = new HashMap<String, Integer>();
             hashMap.put("id", id);
             return gson.toJson(new Response<Map<String, Integer>>(1000, "success", hashMap));
