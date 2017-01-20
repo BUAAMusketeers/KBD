@@ -19,7 +19,7 @@
             user_id AS userId,
             brand.brand_name AS brandName,
             model.model_name AS modelName,
-            location_id AS locationId,
+            location_code AS locationCode,
             used_hours AS usedHours,
             vehicle_age AS vehicleAge,
             equipment_number AS equipmentNumber,
@@ -38,7 +38,7 @@
         FROM vehicle
         LEFT JOIN model ON vehicle.model_id = model.id
         LEFT JOIN brand ON vehicle.brand_id = brand.id
-        LEFT JOIN location ON vehicle.location_id = location.id
+        LEFT JOIN location ON vehicle.location_code = location.location_code
         WHERE vehicle.brand_id = #{brand} AND vehicle.model_id = #{model}
             AND vehicle.location_id = #{city}
         <if test="sellOrRent == 1">
@@ -74,7 +74,7 @@
         user_id AS userId,
         brand.brand_name AS brandName,
         model.model_name AS modelName,
-        location.city AS location,
+        location_code AS locationCode,
         used_hours AS usedHours,
         vehicle_age AS vehicleAge,
         equipment_number AS equipmentNumber,
@@ -93,7 +93,7 @@
         FROM vehicle
         LEFT JOIN model ON vehicle.model_id = model.id
         LEFT JOIN brand ON vehicle.brand_id = brand.id
-        LEFT JOIN location ON vehicle.location_id = location.id
+        LEFT JOIN location ON vehicle.location_code = location.location_code
         WHERE vehicle.id = #{id}
     </select>
 
@@ -109,7 +109,7 @@
             user_id AS userId,
             brand_id AS brandId,
             model_id AS modelId,
-            location_id AS locationId,
+            location_code AS locationCode,
             used_hours AS usedHours,
             vehicle_age AS vehicleAge,
             equipment_number AS equipmentNumber,
@@ -130,10 +130,10 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO vehicle
-        (user_id, model_id, brand_id, location_id, used_hours, vehicle_age, equipment_number, description, contact,
+        (user_id, model_id, brand_id, location_code, used_hours, vehicle_age, equipment_number, description, contact,
         contact_phone, tonnage, sell, rent, sell_state, rent_state, sell_price, rent_price, release_date, update_date)
         VALUES
-        (#{userId}, #{modelId}, #{brandId}, #{locationId}, #{usedHours}, #{vehicleAge}, #{equipmentNumber}, #{description},
+        (#{userId}, #{modelId}, #{brandId}, #{locationCode}, #{usedHours}, #{vehicleAge}, #{equipmentNumber}, #{description},
         #{contact}, #{contactPhone}, #{tonnage}, #{isSell}, #{isRent}, #{sellState}, #{rentState}, #{sellPrice}, #{rentPrice},
         #{releaseDate}, #{updateDate})
     </insert>
@@ -143,7 +143,7 @@
             user_id = #{userId},
             model_id = #{modelId},
             brand_id = #{brandId},
-            location_id = #{locationId},
+            location_code = #{locationCode},
             used_hours = #{usedHours},
             vehicle_age = #{vehicleAge},
             equipment_number = #{equipmentNumber},

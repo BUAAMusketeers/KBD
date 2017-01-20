@@ -11,7 +11,7 @@ public class Vehicle implements Serializable {
     private int userId;               // 所属用户的id
     private int modelId;              // 所属机型的id
     private int brandId;              // 所属品牌的id
-    private int locationId;           // 所属地址的id
+    private String locationCode;         // 所属地址的location_code
     private int usedHours;            // 使用小时数
     private int vehicleAge;           // 车龄
     private String equipmentNumber;   // 设备编号
@@ -31,13 +31,13 @@ public class Vehicle implements Serializable {
     public Vehicle() {
     }
 
-    public Vehicle(int userId, int modelId, int brandId, int locationId, int usedHours, int vehicleAge, String equipmentNumber,
-                   String description, String contact, String contactPhone, int tonnage, int isSell, int isRent,
-                   int sellState, int rentState, double sellPrice, double rentPrice, Date releaseDate, Date updateDate) {
+    public Vehicle(int userId, int modelId, int brandId, String locationCode, int usedHours, int vehicleAge,
+                   String equipmentNumber, String description, String contact, String contactPhone, int tonnage, int isSell,
+                   int isRent, int sellState, int rentState, double sellPrice, double rentPrice, Date releaseDate, Date updateDate) {
         this.userId = userId;
         this.modelId = modelId;
         this.brandId = brandId;
-        this.locationId = locationId;
+        this.locationCode = locationCode;
         this.usedHours = usedHours;
         this.vehicleAge = vehicleAge;
         this.equipmentNumber = equipmentNumber;
@@ -95,12 +95,12 @@ public class Vehicle implements Serializable {
         this.brandId = brandId;
     }
 
-    public int getLocationId() {
-        return locationId;
+    public String getLocationCode() {
+        return locationCode;
     }
 
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public void setLocationCode(String locationCode) {
+        this.locationCode = locationCode;
     }
 
     public int getUsedHours() {
