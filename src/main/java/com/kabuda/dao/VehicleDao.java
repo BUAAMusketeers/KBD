@@ -6,10 +6,8 @@ import com.kabuda.dao.common.MyBatisDao;
 import com.kabuda.entity.Vehicle;
 import com.kabuda.entity.domain.VehicleBean;
 import com.kabuda.entity.domain.VehicleRequest;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 @MyBatisDao
 public interface VehicleDao extends Dao<Vehicle>{
@@ -29,7 +27,7 @@ public interface VehicleDao extends Dao<Vehicle>{
 
     Vehicle getVehicleById(int id);
 
-    void insert(Vehicle vehicle);
+    int insert(Vehicle vehicle);
 
     void update(Vehicle vehicle);
 }

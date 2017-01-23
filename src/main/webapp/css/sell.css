@@ -70,10 +70,17 @@ select.form-control{
     float:right;
     margin-bottom: 5px;
 }
-#push-btn {
+#push-btn{
     color:#fff;
     font-size:18px;
     margin: 10px 0;
+    transition: all 0.15s ease-in-out;
+    border: none;
+    border-radius: 4px;
+}
+#update-btn,#img-btn {
+    color:#fff;
+    font-size:16px;
     transition: all 0.15s ease-in-out;
     border: none;
     border-radius: 4px;
@@ -193,7 +200,8 @@ select.form-control{
     background-color: #FD521D;
 }
 
-#push-btn:hover,#register-btn:hover{
+#push-btn:hover,#register-btn:hover,#update-btn:hover,
+#img-btn:hover{
     background-color: #FD521D;
 }
 #register-btn[disabled],#push-btn[disabled]{

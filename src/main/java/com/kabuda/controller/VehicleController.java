@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class VehicleController {
@@ -76,11 +74,11 @@ public class VehicleController {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if (StringUtils.isEmpty(city) || StringUtils.isEmpty(brand) || StringUtils.isEmpty(model) || StringUtils.isEmpty(sort) ||
-                    StringUtils.isEmpty(limit) || StringUtils.isEmpty(page) || StringUtils.isEmpty(keyword)) {
+                    StringUtils.isEmpty(limit) || StringUtils.isEmpty(page)) {
                 return gson.toJson(new Response(1001, "参数为空"));
             }
             city = city.trim();
-            keyword = keyword.trim();
+            keyword = StringUtils.isEmpty(keyword)? keyword : keyword.trim();
 
             Location cityByName = locationService.getCityByName(city);
             if(cityByName == null){
@@ -176,7 +174,7 @@ public class VehicleController {
      */
     @ResponseBody
     @RequestMapping(path = "/car/publishCar", method = RequestMethod.POST)
-    public String publishCar(Integer model, Integer brand, Integer location, Integer usedHours,
+    public String publishCar(Integer model, Integer brand, String location, Integer usedHours,
                              Integer vehicleAge, Integer tonnage, String equipmentNumber, String description, String contact,
                              String contactPhone, Integer isSell, Integer isRent, Integer sellState, Integer rentState,
                              Double sellPrice, Double rentPrice, HttpServletRequest request) {
@@ -195,6 +193,7 @@ public class VehicleController {
                     StringUtils.isEmpty(isRent)) {
                 return gson.toJson(new Response(1001, "缺少参数"));
             }
+            location = location.trim();
             equipmentNumber = equipmentNumber.trim();
             description = description.trim();
             contact = contact.trim();
@@ -221,8 +220,12 @@ public class VehicleController {
             if (vehicleService.getVehicleByEN(equipmentNumber) != null) {
                 return gson.toJson(new Response(1007, "该车辆已存在"));
             }
+
             vehicleService.insert(vehicle);
-            return gson.toJson(new Response(1000, "success"));
+            int id = vehicle.getId();
+            Map<String, Integer> hashMap = new HashMap<String, Integer>();
+            hashMap.put("id", id);
+            return gson.toJson(new Response<Map<String, Integer>>(1000, "success", hashMap));
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(1100, "其它错误"));
@@ -235,7 +238,7 @@ public class VehicleController {
      */
     @ResponseBody
     @RequestMapping(path = "/car/updateCar", method = RequestMethod.POST)
-    public String updateCar(Integer id, Integer model, Integer brand, Integer location, Integer usedHours,
+    public String updateCar(Integer id, Integer model, Integer brand, String location, Integer usedHours,
                             Integer vehicleAge, Integer tonnage, String equipmentNumber, String description, String contact,
                             String contactPhone, Integer isSell, Integer isRent, Integer sellState, Integer rentState,
                             Double sellPrice, Double rentPrice) {
@@ -270,7 +273,7 @@ public class VehicleController {
             }
             if (!StringUtils.isEmpty(model)) vehicleById.setModelId(model);
             if (!StringUtils.isEmpty(brand)) vehicleById.setBrandId(brand);
-            if (!StringUtils.isEmpty(location)) vehicleById.setLocationId(location);
+            if (!StringUtils.isEmpty(location)) vehicleById.setLocationCode(location);
             if (!StringUtils.isEmpty(usedHours)) vehicleById.setUsedHours(usedHours);
             if (!StringUtils.isEmpty(vehicleAge)) vehicleById.setVehicleAge(vehicleAge);
             if (!StringUtils.isEmpty(tonnage)) vehicleById.setTonnage(tonnage);

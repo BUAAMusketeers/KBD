@@ -7,7 +7,7 @@ public interface Dao<T> {
 
     T get(T entity);
 
-    void insert(T entity);
+    int insert(T entity);
 
     void update(T entity);
 

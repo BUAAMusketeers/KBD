@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>发布车辆 | 卡布达</title>
+    <title>车辆编辑 | 卡布达</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrapValidator.min.css" />
     <link rel="stylesheet" href="css/base.css" />
@@ -25,10 +25,10 @@
         <li><a href="#">首页</a></li>
         <li><a href="user.jsp">个人信息</a></li>
         <li><a href="carManage.jsp">车辆管理</a></li>
-        <li class="active">发布车辆</li>
+        <li class="active">车辆编辑</li>
     </ol>
     <div class="reg-head" style="margin-top: -50px">
-        <h1>发布车辆</h1>
+        <h1>更新车辆</h1>
     </div>
 </div>
 
@@ -98,28 +98,28 @@
                     </div>
                 </div>
                 <!--<div class="form-group img-group">-->
-                    <!--<ul id="img-group">-->
-                        <!--<li class="picList">-->
-                            <!--<div class="img">-->
-                                <!--<img src="http://img.tiebaobei.com/img/170115/213655d858b53dbbd87dc9b9d0502e26_2.jpg" deg="0">-->
-                                <!--<input type="hidden" id="imageIdIpt" value="170115/213655d858b53dbbd87dc9b9d0502e26.jpg" name="image1">-->
-                            <!--</div>-->
-                            <!--<div class="set first"><span class="on fl">首图</span></div>-->
-                            <!--<i class="btn-close"></i>-->
-                        <!--</li>-->
-                    <!--</ul>-->
+                <!--<ul id="img-group">-->
+                <!--<li class="picList">-->
+                <!--<div class="img">-->
+                <!--<img src="http://img.tiebaobei.com/img/170115/213655d858b53dbbd87dc9b9d0502e26_2.jpg" deg="0">-->
+                <!--<input type="hidden" id="imageIdIpt" value="170115/213655d858b53dbbd87dc9b9d0502e26.jpg" name="image1">-->
+                <!--</div>-->
+                <!--<div class="set first"><span class="on fl">首图</span></div>-->
+                <!--<i class="btn-close"></i>-->
+                <!--</li>-->
+                <!--</ul>-->
                 <!--</div>-->
                 <!--<div class="form-group">-->
-                    <!--<label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">车辆照片:</label>-->
-                    <!--<div class="col-md-4 col-xs-7">-->
-                        <!--<input type="file" multiple="true"  id="uploadpicture"  tabindex="-1" onchange="fileok(this)" style="position: absolute; clip: rect(0px 0px 0px 0px);">-->
-                            <!--<label id="selectfile" for="uploadpicture" class="btn btn-primary ">-->
-                                <!--<span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span>-->
-                                <!--<span class="buttonText">选择文件</span><span class="glyphicon glyphicon-ok" style="display:none;"></span>-->
-                            <!--</label>-->
-                    <!--</div>-->
-                    <!--<div id="upload_btn" class="uploadify" style="height: 30px; width: 80px;">-->
-                    <!--</div>-->
+                <!--<label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">车辆照片:</label>-->
+                <!--<div class="col-md-4 col-xs-7">-->
+                <!--<input type="file" multiple="true"  id="uploadpicture"  tabindex="-1" onchange="fileok(this)" style="position: absolute; clip: rect(0px 0px 0px 0px);">-->
+                <!--<label id="selectfile" for="uploadpicture" class="btn btn-primary ">-->
+                <!--<span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span>-->
+                <!--<span class="buttonText">选择文件</span><span class="glyphicon glyphicon-ok" style="display:none;"></span>-->
+                <!--</label>-->
+                <!--</div>-->
+                <!--<div id="upload_btn" class="uploadify" style="height: 30px; width: 80px;">-->
+                <!--</div>-->
 
                 <!--</div>-->
                 <div class="form-group">
@@ -128,13 +128,23 @@
                         <textarea class="form-control" name="description"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group isSell">
                     <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label control-label">是否出售:</label>
                     <div style="margin-top: 7px">
                         <input class="col-xs-1" type="radio" value="1" name="isSell"/>
                         <label class="col-xs-1 toleft">是</label>
                         <input class="col-xs-1" type="radio" value="0" name="isSell" checked="checked" />
                         <label class="col-xs-1 toleft">否</label>
+                    </div>
+                </div>
+                <div class="form-group sellState" style="display: block">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">出售状态:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <select class="form-control for-xs" name="sellState">
+                            <option value="0">待售</option>
+                            <option value="1">已售</option>
+                            <option value="2">下架</option>
+                        </select>
                     </div>
                 </div>
                 <div class="sell_info form-group" style="display: none;">
@@ -146,13 +156,23 @@
                         </span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group isRent">
                     <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">是否出租:</label>
                     <div style="margin-top: 7px">
                         <input class="col-xs-1" type="radio" value="1" name="isRent"/>
                         <label class="col-xs-1 toleft">是</label>
                         <input class="col-xs-1" type="radio" value="0" name="isRent" checked="checked" />
                         <label class="col-xs-1 toleft">否</label>
+                    </div>
+                </div>
+                <div class="form-group rentState">
+                    <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">出租状态:</label>
+                    <div class="col-md-4 col-xs-7">
+                        <select class="form-control for-xs" name="rentState">
+                            <option value="0">待租</option>
+                            <option value="1">已租</option>
+                            <option value="2">下架</option>
+                        </select>
                     </div>
                 </div>
                 <div class="rent_info form-group" style="display: none;">
@@ -164,8 +184,9 @@
                         </span>
                     </div>
                 </div>
-                <div class="form-group btn-area">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="push-btn">发布</button>
+                <div class="form-group btn-area row">
+                    <button type="submit" class="btn btn-primary btn-sm  col-md-4 col-md-offset-1" id="update-btn">确认修改</button>
+                    <button type="input" class="btn btn-primary btn-sm  col-md-4 col-md-offset-1" id="img-btn">车辆图片</button>
                 </div>
             </form>
         </div>
@@ -187,10 +208,8 @@
             var str = "<option value='"+i+"'>"+i+"</option>";
             $("select[name='vehicleAge']").append(str);
         }
-
         initProvinceList();
-        initModelList();
-        initBrandList();
+        initVehicel();
         $("input[name=isSell]").click(function(){
             if(this.value=="1"){
                 $(".sell_info").fadeIn(500);
@@ -209,6 +228,9 @@
             }
             $('#register-form').bootstrapValidator('resetForm',false);
         });
+
+
+
 
         $('#register-form').bootstrapValidator({
             message: 'This value is not valid',
@@ -369,6 +391,146 @@
                         }
                     });
                 });
+        function initVehicel(){
+            var id = getQueryString("vehicleId");
+            $.ajax({
+                type: "post",
+                url: "/car/getCarInfo",
+                data:{"id":id},
+                success: function(data){
+                    if (typeof data == "string") {
+                        data = JSON.parse(data);
+                    }
+                    if(data.status==1000){
+                        $.ajax({
+                            type: "post",
+                            url: "/car/getModelList",
+                            success: function(data1){
+                                if (typeof data1 == "string") {
+                                    data1 = JSON.parse(data1);
+                                }
+                                if(data1.status==1000){
+                                    var result = data1.data;
+                                    for (var i = 0; i < 26; i++) {
+                                        var str='';
+                                        for(var j=0;j<result[i].length;j++){
+                                            str='<option value="'+result[i][j].id+'">'+result[i][j].name+'</option>';
+                                            $("select[name='model']").append(str);
+                                        }
+                                    }
+                                    $("select[name='model'] option").each(function() {
+                                        if ($(this).text() == data.data.model) {
+                                            $(this).attr("selected", "selected");
+                                        }
+                                    });
+                                }
+                            },
+                            error:function(error){
+                                alert("connection error!");
+                            }
+                        });
+                        $.ajax({
+                            type: "post",
+                            url: "/car/getBrandList",
+                            success: function(data1){
+                                if (typeof data1 == "string") {
+                                    data1 = JSON.parse(data1);
+                                }
+                                if(data1.status==1000){
+                                    var result = data1.data;
+                                    for (var i = 0; i < 26; i++) {
+                                        var str='';
+                                        for(var j=0;j<result[i].length;j++){
+                                            str='<option value="'+result[i][j].id+'">'+result[i][j].name+'</option>';
+                                            $("select[name='brand']").append(str);
+                                        }
+                                    }
+                                    $("select[name='brand'] option").each(function() {
+                                        if ($(this).text() == data.data.brand) {
+                                            $(this).attr("selected", "selected");
+                                        }
+                                    });
+                                }
+                            },
+                            error:function(error){
+                                alert("connection error!");
+                            }
+                        });
+                        $.ajax({
+                            type: "post",
+                            url: "/location/getProvinceList ",
+                            success: function(data1){
+                                if (typeof data1 == "string") {
+                                    data1 = JSON.parse(data1);
+                                }
+                                if(data1.status==1000){
+                                    var result = data1.result;
+                                    for (var i = 0; i < result.total; i++) {
+                                        var str="<option value='"+result.data[i].locationCode+"'>"+result.data[i].province+"</option>";
+                                        $("#location_province").append(str);
+                                    }
+                                }
+                                showMyProvince("location",data.data.locationCode);
+                            },
+                            error:function(error){
+                                alert("connection error!");
+                            }
+                        });
+
+
+                        $("select[name='vehicleAge'] option").each(function() {
+                            if ($(this).text() == data.data.vehicleAge) {
+                                $(this).attr("selected", "selected");
+                            }
+                        });
+                        $("input[name='equipmentNumber']").val(data.data.equipmentNumber);
+                        $("input[name='usedHours']").val(data.data.usedHours);
+                        $("input[name='tonnage']").val(data.data.tonnage);
+                        $("input[name='equipmentNumber']").val(data.data.equipmentNumber);
+                        $("input[name='contact']").val(data.data.contact);
+                        $("input[name='contactPhone']").val(data.data.contactPhone);
+
+                        $("textarea[name='description']").val(data.data.description);
+                        if(data.data.sell==0){
+                            $(".sellState").css("display","none");
+                            $(".sell_info").hide();
+                            $(".isSell").show();
+                        }else{
+                            $(".sellSate").show();
+                            $(".sell_info").show();
+                            $(".isSell").hide();
+                            $("input[name='sellPrice']").val(data.data.sellPrice);
+                            $("select[name='sellState'] option").each(function() {
+                                if ($(this).val() == data.data.sellState) {
+                                    $(this).attr("selected", "selected");
+                                }
+                            });
+                        }
+                        if(data.data.rent==0){
+                            $(".rentState").hide();
+                            $(".rent_info").hide();
+                            $(".isRent").show();
+                        }else{
+                            $(".rentSate").show();
+                            $(".rent_info").show();
+                            $(".isRent").hide();
+                            $("input[name='rentPrice']").val(data.data.rentPrice);
+                            $("select[name='rentState'] option").each(function() {
+                                if ($(this).val() == data.data.rentState) {
+                                    $(this).attr("selected", "selected");
+                                }
+                            });
+                        }
+
+                    }else{
+                        alert(data.message);
+                    }
+                },
+                error:function(error){
+                    alert("connection error!");
+                }
+            });
+        }
     });
 </script>
 </body>

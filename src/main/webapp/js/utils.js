@@ -200,7 +200,7 @@ function showMyCounty(idPrefix, locationCode) {
             type : "post",
             url : "/location/getCountyList",
             data : {
-                "location_city" : $seletedCity
+                "city" : $seletedCity
             },
             success : function(data) {
                 if (typeof data == "string") {
@@ -241,6 +241,7 @@ function initProvinceList(){
                     $("#location_province").append(str);
                 }
             }
+            return true;
         },
         error:function(error){
             alert("connection error!");

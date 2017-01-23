@@ -25,7 +25,7 @@
         WHERE location_level = '2' AND province = #{parentProvince}
     </select>
 
-    <select id="getCountyList " resultType="com.kabuda.entity.Location">
+    <select id="getCountyList" resultType="com.kabuda.entity.Location">
         SELECT
             id,
             location_code AS locationCode,

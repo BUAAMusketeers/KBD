@@ -43,8 +43,8 @@ public class VehicleService {
         return vehicleDao.getVehicleByEN(equipmentNumber);
     }
 
-    public void insert(Vehicle vehicle){
-        vehicleDao.insert(vehicle);
+    public int insert(Vehicle vehicle){
+        return vehicleDao.insert(vehicle);
     }
 
     public void update(Vehicle vehicle){

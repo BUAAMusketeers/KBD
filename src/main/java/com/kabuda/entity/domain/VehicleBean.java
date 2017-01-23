@@ -25,7 +25,7 @@ public class VehicleBean implements Serializable {
     private String contact;           // 联系人
     private String contactPhone;      // 联系人电话
     private int tonnage;              // 吨位，单位吨
-    private String location;          // 所属地址
+    private String locationCode;      // 所属地址code
     @SerializedName("sell")
     private int isSell;               // 出售,0代表不出售，1代表出售
     @SerializedName("rent")
@@ -74,12 +74,12 @@ public class VehicleBean implements Serializable {
         this.brandName = brandName;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLocationCode() {
+        return locationCode;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationCode(String locationCode) {
+        this.locationCode = locationCode;
     }
 
     public int getUsedHours() {

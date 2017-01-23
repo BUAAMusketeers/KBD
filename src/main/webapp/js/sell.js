@@ -16,9 +16,10 @@ function initModelList() {
                     var str='';
                     for(var j=0;j<result[i].length;j++){
                             str='<option value="'+result[i][j].id+'">'+result[i][j].name+'</option>';
-                            $("select[name='modelId']").append(str);
+                            $("select[name='model']").append(str);
                     }
                 }
+                return true;
             }
         },
         error:function(error){
@@ -40,10 +41,11 @@ function initBrandList(){
                     var str='';
                     for(var j=0;j<result[i].length;j++){
                         str='<option value="'+result[i][j].id+'">'+result[i][j].name+'</option>';
-                        $("select[name='brandId']").append(str);
+                        $("select[name='brand']").append(str);
                     }
                 }
             }
+            return true;
         },
         error:function(error){
             alert("connection error!");
