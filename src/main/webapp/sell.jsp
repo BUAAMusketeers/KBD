@@ -37,6 +37,8 @@
         <div class="col-md-6 sell-body col-md-offset-3">
             <form id="register-form" class="form-horizontal">
                 <input type="hidden"  name="location" value="">
+                <input type="hidden"  name="sellState" value="-1">
+                <input type="hidden"  name="rentState" value="-1">
                 <div class="form-group">
                     <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">选择分类:</label>
                     <div class="col-md-4 col-xs-7">
@@ -194,18 +196,22 @@
         $("input[name=isSell]").click(function(){
             if(this.value=="1"){
                 $(".sell_info").fadeIn(500);
+                $("input[name='sellState']").val("0");
             }
             else{
                 $(".sell_info").fadeOut(500);
+                $("input[name='sellState']").val("-1");
             }
             $('#register-form').bootstrapValidator('resetForm',false);
         });
         $("input[name=isRent]").click(function(){
             if(this.value=="1"){
                 $(".rent_info").fadeIn(500);
+                $("input[name='rentState']").val("0");
             }
             else{
                 $(".rent_info").fadeOut(500);
+                $("input[name='rentState']").val("-1");
             }
             $('#register-form').bootstrapValidator('resetForm',false);
         });
@@ -360,6 +366,7 @@
                             }
                             if(data.status==1000){
                                 alert("发布成功!");
+                                window.location.href="img_push.jsp?vehicleId="+data.data.id;
                             }else{
                                 alert("信息不完整！");
                             }

@@ -62,10 +62,10 @@ User user = (User)request.getSession().getAttribute("user");
 <!-- 登陆框 -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content login-content">
+            <div class="modal-header login-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="login-title">登录</h4>
+                <h4 class="modal-title login-title" id="login-title">登录</h4>
                 <p id="login-warning"></p>
             </div>
             <div class="modal-body login-body">

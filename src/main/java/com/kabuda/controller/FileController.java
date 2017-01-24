@@ -26,7 +26,7 @@ public class FileController {
     @RequestMapping("/upload")
     public String upload(HttpServletRequest request,String id) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String realPath = ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/") + "file";
+        String realPath = request.getSession().getServletContext().getRealPath("/")+"/" + "file";
         File filePath = new File(realPath);
         if(!filePath.exists() && !filePath.isDirectory()){
             filePath.mkdir();
@@ -45,19 +45,21 @@ public class FileController {
                     if(file != null){
                         //取得当前上传文件的文件名称
                         String myFileName = file.getOriginalFilename();
+                        String timeStamp = String.valueOf(System.currentTimeMillis());
+                        String prefix=myFileName.substring(myFileName.lastIndexOf(".")+1);
+                        myFileName = timeStamp +"." +prefix;
                         //如果名称不为“”,说明该文件存在，否则说明该文件不存在
                         if(!StringUtils.isEmpty(myFileName.trim())){
-                            System.out.println(myFileName);
-                            //重命名上传后的文件名
-                            String fileName = file.getOriginalFilename();
-                            //定义上传路径
-                            String path = filePath + "\\" + fileName;
+//                            System.out.println(myFileName);
+//                            //重命名上传后的文件名
+//                            String fileName = file.getOriginalFilename();
+//                            //定义上传路径
+                            String path = realPath + "\\" + myFileName;
                             File localFile = new File(path);
                             file.transferTo(localFile);
                             Map result =  new HashMap();
                             List<String> strings = new ArrayList<String>();
-                            strings.add("test1");
-                            strings.add("test2");
+                            strings.add("file/"+myFileName);
                             result.put("initialPreview",strings);
 
 
@@ -67,16 +69,9 @@ public class FileController {
                             Map initialPreviewConfig = new HashMap();
                             initialPreviewConfig.put("url","delete-url");
                             initialPreviewConfig.put("key","1,0");
-                            initialPreviewConfig.put("size",88000);
-                            initialPreviewConfig.put("caption","test.jpg");
-
-                            Map initialPreviewConfig1 = new HashMap();
-                            initialPreviewConfig1.put("url","delete-url");
-                            initialPreviewConfig1.put("key","1,0");
-                            initialPreviewConfig1.put("size",88000);
-
+                            initialPreviewConfig.put("size",file.getSize());
+                            initialPreviewConfig.put("caption",myFileName);
                             arrayList.add(initialPreviewConfig);
-                            arrayList.add(initialPreviewConfig1);
 
                             result.put("initialPreviewConfig",arrayList);
                             return gson.toJson(result);

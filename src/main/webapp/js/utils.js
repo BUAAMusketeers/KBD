@@ -212,7 +212,7 @@ function showMyCounty(idPrefix, locationCode) {
                     $countySelect.append($("<option>").text($("#" + idPrefix + "_city option:selected").text()).val(locationCode));
                 }
                 else{
-                    for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < result.total; i++) {
                         $countySelect.append($("<option>").text(result.data[i].county).val(result.data[i].locationCode));// 向清空的列表中增加新值
                     }
                     $countySelect.val(locationCode);

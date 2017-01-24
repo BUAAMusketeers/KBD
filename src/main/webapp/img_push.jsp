@@ -1,5 +1,9 @@
+<%@ page import="com.kabuda.entity.User" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
+<%
+    User user = (User)request.getSession().getAttribute("user");
+%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -15,7 +19,7 @@
 
 <body>
 <!--顶部-->
-<script src="base/head.html"></script>
+<jsp:include page="base/head.jsp"></jsp:include>
 
 <div class="container kv-main">
     <div class="row">
@@ -40,7 +44,6 @@
 <script src="js/utils.js"></script>
 <script>
     initImg();
-
     function initImg(){
         $("#upload").fileinput({
             uploadUrl: '/file/upload', //上传

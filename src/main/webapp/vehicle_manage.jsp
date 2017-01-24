@@ -186,7 +186,7 @@
                 </div>
                 <div class="form-group btn-area row">
                     <button type="submit" class="btn btn-primary btn-sm  col-md-4 col-md-offset-1" id="update-btn">确认修改</button>
-                    <button type="input" class="btn btn-primary btn-sm  col-md-4 col-md-offset-1" id="img-btn">车辆图片</button>
+                    <button type="input" class="btn btn-primary btn-sm  col-md-4 col-md-offset-1" id="img-btn" onclick="showImg()">车辆图片</button>
                 </div>
             </form>
         </div>
@@ -532,6 +532,10 @@
             });
         }
     });
+    function showImg() {
+        var id = getQueryString("vehicleId");
+        window.location.href="img_push.jsp?vehicleId="+id;
+    }
 </script>
 </body>
 </html>
