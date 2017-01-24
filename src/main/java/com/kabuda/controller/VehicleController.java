@@ -84,11 +84,11 @@ public class VehicleController {
             if(cityByName == null){
                 return gson.toJson(new Response(1012, "城市不存在"));
             }
-            int cityId = cityByName.getId();
+            String cityCode = cityByName.getLocationCode();
 
             //int vehicleCount = vehicleService.getVehicleCount(sellOrRent);
             int offset = (page - 1) * limit;
-            VehicleRequest vehicleRequest = new VehicleRequest(cityId, brand, model, sort, keyword, offset, limit, sellOrRent);
+            VehicleRequest vehicleRequest = new VehicleRequest(cityCode, brand, model, sort, keyword, offset, limit, sellOrRent);
             List<VehicleBean> carList = vehicleService.getVehicleList(vehicleRequest);
             int vehicleCount = 0;
             if(carList != null){
