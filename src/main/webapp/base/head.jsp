@@ -47,7 +47,7 @@ User user = (User)request.getSession().getAttribute("user");
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <% if(user==null){ %>
-                    <li><a href="#" data-target="#loginModal" data-toggle="modal" id="nav-login"><span class="glyphicon glyphicon-user"></span> 登录</a></li>
+                    <li id="login_li"><a href="#" data-target="#loginModal" data-toggle="modal" id="nav-login"><span class="glyphicon glyphicon-user"></span> 登录</a></li>
                     <li><a href="register.jsp" id="nav-register"><span class="glyphicon glyphicon-cloud"></span> 注册</a></li>
                     <% }else{ %>
                     <li><a href="user.jsp" id="nav-pc" ><span class="glyphicon glyphicon-user"></span> <%=user.getName()%></a></li>

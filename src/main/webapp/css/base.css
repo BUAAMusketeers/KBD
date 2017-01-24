@@ -214,8 +214,17 @@ body {
 .head-nav .icon-bar{
     background-color:#fff;
 }
+/*登录*/
+
+#nav-login:focus{
+    outline:none !important;
+}
 
 
+/*#login-btn:active,:focus{
+    background-color: #FD521D !important;
+    border-color:#FD521D !important;
+}*/
 /*--底部--*/
 .foot {
     min-height: 140px;

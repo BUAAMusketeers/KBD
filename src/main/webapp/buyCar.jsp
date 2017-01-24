@@ -291,7 +291,7 @@
                             var letterPre=letter[i];
                             var str='';
                             for(var j=0;j<result[i].length;j++){
-                                str+='<a onclick="brandClick('+result[i][j].id+','+result[i][j].name+')">'+result[i][j].name+'</a>';
+                                str+='<a id="brandClick_'+result[i][j].id+'" onclick="brandClick('+result[i][j].id+')">'+result[i][j].name+'</a>';
 
                             }
                             if(result[i].length){
@@ -324,8 +324,7 @@
                             var letterPre=letter[i];
                             var str='';
                             for(var j=0;j<result[i].length;j++){
-                                console.log(result[i][j].id);
-                                str+='<a onclick="typeClick('+result[i][j].id+','+result[i][j].name+')">'+result[i][j].name+'</a>';
+                                str+='<a id="typeClick_'+result[i][j].id+'" onclick="typeClick('+result[i][j].id+')">'+result[i][j].name+'</a>';
                             }
                             if(result[i].length) {
                                 var str0 = '<div class="itemBox"><dl><dt>' + letterPre + '</dt><dd>' + str + '</dd></dl></div>';
@@ -358,7 +357,8 @@
         getCarList();
 
     }
-    function brandClick(id,name) {
+    function brandClick(id) {
+        var name=$("#brandClick_"+id).html();
         if(id>=hotBrand.length){
             var str='<a class="on hotBrandA" href="#" id="brandId_'+id+'" >'+name+'</a>';
             $("#hotBrandList").append(str);
@@ -384,7 +384,8 @@
         getCarList();
 
     }
-    function typeClick(id,name) {
+    function typeClick(id) {
+        var name=$("#typeClick_"+id).html();
         if(id>=hotType.length){
             var str='<a class="on hotTypeA" href="#" id="typeId_'+id+'" >'+name+'</a>';
             $("#hotTypeList").append(str);

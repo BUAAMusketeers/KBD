@@ -46,11 +46,11 @@
         <li class="active">个人信息</li>
     </ol>
     <ul class="nav nav-pills nav-stacked col-md-2 col-xs-12">
-        <li role="presentation" ><a id="info_1" href="user.jsp?id=2" aria-controls="user-information" role="tab" data-toggle="tab">个人资料</a></li>
-        <li role="presentation" ><a id="info_2" href="#edit-information" aria-controls="edit-information" role="tab" data-toggle="tab">修改个人信息</a></li>
-        <li role="presentation" ><a id="info_3" href="#edit-picture" aria-controls="edit-picture" role="tab" data-toggle="tab">头像上传</a></li>
-        <li role="presentation" ><a id="info_4" href="#edit-password" aria-controls="edit-password" role="tab" data-toggle="tab">修改密码</a></li>
-        <li role="presentation" ><a id="info_5" href="#manageCar" aria-controls="edit-password" role="tab" data-toggle="tab" >车辆管理</a></li>
+        <li role="presentation" ><a id="info_1" href="user.jsp?id=1" >个人资料</a></li>
+        <li role="presentation" ><a id="info_2" href="user.jsp?id=2" >修改个人信息</a></li>
+        <li role="presentation" ><a id="info_3" href="user.jsp?id=3" >头像上传</a></li>
+        <li role="presentation" ><a id="info_4" href="user.jsp?id=4" >修改密码</a></li>
+        <li role="presentation" ><a id="info_5" href="#manageCar" >车辆管理</a></li>
     </ul>
     <div class="tab-content">
 
