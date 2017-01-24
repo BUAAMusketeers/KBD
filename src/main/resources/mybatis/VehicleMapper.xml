@@ -40,7 +40,7 @@
         LEFT JOIN brand ON vehicle.brand_id = brand.id
         LEFT JOIN location ON vehicle.location_code = location.location_code
         WHERE vehicle.brand_id = #{brand} AND vehicle.model_id = #{model}
-            AND vehicle.location_id = #{city}
+            AND vehicle.location_code = #{city}
         <if test="sellOrRent == 1">
             AND vehicle.sell = 1 AND vehicle.sell_state = 0
         </if>
@@ -50,12 +50,11 @@
         <if test="keyword != null">
             AND ((brand.brand_name LIKE CONCAT('%', #{keyword}, '%')) OR (model.model_name LIKE CONCAT('%', #{keyword}, '%')) OR (vehicle.description LIKE CONCAT('%', #{keyword}, '%')))
         </if>
-        LIMIT #{offset}, #{limit}
         <if test="sort == 1">
             <if test="sellOrRent == 1"> ORDER BY sell_price ASC </if>
             <if test="sellOrRent == 2"> ORDER BY rent_price ASC </if>
         </if>
-        <if test="sort == 1">
+        <if test="sort == 2">
             <if test="sellOrRent == 1"> ORDER BY sell_price DESC </if>
             <if test="sellOrRent == 2"> ORDER BY rent_price DESC </if>
         </if>
@@ -65,6 +64,7 @@
         <if test="sort == 4">
             ORDER BY vehicle_age ASC
         </if>
+        LIMIT #{offset}, #{limit}
     </select>
 
 

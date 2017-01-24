@@ -3,7 +3,7 @@ package com.kabuda.entity.domain;
 
 public class VehicleRequest {
 
-    private int city;
+    private String city;
     private int brand;
     private int model;
     private int sort;        // 排序方式 0默认 1价格升序 2价格降序 3使用时间升序 4车龄升序
@@ -15,7 +15,7 @@ public class VehicleRequest {
     public VehicleRequest() {
     }
 
-    public VehicleRequest(int city, int brand, int model, int sort, String keyword, int offset, int limit, int sellOrRent) {
+    public VehicleRequest(String city, int brand, int model, int sort, String keyword, int offset, int limit, int sellOrRent) {
         this.city = city;
         this.brand = brand;
         this.model = model;
@@ -26,11 +26,11 @@ public class VehicleRequest {
         this.sellOrRent = sellOrRent;
     }
 
-    public int getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(int city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
