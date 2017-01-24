@@ -19,7 +19,7 @@
             user_id AS userId,
             brand.brand_name AS brandName,
             model.model_name AS modelName,
-            location_code AS locationCode,
+            vehicle.location_code AS locationCode,
             used_hours AS usedHours,
             vehicle_age AS vehicleAge,
             equipment_number AS equipmentNumber,
