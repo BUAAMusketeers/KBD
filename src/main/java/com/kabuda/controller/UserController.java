@@ -48,7 +48,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
-    public String login(String phoneNumber, @RequestParam("password") String unencrypted, HttpSession session) {
+    public String login(String phoneNumber, @RequestParam(value = "password", required = false) String unencrypted, HttpSession session) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted)) {
@@ -77,9 +77,9 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(path = "/user/register", method = RequestMethod.POST)
-    public String register(String phoneNumber, @RequestParam("password") String unencrypted, String name, Integer sex,
-                           Integer isDriver, String model, Integer price, Integer drivingAge,
-                           @RequestParam(value = "location", required = false) Integer locationId,
+    public String register(String phoneNumber, @RequestParam(value = "password", required = false) String unencrypted,
+                           String name, Integer sex, Integer isDriver, String model, Integer price, Integer drivingAge,
+                           @RequestParam(value = "location", required = false) String locationCode,
                            HttpSession session) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
@@ -108,7 +108,7 @@ public class UserController {
                 if (!StringUtils.isEmpty(model)) user.setModel(model);
                 if (!StringUtils.isEmpty(price)) user.setPrice(price);
                 if (!StringUtils.isEmpty(drivingAge)) user.setDrivingAge(drivingAge);
-                if (!StringUtils.isEmpty(locationId)) user.setLocationId(locationId);
+                if (!StringUtils.isEmpty(locationCode)) user.setLocationCode(locationCode);
                 userService.insert(user);
             }
 
@@ -204,8 +204,8 @@ public class UserController {
     @ResponseBody
     @RequestMapping(path = "/user/update", method = RequestMethod.POST)
     public String update(String name, Integer sex, Integer isDriver, String model, Integer price, Integer drivingAge,
-                         @RequestParam(value = "location", required = false) Integer locationId, HttpServletRequest request) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                         @RequestParam(value = "location", required = false) String locationCode, HttpServletRequest request) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/25
         try {
             User user = (User) request.getSession().getAttribute("user");
             if(user == null){
@@ -220,7 +220,7 @@ public class UserController {
                     if (!StringUtils.isEmpty(model)) user.setModel(model.trim());
                     if (!StringUtils.isEmpty(price)) user.setPrice(price);
                     if (!StringUtils.isEmpty(drivingAge)) user.setDrivingAge(drivingAge);
-                    if (!StringUtils.isEmpty(locationId)) user.setLocationId(locationId);
+                    if (!StringUtils.isEmpty(locationCode)) user.setLocationCode(locationCode);
                 } else {
                     user.setModel(null);
                     user.setPrice(-1);
@@ -232,7 +232,7 @@ public class UserController {
                     if (!StringUtils.isEmpty(model)) user.setModel(model.trim());
                     if (!StringUtils.isEmpty(price)) user.setPrice(price);
                     if (!StringUtils.isEmpty(drivingAge)) user.setDrivingAge(drivingAge);
-                    if (!StringUtils.isEmpty(locationId)) user.setLocationId(locationId);
+                    if (!StringUtils.isEmpty(locationCode)) user.setLocationCode(locationCode);
                 }
             }
             userService.update(user);

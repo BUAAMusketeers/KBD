@@ -17,7 +17,7 @@
             head_potrait AS "headPotrait",
             user_level AS "userLevel",
             active AS "isActive"
-        FROM user LEFT JOIN location ON location_id = location.id WHERE user.id = #{id}
+        FROM user LEFT JOIN location ON user.location_code = location.location_code WHERE user.id = #{id}
     </select>
 
     <select id="getUserByPhoneNumber" resultType="com.kabuda.entity.User">
@@ -35,12 +35,12 @@
             head_potrait AS "headPotrait",
             user_level AS "userLevel",
             active AS "isActive"
-        FROM user LEFT JOIN location ON location_id = location.id WHERE phone_number = #{phoneNumber}
+        FROM user LEFT JOIN location ON user.location_code = location.location_code WHERE phone_number = #{phoneNumber}
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (phone_number, password, name, sex, is_driver, model, price, driving_age, location_id, head_potrait, user_level, active)
-        VALUES (#{phoneNumber}, #{password}, #{name}, #{sex}, #{isDriver}, #{model}, #{price}, #{drivingAge}, #{locationId}, #{headPotrait}, #{userLevel}, #{isActive})
+        INSERT INTO user (phone_number, password, name, sex, is_driver, model, price, driving_age, location_code, head_potrait, user_level, active)
+        VALUES (#{phoneNumber}, #{password}, #{name}, #{sex}, #{isDriver}, #{model}, #{price}, #{drivingAge}, #{locationCode}, #{headPotrait}, #{userLevel}, #{isActive})
     </insert>
 
     <update id="update">
@@ -53,7 +53,7 @@
           model = #{model},
           price = #{price},
           driving_age = #{drivingAge},
-          location_id = #{locationId},
+          location_code = #{locationCode},
           head_potrait = #{headPotrait},
           user_level = #{userLevel},
           active = #{isActive}
