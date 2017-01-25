@@ -246,18 +246,18 @@
                             var str=''+
                             '<div class="col-sm-6 col-md-3 listBox">' +
                             '<div class="thumbnail">' +
-                            '<img src="images/demo.jpg" alt="...">' +
+                            '<img src="'+result[i].pictureUrl+" alt="图片">' +
                             '<div class="infoDiv">' +
-                            '<p class="infoBox"><a>T现代车两全开T现代车两全开那个in爱姑娘IGN那个in爱姑娘IGN</a></p>' +
+                            '<p class="infoBox"><a>'+result[i].brand+result[i].model+'</a></p>' +
                             '<p class="infoGray">' +
-                            '<span>2015年上牌</span>' +
+                            '<span>'+result[i].vehicleAge+'年上牌</span>' +
                             '<em class="verticalLine">|</em>' +
-                            '<span>使用25小时</span>' +
+                            '<span>使用'+result[i].usedHours+'小时</span>' +
                             '<em class="verticalLine">|</em>' +
-                            '<span>45吨</span>' +
+                            '<span>'+result[i].tonnage+'吨</span>' +
                             '</p>' +
                             '<p class="infoPrice"> 价格：' +
-                            '<span>24.4万</span>' +
+                            '<span>'+result[i].sellPrice+'万</span>' +
                             '</p>' +
                             '</div>' +
                             '</div>' +
