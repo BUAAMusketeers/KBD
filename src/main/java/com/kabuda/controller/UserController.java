@@ -12,6 +12,7 @@ import com.kabuda.entity.domain.VehicleResponse;
 import com.kabuda.service.ModelService;
 import com.kabuda.service.UserService;
 import com.kabuda.util.Encrypt;
+import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -52,25 +53,25 @@ public class UserController {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted)) {
-                return gson.toJson(new Response(1001, "参数为空"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
             phoneNumber = phoneNumber.trim();
             unencrypted = unencrypted.trim();
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
             if (isUserExist == null)
-                return gson.toJson(new Response(1002, "用户不存在"));
+                return gson.toJson(new Response(ResponseCode.R_1002));
 
             String password = Encrypt.SHA256(unencrypted);
             if (!isUserExist.getPassword().equals(password))
-                return gson.toJson(new Response(1003, "密码不正确"));
+                return gson.toJson(new Response(ResponseCode.R_1003));
 
             session.setAttribute("user", isUserExist);
             session.setMaxInactiveInterval(1800); // 30 minutes
             return getResponse(isUserExist);
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -85,7 +86,7 @@ public class UserController {
         try {
             if (StringUtils.isEmpty(phoneNumber) || StringUtils.isEmpty(unencrypted) || StringUtils.isEmpty(name)
                     || StringUtils.isEmpty(sex) || StringUtils.isEmpty(isDriver)) {
-                return gson.toJson(new Response(1001, "参数为空"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
             phoneNumber = phoneNumber.trim();
             unencrypted = unencrypted.trim();
@@ -94,7 +95,7 @@ public class UserController {
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
             if (isUserExist != null) {
-                Response response = new Response(1004, "用户已存在");
+                Response response = new Response(ResponseCode.R_1004);
                 return gson.toJson(response);
             }
 
@@ -114,10 +115,10 @@ public class UserController {
 
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(1800); // 30 minutes
-            return gson.toJson(new Response(1000, "success"));
+            return gson.toJson(new Response(ResponseCode.R_1000));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -145,18 +146,18 @@ public class UserController {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if (StringUtils.isEmpty(phoneNumber)) {
-                return gson.toJson(new Response(1001, "参数为空"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
             phoneNumber = phoneNumber.trim();
 
             User isUserExist = userService.getUserByPhoneNumber(phoneNumber);
             if (isUserExist == null)
-                return gson.toJson(new Response(1000, "不存在"));
+                return gson.toJson(new Response(ResponseCode.R_1000));
             else
-                return gson.toJson(new Response(1005, "手机号码已存在"));
+                return gson.toJson(new Response(ResponseCode.R_1005));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -174,26 +175,26 @@ public class UserController {
         try {
             User user = (User) request.getSession().getAttribute("user");
             if(user == null){
-                return gson.toJson(new Response(1010, "用户未登录"));
+                return gson.toJson(new Response(ResponseCode.R_1010));
             }
 
             if (StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
-                return gson.toJson(new Response(1001, "参数为空"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
             oldPassword = oldPassword.trim();
             newPassword = newPassword.trim();
 
             if (!user.getPassword().equals(Encrypt.SHA256(oldPassword))) {
-                return gson.toJson(new Response(1006, "原密码不正确"));
+                return gson.toJson(new Response(ResponseCode.R_1006));
             }
 
             user.setPassword(Encrypt.SHA256(newPassword));
             userService.update(user);
-            return gson.toJson(new Response(1000, "success"));
+            return gson.toJson(new Response(ResponseCode.R_1000));
 
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -205,11 +206,11 @@ public class UserController {
     @RequestMapping(path = "/user/update", method = RequestMethod.POST)
     public String update(String name, Integer sex, Integer isDriver, String model, Integer price, Integer drivingAge,
                          @RequestParam(value = "location", required = false) String locationCode, HttpServletRequest request) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();  // TODO: 2017/1/25
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             User user = (User) request.getSession().getAttribute("user");
             if(user == null){
-                return gson.toJson(new Response(1010, "用户未登录"));
+                return gson.toJson(new Response(ResponseCode.R_1010));
             }
 
             if (!StringUtils.isEmpty(name)) user.setName(name.trim());
@@ -238,11 +239,11 @@ public class UserController {
             userService.update(user);
             request.getSession().removeAttribute("user");
             request.getSession().setAttribute("user", user);
-            return gson.toJson(new Response(1000, "success"));
+            return gson.toJson(new Response(ResponseCode.R_1000));
 
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -258,12 +259,12 @@ public class UserController {
         try {
             User user = (User) request.getSession().getAttribute("user");
             if(user == null){
-                return gson.toJson(new Response(1010, "用户未登录"));
+                return gson.toJson(new Response(ResponseCode.R_1010));
             }
             return getResponse(user);
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -287,7 +288,7 @@ public class UserController {
                     return false;
                 }
             }).serializeNulls().setPrettyPrinting().create();
-            return gson.toJson(new Response<User>(1000, "success", user));
+            return gson.toJson(new Response<User>(ResponseCode.R_1000, user));
         }
 
         //如果是驾驶员返回全部字段
@@ -300,7 +301,7 @@ public class UserController {
             public boolean shouldSkipClass(Class<?> clazz) {
                 return false;
             }
-        }).setPrettyPrinting().create().toJson(new Response<User>(1000, "success", user));
+        }).setPrettyPrinting().create().toJson(new Response<User>(ResponseCode.R_1000, user));
     }
 
     /**
@@ -330,7 +331,7 @@ public class UserController {
         try {
             User user = (User) request.getSession().getAttribute("user");
             if(user == null){
-                return gson.toJson(new Response(1010, "用户未登录"));
+                return gson.toJson(new Response(ResponseCode.R_1010));
             }
             int userId = user.getId();
             int userCarsCount = userService.getUserCarsCount(userId);
@@ -338,12 +339,12 @@ public class UserController {
             return getUserCarListGson(userCarsCount, userCarsList);
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
     private String getUserCarListGson(int userCarsCount, List<VehicleBean> userCarsList){
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").serializeNulls().setPrettyPrinting().create();
-        return gson.toJson(new VehicleResponse(1000, "success", userCarsCount, userCarsList));
+        return gson.toJson(new VehicleResponse(ResponseCode.R_1000, userCarsCount, userCarsList));
     }
 }

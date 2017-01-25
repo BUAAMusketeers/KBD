@@ -8,6 +8,7 @@ import com.kabuda.entity.Location;
 import com.kabuda.entity.domain.LocationResponse;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.service.LocationService;
+import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -49,10 +50,10 @@ public class LocationController {
             if(provinceList != null){
                 total = provinceList.size();
             }
-            return gson.toJson(new LocationResponse(1000, "success", total, provinceList));
+            return gson.toJson(new LocationResponse(ResponseCode.R_1000, total, provinceList));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -71,7 +72,7 @@ public class LocationController {
         }).setPrettyPrinting().create();
         try {
             if(StringUtils.isEmpty(province)){
-                return gson.toJson(new Response(1001, "参数为空"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
             province = province.trim();
 
@@ -80,10 +81,10 @@ public class LocationController {
             if(cityList != null){
                 total = cityList.size();
             }
-            return gson.toJson(new LocationResponse(1000, "success", total, cityList));
+            return gson.toJson(new LocationResponse(ResponseCode.R_1000, total, cityList));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -102,7 +103,7 @@ public class LocationController {
         }).setPrettyPrinting().create();
         try {
             if(StringUtils.isEmpty(city)){
-                return gson.toJson(new Response(1001, "参数为空"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
             city = city.trim();
 
@@ -111,10 +112,10 @@ public class LocationController {
             if(countyList != null){
                 total = countyList.size();
             }
-            return gson.toJson(new LocationResponse(1000, "success", total, countyList));
+            return gson.toJson(new LocationResponse(ResponseCode.R_1000, total, countyList));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 }

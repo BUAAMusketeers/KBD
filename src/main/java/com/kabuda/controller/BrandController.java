@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Brand;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.service.BrandService;
+import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,10 +36,10 @@ public class BrandController {
                 List<Brand> brands = brandService.getBrandListByLetter(String.valueOf(i));
                 data.add(brands);
             }
-            return gson.toJson(new Response<List<List<Brand>>>(1000, "success", data));
+            return gson.toJson(new Response<List<List<Brand>>>(ResponseCode.R_1000, data));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 }

@@ -2,6 +2,7 @@ package com.kabuda.entity.domain;
 
 
 import com.kabuda.entity.Location;
+import com.kabuda.util.ResponseCode;
 
 import java.util.List;
 
@@ -14,9 +15,9 @@ public class LocationResponse {
     public LocationResponse() {
     }
 
-    public LocationResponse(int status, String message, int total, List<Location> data) {
-        this.status = status;
-        this.message = message;
+    public LocationResponse(ResponseCode responseCode, int total, List<Location> data) {
+        this.status = responseCode.getStatus();
+        this.message = responseCode.getMessage();
         this.result = new Result(total, data);
     }
 

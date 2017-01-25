@@ -13,6 +13,7 @@ import com.kabuda.entity.domain.VehicleRequest;
 import com.kabuda.entity.domain.VehicleResponse;
 import com.kabuda.service.LocationService;
 import com.kabuda.service.VehicleService;
+import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -75,14 +76,14 @@ public class VehicleController {
         try {
             if (StringUtils.isEmpty(city) || StringUtils.isEmpty(brand) || StringUtils.isEmpty(model) || StringUtils.isEmpty(sort) ||
                     StringUtils.isEmpty(limit) || StringUtils.isEmpty(page)) {
-                return gson.toJson(new Response(1001, "参数为空"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
             city = city.trim();
             keyword = StringUtils.isEmpty(keyword)? keyword : keyword.trim();
 
             Location cityByName = locationService.getCityByName(city);
             if(cityByName == null){
-                return gson.toJson(new Response(1012, "城市不存在"));
+                return gson.toJson(new Response(ResponseCode.R_1008));
             }
             String cityCode = cityByName.getLocationCode();
 
@@ -97,7 +98,7 @@ public class VehicleController {
             return carListJson(vehicleCount, carList, sellOrRent);
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -116,12 +117,12 @@ public class VehicleController {
         if(sellOrRent == 1){
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").setVersion(0).setExclusionStrategies(exclusionStrategy)
                     .serializeNulls().setPrettyPrinting().create();
-            return gson.toJson(new VehicleResponse(1000, "success", vehicleCount, carList));
+            return gson.toJson(new VehicleResponse(ResponseCode.R_1000, vehicleCount, carList));
         }
         if(sellOrRent == 2){
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").setVersion(4).setExclusionStrategies(exclusionStrategy)
                     .serializeNulls().setPrettyPrinting().create();
-            return gson.toJson(new VehicleResponse(1000, "success", vehicleCount, carList));
+            return gson.toJson(new VehicleResponse(ResponseCode.R_1000, vehicleCount, carList));
         }
         return null;
     }
@@ -136,13 +137,13 @@ public class VehicleController {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if(StringUtils.isEmpty(id)){
-                return gson.toJson(new Response(1001, "参数为空"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
             VehicleBean vehicleBean = vehicleService.getVehicleInfoById(id);
             return carInfoJson(vehicleBean);
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -151,21 +152,21 @@ public class VehicleController {
             if(vehicleBean.getIsSell() == 0 && vehicleBean.getIsRent() == 0){
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").setVersion(2).serializeNulls()
                         .setPrettyPrinting().create();
-                return gson.toJson(new Response<VehicleBean>(1000, "success", vehicleBean));
+                return gson.toJson(new Response<VehicleBean>(ResponseCode.R_1000, vehicleBean));
             }
             if(vehicleBean.getIsSell() == 0){
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").setVersion(4).serializeNulls()
                         .setPrettyPrinting().create();
-                return gson.toJson(new Response<VehicleBean>(1000, "success", vehicleBean));
+                return gson.toJson(new Response<VehicleBean>(ResponseCode.R_1000, vehicleBean));
             }
             if(vehicleBean.getIsRent() == 0){
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").setVersion(0).serializeNulls()
                         .setPrettyPrinting().create();
-                return gson.toJson(new Response<VehicleBean>(1000, "success", vehicleBean));
+                return gson.toJson(new Response<VehicleBean>(ResponseCode.R_1000, vehicleBean));
             }
         }
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").serializeNulls().setPrettyPrinting().create();
-        return gson.toJson(new Response<VehicleBean>(1000, "success", vehicleBean));
+        return gson.toJson(new Response<VehicleBean>(ResponseCode.R_1000, vehicleBean));
     }
 
 
@@ -182,7 +183,7 @@ public class VehicleController {
         try {
             User user = (User) request.getSession().getAttribute("user");
             if(user == null){
-                return gson.toJson(new Response(1010, "用户未登录"));
+                return gson.toJson(new Response(ResponseCode.R_1010));
             }
             int userId = user.getId();
 
@@ -191,7 +192,7 @@ public class VehicleController {
                     StringUtils.isEmpty(tonnage) || StringUtils.isEmpty(equipmentNumber) || StringUtils.isEmpty(description) ||
                     StringUtils.isEmpty(contact) || StringUtils.isEmpty(contactPhone) || StringUtils.isEmpty(isSell) ||
                     StringUtils.isEmpty(isRent)) {
-                return gson.toJson(new Response(1001, "缺少参数"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
             location = location.trim();
             equipmentNumber = equipmentNumber.trim();
@@ -204,31 +205,31 @@ public class VehicleController {
                     description, contact, contactPhone, tonnage, isSell, isRent, -1, -1, -1, -1, releaseDate, releaseDate);
             if (isSell == 1) {
                 if (StringUtils.isEmpty(sellState) || StringUtils.isEmpty(sellPrice)) {
-                    return gson.toJson(new Response(1001, "缺少参数"));
+                    return gson.toJson(new Response(ResponseCode.R_1001));
                 }
                 vehicle.setSellState(sellState);
                 vehicle.setSellPrice(sellPrice);
             }
             if (isRent == 1) {
                 if (StringUtils.isEmpty(rentState) || StringUtils.isEmpty(rentPrice)) {
-                    return gson.toJson(new Response(1001, "缺少参数"));
+                    return gson.toJson(new Response(ResponseCode.R_1001));
                 }
                 vehicle.setRentState(rentState);
                 vehicle.setRentPrice(rentPrice);
             }
 
             if (vehicleService.getVehicleByEN(equipmentNumber) != null) {
-                return gson.toJson(new Response(1007, "该车辆已存在"));
+                return gson.toJson(new Response(ResponseCode.R_1007));
             }
 
             vehicleService.insert(vehicle);
             int id = vehicle.getId();
             Map<String, Integer> hashMap = new HashMap<String, Integer>();
             hashMap.put("id", id);
-            return gson.toJson(new Response<Map<String, Integer>>(1000, "success", hashMap));
+            return gson.toJson(new Response<Map<String, Integer>>(ResponseCode.R_1000, hashMap));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 
@@ -245,14 +246,14 @@ public class VehicleController {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if (StringUtils.isEmpty(id) || StringUtils.isEmpty(isSell) || StringUtils.isEmpty(isRent)) {
-                return gson.toJson(new Response(1001, "参数为空"));
+                return gson.toJson(new Response(ResponseCode.R_1001));
             }
 
             Vehicle vehicleById = vehicleService.getVehicleById(id);
             vehicleById.setIsSell(isSell);
             if (isSell == 1) {
                 if (StringUtils.isEmpty(sellState) || StringUtils.isEmpty(sellPrice)) {
-                    return gson.toJson(new Response(1001, "参数为空"));
+                    return gson.toJson(new Response(ResponseCode.R_1001));
                 }
                 vehicleById.setSellState(sellState);
                 vehicleById.setSellPrice(sellPrice);
@@ -263,7 +264,7 @@ public class VehicleController {
             vehicleById.setIsRent(isRent);
             if (isRent == 1) {
                 if (StringUtils.isEmpty(rentState) || StringUtils.isEmpty(rentPrice)) {
-                    return gson.toJson(new Response(1001, "参数为空"));
+                    return gson.toJson(new Response(ResponseCode.R_1001));
                 }
                 vehicleById.setRentState(rentState);
                 vehicleById.setRentPrice(rentPrice);
@@ -284,10 +285,10 @@ public class VehicleController {
 
             vehicleById.setUpdateDate(Calendar.getInstance().getTime());
             vehicleService.update(vehicleById);
-            return gson.toJson(new Response(1000, "success"));
+            return gson.toJson(new Response(ResponseCode.R_1000));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
 
     }

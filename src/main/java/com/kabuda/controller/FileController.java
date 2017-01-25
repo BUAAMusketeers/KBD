@@ -3,6 +3,7 @@ package com.kabuda.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kabuda.entity.domain.Response;
+import com.kabuda.util.ResponseCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,18 +78,18 @@ public class FileController {
                             return gson.toJson(result);
                         }
                     }else{
-                        return gson.toJson(new Response(1100, "其它错误"));
+                        return gson.toJson(new Response(ResponseCode.R_1100));
                     }
                     //记录上传该文件后的时间
                     //int finalTime = (int) System.currentTimeMillis();
                     //System.out.println(finalTime - pre);
                 }
-                return gson.toJson(new Response(1000, "success"));
+                return gson.toJson(new Response(ResponseCode.R_1000));
             }
-            return gson.toJson(new Response(1011, "不是文件上传请求"));
+            return gson.toJson(new Response(ResponseCode.R_1009));
         } catch (Exception e) {
             e.printStackTrace();
-            return gson.toJson(new Response(1100, "其它错误"));
+            return gson.toJson(new Response(ResponseCode.R_1100));
         }
     }
 }

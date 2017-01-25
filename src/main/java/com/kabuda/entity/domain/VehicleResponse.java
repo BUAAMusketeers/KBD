@@ -1,6 +1,8 @@
 package com.kabuda.entity.domain;
 
 
+import com.kabuda.util.ResponseCode;
+
 import java.util.List;
 
 public class VehicleResponse{
@@ -12,9 +14,9 @@ public class VehicleResponse{
     public VehicleResponse() {
     }
 
-    public VehicleResponse(int status, String message, int total, List<VehicleBean> data) {
-        this.status = status;
-        this.message = message;
+    public VehicleResponse(ResponseCode responseCode, int total, List<VehicleBean> data) {
+        this.status = responseCode.getStatus();
+        this.message = responseCode.getMessage();
         this.result = new Result(total, data);
     }
 
