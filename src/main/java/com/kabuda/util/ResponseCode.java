@@ -34,6 +34,8 @@ public enum ResponseCode {
     private String message;
 
     ResponseCode(int status, String message) {
+        this.status = status;
+        this.message = message;
     }
 
     public int getStatus() {

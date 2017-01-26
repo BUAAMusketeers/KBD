@@ -5,13 +5,12 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Location;
+import com.kabuda.entity.Picture;
 import com.kabuda.entity.User;
 import com.kabuda.entity.Vehicle;
-import com.kabuda.entity.domain.Response;
-import com.kabuda.entity.domain.VehicleBean;
-import com.kabuda.entity.domain.VehicleRequest;
-import com.kabuda.entity.domain.VehicleResponse;
+import com.kabuda.entity.domain.*;
 import com.kabuda.service.LocationService;
+import com.kabuda.service.PictureService;
 import com.kabuda.service.VehicleService;
 import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +30,13 @@ public class VehicleController {
 
     private final LocationService locationService;
 
+    private final PictureService pictureService;
+
     @Autowired
-    public VehicleController(VehicleService vehicleService, LocationService locationService) {
+    public VehicleController(VehicleService vehicleService, LocationService locationService, PictureService pictureService) {
         this.vehicleService = vehicleService;
         this.locationService = locationService;
+        this.pictureService = pictureService;
     }
 
     /**
@@ -293,38 +295,34 @@ public class VehicleController {
 
     }
 
-//    @ResponseBody
-//    @RequestMapping(path = "/car/publishCar", method = RequestMethod.POST)
-//    public String publishCar(HttpServletRequest request, HttpServletResponse response){
-//        Gson gson = new Gson();
-//        try {
-//            Map<String, String> paramsMap = new HashMap<String, String>();
-//            Enumeration parameterNames = request.getParameterNames();
-//            while (parameterNames.hasMoreElements()){
-//                String parameterName = (String) parameterNames.nextElement();
-//                paramsMap.put(parameterName, request.getParameter(parameterName));
-//            }
-//            if(paramsIsEmpty(paramsMap)){
-//                return gson.toJson(new Response(1001, "参数为空"));
-//            }
-//
-//            paramsMap.put("releaseDate", Calendar.getInstance().getTime().toString());
-//            paramsMap.put("updateDate", null);
-//            vehicleService.insert(paramsMap);
-//            return gson.toJson(new Response(1000, "success"));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return gson.toJson(new Response(1100, "其它错误"));
-//        }
-//    }
-//
-//    private boolean paramsIsEmpty(Map map){
-//        for(Object key : map.keySet()){
-//            if(!(key.equals("sellState") || key.equals("rentState") || key.equals("sellPrice") || key.equals("rentPrice"))
-//                    && map.get(key) == null){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+
+    /**
+     * 获取车辆图片
+     * @param id 车辆id
+     */
+    @ResponseBody
+    @RequestMapping(path = "/car/getPictures", method = RequestMethod.POST)
+    public String getPictures(Integer id, HttpServletRequest request){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            if(StringUtils.isEmpty(id)){
+                return gson.toJson(new Response(ResponseCode.R_1001));
+            }
+
+            User user = (User) request.getSession().getAttribute("user");
+            if(user == null){
+                return gson.toJson(new Response(ResponseCode.R_1010));
+            }
+
+            List<Picture> pictures = pictureService.getPictureByVehicleId(id);
+            int total = 0;
+            if(pictures != null){
+                total = pictures.size();
+            }
+            return gson.toJson(new ListResponse<Picture>(ResponseCode.R_1000, total, pictures));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(ResponseCode.R_1100));
+        }
+    }
 }

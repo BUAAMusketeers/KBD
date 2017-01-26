@@ -14,6 +14,7 @@
             price,
             driving_age AS "drivingAge",
             city AS location,
+            user.location_code AS locationCode,
             head_potrait AS "headPotrait",
             user_level AS "userLevel",
             active AS "isActive"
@@ -32,6 +33,7 @@
             price,
             driving_age AS "drivingAge",
             city AS location,
+            user.location_code AS locationCode,
             head_potrait AS "headPotrait",
             user_level AS "userLevel",
             active AS "isActive"
