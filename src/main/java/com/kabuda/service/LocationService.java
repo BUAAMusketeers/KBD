@@ -35,4 +35,11 @@ public class LocationService {
     public Location getCityByName(String curCity){
         return locationDao.getCityByName(curCity);
     }
+
+    /**
+     *  根据地址代码获取地址信息
+     */
+    public Location getLocationByLC(String LocationCode){
+        return locationDao.getLocationByLC(LocationCode);
+    }
 }

@@ -18,4 +18,6 @@ public interface LocationDao extends Dao<Location>{
 
     Location getCityByName(String curCity);
 
+    Location getLocationByLC(String LocationCode);
+
 }

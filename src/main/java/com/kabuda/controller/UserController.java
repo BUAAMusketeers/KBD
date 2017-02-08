@@ -4,11 +4,13 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kabuda.entity.Location;
 import com.kabuda.entity.Model;
 import com.kabuda.entity.User;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.entity.domain.VehicleBean;
 import com.kabuda.entity.domain.VehicleResponse;
+import com.kabuda.service.LocationService;
 import com.kabuda.service.ModelService;
 import com.kabuda.service.UserService;
 import com.kabuda.util.Encrypt;
@@ -34,10 +36,13 @@ public class UserController {
 
     private final ModelService modelService;
 
+    private final LocationService locationService;
+
     @Autowired
-    public UserController(UserService userService, ModelService modelService) {
+    public UserController(UserService userService, ModelService modelService, LocationService locationService) {
         this.userService = userService;
         this.modelService = modelService;
+        this.locationService = locationService;
     }
 
     /**
@@ -112,6 +117,9 @@ public class UserController {
                 if (!StringUtils.isEmpty(locationCode)) user.setLocationCode(locationCode);
                 userService.insert(user);
             }
+
+            Location locationByLC = locationService.getLocationByLC(locationCode);
+            user.setLocation(locationByLC.getCity());
 
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(1800); // 30 minutes

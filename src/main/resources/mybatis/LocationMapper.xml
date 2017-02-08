@@ -48,4 +48,16 @@
         FROM location
         WHERE location_level = '2' AND city = #{curCity}
     </select>
+
+    <select id="getLocationByLC" resultType="com.kabuda.entity.Location">
+        SELECT
+        id,
+        location_code AS locationCode,
+        province,
+        city,
+        county,
+        location_level AS locationLevel
+        FROM location
+        WHERE location_code = #{LocationCode}
+    </select>
 </mapper>
