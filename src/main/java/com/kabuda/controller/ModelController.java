@@ -9,6 +9,7 @@ import com.kabuda.service.ModelService;
 import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,6 +39,24 @@ public class ModelController {
                 data.add(models);
             }
             return gson.toJson(new Response<List<List<Model>>>(ResponseCode.R_1000, data));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(ResponseCode.R_1100));
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(path = "/car/getModel", method = RequestMethod.POST)
+    public String getModelById(Integer id){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            if(StringUtils.isEmpty(id)){
+                return gson.toJson(new Response(ResponseCode.R_1001));
+            }
+
+            Model model = modelService.getModelById(id);
+            return gson.toJson(new Response<Model>(ResponseCode.R_1000, model));
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(ResponseCode.R_1100));

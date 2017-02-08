@@ -2,14 +2,17 @@ package com.kabuda.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kabuda.entity.Picture;
 import com.kabuda.entity.User;
 import com.kabuda.entity.domain.Response;
+import com.kabuda.service.PictureService;
 import com.kabuda.service.UserService;
 import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -27,19 +30,22 @@ public class FileController {
 
     private final UserService userService;
 
+    private final PictureService pictureService;
+
     @Autowired
-    public FileController(UserService userService) {
+    public FileController(UserService userService, PictureService pictureService) {
         this.userService = userService;
+        this.pictureService = pictureService;
     }
 
 
     @ResponseBody
     @RequestMapping("/upload")
-    public String upload(Integer type, Integer id, HttpServletRequest request) {
+    public String upload(Integer type, Integer id, Integer isFirst, HttpServletRequest request) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             if (StringUtils.isEmpty(type) || type < 0 || type > 1 ||
-                    (type == 0 && StringUtils.isEmpty(id))) {
+                    (type == 0 && (StringUtils.isEmpty(id) || StringUtils.isEmpty(isFirst)))) {
                 return gson.toJson(new Response(ResponseCode.R_1001));
             }
 
@@ -50,7 +56,7 @@ public class FileController {
 
             String realPath = request.getSession().getServletContext().getRealPath("/");
 
-            initFile(realPath);
+            initFile(realPath); // 初始化保存图片的路径
 
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
             //判断 request 是否有文件上传,即多部分请求
@@ -66,7 +72,8 @@ public class FileController {
 
                         //如果名称不为“”,说明该文件存在，否则说明该文件不存在
                         if (!StringUtils.isEmpty(myFileName.trim())) {
-                            return saveFile(file, realPath, type, request);
+                            //保存图片
+                            return saveFile(file, realPath, type, id, isFirst, request);
                         }
                     } else {
                         return gson.toJson(new Response(ResponseCode.R_1100));
@@ -85,7 +92,8 @@ public class FileController {
     /**
      * @param type 上传类型(车辆:0, 头像:1)
      */
-    private String saveFile(MultipartFile file, String realPath, int type, HttpServletRequest request) throws IOException {
+    private String saveFile(MultipartFile file, String realPath, int type, Integer id, Integer isFirst,
+                            HttpServletRequest request) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         String timeStamp = String.valueOf(System.currentTimeMillis());
@@ -111,6 +119,12 @@ public class FileController {
             File localFile = new File(path);
             file.transferTo(localFile);
 
+            // 插入数据库表picture
+            Picture picture = new Picture();
+            picture.setIsFirst(isFirst);
+            picture.setVehicleId(id);
+            picture.setUrl(relativePath);
+            pictureService.insert(picture);
 
             Map result = new HashMap();
             List<String> strings = new ArrayList<String>();
@@ -118,7 +132,6 @@ public class FileController {
             result.put("initialPreview", strings);
 
             List arrayList = new ArrayList();
-
             Map initialPreviewConfig = new HashMap();
             initialPreviewConfig.put("caption", myFileName);
             initialPreviewConfig.put("url", "delete-url");
@@ -141,5 +154,31 @@ public class FileController {
 
         File vehiclePath = new File(realPath + "file/vehicle");
         if (!vehiclePath.exists() && !vehiclePath.isDirectory()) vehiclePath.mkdir();
+    }
+
+
+    /**
+     *  删除车辆图片接口
+     */
+    @ResponseBody
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    public String delete(Integer id, HttpServletRequest request){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            if (StringUtils.isEmpty(id)) {
+                return gson.toJson(new Response(ResponseCode.R_1001));
+            }
+
+            User user = (User) request.getSession().getAttribute("user");
+            if (user == null) {
+                return gson.toJson(new Response(ResponseCode.R_1010));
+            }
+
+            pictureService.delete(id);
+            return gson.toJson(new Response(ResponseCode.R_1000));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(ResponseCode.R_1100));
+        }
     }
 }

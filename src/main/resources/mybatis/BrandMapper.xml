@@ -5,16 +5,24 @@
     <select id="getBrandList" resultType="com.kabuda.entity.Brand">
         SELECT
             id,
-            first_letter AS "firstLetter",
-            brand_name AS "brandName"
+            first_letter AS firstLetter,
+            brand_name AS brandName
         FROM brand
     </select>
 
     <select id="getBrandListByLetter" resultType="com.kabuda.entity.Brand">
         SELECT
             id,
-            first_letter AS "firstLetter",
-            brand_name AS "brandName"
+            first_letter AS firstLetter,
+            brand_name AS brandName
         FROM brand WHERE first_letter = #{firstLetter}
+    </select>
+
+    <select id="getBrandById" resultType="com.kabuda.entity.Brand">
+        SELECT
+            id,
+            first_letter AS firstLetter,
+            brand_name AS brandName
+        FROM brand WHERE id = #{id}
     </select>
 </mapper>

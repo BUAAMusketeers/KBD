@@ -11,7 +11,7 @@ public class Brand implements Serializable{
 
     private int id;
 
-    private transient String firstLetter;    // 品牌名称首字母
+    private String firstLetter;    // 品牌名称首字母
 
     @SerializedName("name")
     private String brandName;     // 品牌名称

@@ -11,4 +11,7 @@ public interface PictureDao extends Dao<Picture>{
 
     List<Picture> getPictureByVehicleId(int vehicleId);
 
+    int insert(Picture picture);
+
+    void delete(int id);
 }

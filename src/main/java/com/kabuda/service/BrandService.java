@@ -26,4 +26,8 @@ public class BrandService {
     public List<Brand> getBrandListByLetter(String firstLetter){
         return brandDao.getBrandListByLetter(firstLetter);
     }
+
+    public Brand getBrandById(int id){
+        return brandDao.getBrandById(id);
+    }
 }

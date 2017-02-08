@@ -12,4 +12,6 @@ public interface BrandDao extends Dao<Brand>{
     List<Brand> getBrandList();
 
     List<Brand> getBrandListByLetter(String firstLetter);
+
+    Brand getBrandById(int id);
 }

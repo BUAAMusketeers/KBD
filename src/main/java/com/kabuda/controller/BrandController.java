@@ -9,6 +9,7 @@ import com.kabuda.service.BrandService;
 import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +38,23 @@ public class BrandController {
                 data.add(brands);
             }
             return gson.toJson(new Response<List<List<Brand>>>(ResponseCode.R_1000, data));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(ResponseCode.R_1100));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(path = "/car/getBrand", method = RequestMethod.POST)
+    public String getBrandById(Integer id){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            if(StringUtils.isEmpty(id)){
+                return gson.toJson(new Response(ResponseCode.R_1001));
+            }
+
+            Brand brand = brandService.getBrandById(id);
+            return gson.toJson(new Response<Brand>(ResponseCode.R_1000, brand));
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(ResponseCode.R_1100));

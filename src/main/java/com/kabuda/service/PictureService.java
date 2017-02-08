@@ -23,4 +23,12 @@ public class PictureService {
     public List<Picture> getPictureByVehicleId(int vehicleId){
         return pictureDao.getPictureByVehicleId(vehicleId);
     }
+
+    public int insert(Picture picture){
+        return pictureDao.insert(picture);
+    }
+
+    public void delete(int id){
+        pictureDao.delete(id);
+    }
 }

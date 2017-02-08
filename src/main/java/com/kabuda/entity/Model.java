@@ -11,7 +11,7 @@ public class Model implements Serializable{
 
     private int id;
 
-    private transient String firstLetter;     // 机型名称首字母
+    private String firstLetter;     // 机型名称首字母
 
     @SerializedName("name")
     private String modelName;       // 机型名称
