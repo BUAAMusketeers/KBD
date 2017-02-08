@@ -1,4 +1,9 @@
-
+<%@ page import="com.kabuda.entity.User" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" %>
+<%
+    User user = (User)request.getSession().getAttribute("user");
+%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -14,17 +19,14 @@
 
 <body>
 <!--顶部-->
-<script src="base/head.jsp"></script>
-<div class="crumbs" style="margin-left:10%;margin-top: 10px;">
-    <a href="http://www.guazi.com/bj/" rel="nofollow">首页</a>
-    <em>&gt;</em>
-    <a href="http://www.guazi.com/bj/buy/">北京个人二手车</a>
-    <em>&gt;</em>
-    <a href="http://www.guazi.com/bj/richan/">北京日产二手车</a>
-    <em>&gt;</em>
-    <a href="http://www.guazi.com/bj/richan-yangguang/">北京二手阳光</a>
-    <em>&gt;</em>
-    <span>日产阳光 2014款 1.5XE 手动舒适版</span>
+<jsp:include page="base/head.jsp"></jsp:include>
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li><a href="buyCar.jsp">买车</a></li>
+        <%--<li><a href="carManage.jsp">车辆信息</a></li>--%>
+        <li class="active">车辆信息</li>
+    </ol>
 </div>
 
 <div class="container">
@@ -256,27 +258,27 @@
         <div class="vehicle col-md-6">
             <div >
                 <p class="title col-xs-12">
-                    <span class="vehicle_name col-xs-8">斗山DH300LC-7挖掘机</span>
-                    <span class="vehicle_update col-xs-3 col-xs-offset-1">01-14更新</span>
+                    <span class="vehicle_name col-xs-8" name="title">斗山DH300LC-7挖掘机</span>
+                    <span class="vehicle_update col-xs-3 col-xs-offset-1" name="time">01-14更新</span>
                 </p>
 
                 <p class="price">
-                    <span class="pric_number">¥38万</span>
-                    <span class="pric_number col-xs-3 col-xs-offset-1" style="float: right;">10吨</span>
+                    <span class="pric_number" name="price">¥38万</span>
+                    <span class="pric_number col-xs-3 col-xs-offset-1" style="float: right;" name="tonnage">10吨</span>
                 </p>
 
                 <div class="device_inf">
                     <div class="d_inf">
                         <input type="hidden" id="equipmentCityId" value="45074">
-                        <div class="ecolor">北京&nbsp;北京市</div>
+                        <div class="ecolor" name="location">北京&nbsp;北京市</div>
                         <div class="sec_div">停放</div>
                     </div>
                     <div class="d_inf">
-                        <div class="ecolor">6100小时</div>
+                        <div class="ecolor" name="used_hours">6100小时</div>
                         <div class="sec_div">小时</div>
                     </div>
                     <div class="d_inf last_d_inf">
-                        <div class="ecolor">2011年</div>
+                        <div class="ecolor" name="vehicle_age">2011年</div>
                         <div class="sec_div">年限</div>
                     </div>
                 </div>
@@ -284,23 +286,23 @@
                 <div class="row vehicle-info">
                     <div class="col-xs-6">
                         <span class="col-xs-5 col-xs-offset-1">设备类别:</span>
-                        <span class="col-xs-6">挖掘机</span>
+                        <span class="col-xs-6" name="model">挖掘机</span>
                     </div>
                     <div class="col-xs-6 ">
                         <span class="col-xs-5 col-xs-offset-1">设备品牌:</span>
-                        <span class="col-xs-6">斗山</span>
+                        <span class="col-xs-6" name="grand">斗山</span>
                     </div>
                     <div class="col-xs-6 ">
                         <span class="col-xs-5 col-xs-offset-1">联系人:</span>
-                        <span class="col-xs-6">张先生</span>
+                        <span class="col-xs-6" name="contact">张先生</span>
                     </div>
                     <div class="col-xs-6 ">
                         <span class="col-xs-5 col-xs-offset-1">联系电话:</span>
-                        <span class="col-xs-6">12343213</span>
+                        <span class="col-xs-6" name="contact_phone">12343213</span>
                     </div>
                     <div class="col-xs-12 ">
                         <span class="col-xs-10" style="margin-left: 20px">车主描述:</span>
-                        <p class="col-xs-12" style="margin-left: 20px">12343213</p>
+                        <p class="col-xs-12" name="description" style="margin-left: 20px">12343213</p>
                     </div>
                 </div>
         </div>
@@ -349,6 +351,29 @@
             $(".det-picside li:eq("+now+")").show();
             console.log(now);
         });
+
+        //初始化数据
+        function init(){
+            var id = getQueryString("vehicleId");
+            $.ajax({
+                type: "post",
+                url: "/car/getCarInfo",
+                data:{"id":id},
+                success: function(data){
+                    if (typeof data == "string") {
+                        data = JSON.parse(data);
+                    }
+                    if(data.status==1000) {
+
+
+                    }
+
+                },
+                error:function(error){
+                    alert("connection error!");
+                }
+            });
+        }
 
     });
 </script>

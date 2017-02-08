@@ -114,7 +114,7 @@ public class FileController {
 
             Map result = new HashMap();
             List<String> strings = new ArrayList<String>();
-            strings.add("file/" + myFileName);
+            strings.add("file/vehicle/" + myFileName);
             result.put("initialPreview", strings);
 
             List arrayList = new ArrayList();

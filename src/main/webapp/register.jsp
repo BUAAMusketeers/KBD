@@ -121,7 +121,7 @@
                     <div class="form-group">
                         <label class="col-xs-4 control-label">驾驶年龄:</label>
                         <div class="col-xs-8">
-                            <select class="form-control" name="driverAge">
+                            <select class="form-control" name="drivingAge">
                                 <option value="">请选择</option>
                                 <option value="1">1年</option>
                                 <option value="2">2年</option>
@@ -162,7 +162,7 @@
                 <div class="form-group agree">
                     <div class="checkbox">
                         <input type="checkbox" id="checkAgreement"  name="checkAgreement" checked="true">我同意
-                        <a href="agreement.html" target="_blank">《猎豹挂号网注册协议》</a>
+                        <a href="agreement.html" target="_blank">《卡布达网注册协议》</a>
                     </div>
                 </div>
                 <div class="form-group btn-area">
@@ -289,7 +289,7 @@
                         }
                     }
                 },
-                driverAge:{
+                drivingAge:{
                     validators: {
                         callback:{
                             message: '请选择驾驶年龄',
@@ -382,7 +382,7 @@
                                 data = JSON.parse(data);
                             }
                             if(data.status==1000){
-                                windows.location.href="user.jsp";
+                                window.location.href="user.jsp";
                             }else if(data.status==1001){
                                 alert("手机号已注册！");
                             }else{
