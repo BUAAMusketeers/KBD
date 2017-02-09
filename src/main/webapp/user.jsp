@@ -630,7 +630,7 @@
         //console.log(file[0]);
         $.ajax({
             type: "POST",
-            url:  "file/upload?type=1",
+            url:  "file/uploadAvatar",
             contentType: false,
             processData: false ,
             data: formdata,
