@@ -1,6 +1,8 @@
 package com.kabuda.entity;
 
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Picture implements Serializable {
@@ -10,6 +12,11 @@ public class Picture implements Serializable {
     private Integer isFirst;
     private transient Integer vehicleId;
     private String url;
+
+    @SerializedName("caption")
+    private String name;
+    private Long size;
+
 
     public Integer getId() {
         return id;
@@ -41,5 +48,21 @@ public class Picture implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
     }
 }

@@ -69,7 +69,7 @@ public class FileController {
     private String upload(int type, Integer id, Integer isFirst, HttpServletRequest request) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            if (type == 0 && (StringUtils.isEmpty(id) || StringUtils.isEmpty(isFirst))) {
+            if (type == 0 && StringUtils.isEmpty(id)) {
                 return gson.toJson(new Response(ResponseCode.R_1001));
             }
 
@@ -145,26 +145,30 @@ public class FileController {
 
             // 插入数据库表picture
             Picture picture = new Picture();
-            picture.setIsFirst(isFirst);
+            picture.setIsFirst(isFirst == null ? 0 : isFirst);
             picture.setVehicleId(id);
             picture.setUrl(relativePath);
+            picture.setName(myFileName);
+            picture.setSize(file.getSize());
             pictureService.insert(picture);
 
-            Map result = new HashMap();
-            List<String> strings = new ArrayList<String>();
-            strings.add("file/vehicle/" + myFileName);
-            result.put("initialPreview", strings);
+            // 返回的数据
+            Map<String, Object> result = new HashMap<String, Object>();
 
-            List arrayList = new ArrayList();
-            Map initialPreviewConfig = new HashMap();
-            initialPreviewConfig.put("caption", myFileName);
-            initialPreviewConfig.put("url", "delete-url");
-            initialPreviewConfig.put("key", "1,0");
-            initialPreviewConfig.put("size", file.getSize());
-            arrayList.add(initialPreviewConfig);
+            List<String> initialPreview = new ArrayList<String>();
+            initialPreview.add("file/vehicle/" + myFileName);
+            result.put("initialPreview", initialPreview);
 
-            result.put("initialPreviewConfig", arrayList);
-            return gson.toJson(new Response(ResponseCode.R_1000));
+            List<Object> initialPreviewConfig = new ArrayList<Object>();
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("caption", myFileName);
+            map.put("url", "/file/delete");
+            map.put("key", picture.getId());
+            map.put("size", file.getSize());
+            initialPreviewConfig.add(map);
+
+            result.put("initialPreviewConfig", initialPreviewConfig);
+            return gson.toJson(new Response<Map>(ResponseCode.R_1000, result));
         }
     }
 
@@ -199,6 +203,44 @@ public class FileController {
             }
 
             pictureService.delete(id);
+            return gson.toJson(new Response(ResponseCode.R_1000));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(ResponseCode.R_1100));
+        }
+    }
+
+
+    /**
+     * 车辆图片设为首图
+     * @param vehicleId 车辆id
+     * @param pictureId 车辆图片的id
+     */
+    @ResponseBody
+    @RequestMapping(path = "setFirst ", method = RequestMethod.POST)
+    public String setFirst(Integer vehicleId, Integer pictureId, HttpServletRequest request){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            if (StringUtils.isEmpty(vehicleId) || StringUtils.isEmpty(pictureId)) {
+                return gson.toJson(new Response(ResponseCode.R_1001));
+            }
+
+            User user = (User) request.getSession().getAttribute("user");
+            if (user == null) {
+                return gson.toJson(new Response(ResponseCode.R_1010));
+            }
+
+            List<Picture> pictureList = pictureService.getPictureByVehicleId(vehicleId);
+            for(Picture picture : pictureList){
+                if(picture.getIsFirst() == 1){
+                    picture.setIsFirst(0);
+                    pictureService.update(picture);
+                }
+                if(picture.getId() == pictureId.intValue()){
+                    picture.setIsFirst(1);
+                    pictureService.update(picture);
+                }
+            }
             return gson.toJson(new Response(ResponseCode.R_1000));
         } catch (Exception e) {
             e.printStackTrace();

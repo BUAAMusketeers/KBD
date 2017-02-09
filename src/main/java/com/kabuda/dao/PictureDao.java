@@ -13,5 +13,7 @@ public interface PictureDao extends Dao<Picture>{
 
     int insert(Picture picture);
 
+    void update(Picture picture);
+
     void delete(int id);
 }

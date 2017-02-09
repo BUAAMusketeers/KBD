@@ -28,6 +28,10 @@ public class PictureService {
         return pictureDao.insert(picture);
     }
 
+    public void update(Picture picture){
+        pictureDao.update(picture);
+    }
+
     public void delete(int id){
         pictureDao.delete(id);
     }

@@ -8,7 +8,9 @@
             id,
             is_first    AS isFirst,
             vehicle_id  AS vehicleId,
-            url
+            url,
+            name,
+            size
         FROM picture WHERE vehicle_id = #{vehicleId}
     </select>
 
@@ -18,14 +20,16 @@
             id,
             is_first    AS isFirst,
             vehicle_id  AS vehicleId,
-            url
+            url,
+            name,
+            size
         FROM picture WHERE id = #{id}
     </select>
 
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO picture (is_first, vehicle_id, url)
-        VALUES (#{isFirst}, #{vehicleId}, #{url})
+        INSERT INTO picture (is_first, vehicle_id, url, name, size)
+        VALUES (#{isFirst}, #{vehicleId}, #{url}, #{name}, #{size})
     </insert>
 
 
@@ -33,7 +37,9 @@
         UPDATE picture SET
             is_first = #{isFirst},
             vehicle_id = #{vehicleId},
-            url = #{url}
+            url = #{url},
+            name = #{name},
+            size = #{size}
         WHERE id = #{id}
     </update>
 
