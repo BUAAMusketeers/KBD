@@ -20,6 +20,11 @@ public interface VehicleDao extends Dao<Vehicle>{
 
     List<VehicleBean> getVehicleList(VehicleRequest vehicleRequest); //int city, int brand, int model, int sort, int limit, int offset, String keyword, int isSell
 
+    /**
+     * 根据用户id获取车辆列表
+     */
+    List<Vehicle> getVehicleListByUserId(int userId);
+
     VehicleBean getVehicleInfoById(int id);
 
 

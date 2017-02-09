@@ -68,6 +68,32 @@
     </select>
 
 
+    <select id="getVehicleListByUserId" resultType="com.kabuda.entity.Vehicle">
+        SELECT
+            id,
+            user_id AS userId,
+            brand_id AS brandId,
+            model_id AS modelId,
+            location_code AS locationCode,
+            used_hours AS usedHours,
+            vehicle_age AS vehicleAge,
+            equipment_number AS equipmentNumber,
+            description,
+            contact,
+            contact_phone AS contactPhone,
+            tonnage,
+            sell AS isSell,
+            rent AS isRent,
+            sell_state AS sellState,
+            rent_state AS rentState,
+            sell_price AS sellPrice,
+            rent_price AS rentPrice,
+            release_date AS releaseDate,
+            update_date AS updateDate
+        FROM vehicle WHERE user_id = #{userId}
+    </select>
+
+
     <select id="getVehicleInfoById" resultType="com.kabuda.entity.domain.VehicleBean">
         SELECT
         vehicle.id AS id,

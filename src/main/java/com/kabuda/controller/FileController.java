@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Picture;
 import com.kabuda.entity.User;
+import com.kabuda.entity.Vehicle;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.service.PictureService;
 import com.kabuda.service.UserService;
+import com.kabuda.service.VehicleService;
 import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,10 +34,13 @@ public class FileController {
 
     private final PictureService pictureService;
 
+    private final VehicleService vehicleService;
+
     @Autowired
-    public FileController(UserService userService, PictureService pictureService) {
+    public FileController(UserService userService, PictureService pictureService, VehicleService vehicleService) {
         this.userService = userService;
         this.pictureService = pictureService;
+        this.vehicleService = vehicleService;
     }
 
 
@@ -76,6 +81,10 @@ public class FileController {
             User user = (User) request.getSession().getAttribute("user");
             if (user == null) {
                 return gson.toJson(new Response(ResponseCode.R_1010));
+            }
+
+            if(type == 0 && !userHasCar(user.getId(), id)){
+                return gson.toJson(new Response(ResponseCode.R_1011));
             }
 
             String realPath = request.getSession().getServletContext().getRealPath("/");
@@ -202,6 +211,10 @@ public class FileController {
                 return gson.toJson(new Response(ResponseCode.R_1010));
             }
 
+            if(!userHasCar(user.getId(), id)){
+                return gson.toJson(new Response(ResponseCode.R_1011));
+            }
+
             pictureService.delete(id);
             return gson.toJson(new Response(ResponseCode.R_1000));
         } catch (Exception e) {
@@ -230,6 +243,10 @@ public class FileController {
                 return gson.toJson(new Response(ResponseCode.R_1010));
             }
 
+            if(!userHasCar(user.getId(), vehicleId)){
+                return gson.toJson(new Response(ResponseCode.R_1011));
+            }
+
             List<Picture> pictureList = pictureService.getPictureByVehicleId(vehicleId);
             for(Picture picture : pictureList){
                 if(picture.getIsFirst() == 1){
@@ -246,5 +263,22 @@ public class FileController {
             e.printStackTrace();
             return gson.toJson(new Response(ResponseCode.R_1100));
         }
+    }
+
+
+    /**
+     * 判断用户是否拥有对应车辆
+     * @param userId 用户id
+     * @param vehicleId 车辆id
+     */
+    private boolean userHasCar(int userId, int vehicleId){
+        List<Vehicle> vehicleList = vehicleService.getVehicleListByUserId(userId);
+        if(vehicleList != null){
+            for(Vehicle vehicle : vehicleList){
+                if(vehicle.getId() == vehicleId)
+                    return true;
+            }
+        }
+        return false;
     }
 }

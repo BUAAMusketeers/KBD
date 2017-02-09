@@ -30,6 +30,10 @@ public class VehicleService {
         return vehicleDao.getVehicleList(vehicleRequest);
     }
 
+    public  List<Vehicle> getVehicleListByUserId(int userId){
+        return vehicleDao.getVehicleListByUserId(userId);
+    }
+
     public VehicleBean getVehicleInfoById(int id){
         return vehicleDao.getVehicleInfoById(id);
     }
