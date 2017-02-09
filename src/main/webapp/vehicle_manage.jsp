@@ -37,6 +37,7 @@
         <div class="col-md-6 sell-body col-md-offset-3">
             <form id="register-form" class="form-horizontal">
                 <input type="hidden"  name="location" value="">
+                <input type="hidden"  name="id" value="">
                 <div class="form-group">
                     <label class="col-md-2 col-md-offset-0 col-xs-3 col-xs-offset-1 control-label">选择分类:</label>
                     <div class="col-md-4 col-xs-7">
@@ -372,9 +373,10 @@
                     var bv = $form.data('bootstrapValidator');
                     var location = $('select[name="county"] option:selected').val();
                     $('input[name="location"]').val(location);
+
                     $.ajax({
                         type: "post",
-                        url: "/car/publishCar",
+                        url: "/car/updateCar",
                         data:$('#register-form').serialize(),
                         success: function(data){
                             if (typeof data == "string") {
@@ -382,6 +384,7 @@
                             }
                             if(data.status==1000){
                                 alert("发布成功!");
+                                history.go(0);//刷洗当前页面
                             }else{
                                 alert("信息不完整！");
                             }
@@ -393,6 +396,7 @@
                 });
         function initVehicel(){
             var id = getQueryString("vehicleId");
+            $("input[name='id']").val(id);
             $.ajax({
                 type: "post",
                 url: "/car/getCarInfo",
@@ -505,6 +509,7 @@
                                     $(this).attr("selected", "selected");
                                 }
                             });
+                            $("input[name='isSell']:eq(0)").attr("checked","checked");
                         }
                         if(data.data.rent==0){
                             $(".rentState").hide();
@@ -520,6 +525,7 @@
                                     $(this).attr("selected", "selected");
                                 }
                             });
+                            $("input[name='isRent']:eq(0)").attr("checked","checked");
                         }
 
                     }else{
