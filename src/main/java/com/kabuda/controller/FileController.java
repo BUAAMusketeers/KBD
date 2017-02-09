@@ -43,7 +43,7 @@ public class FileController {
      *  用户头像上传
      */
     @ResponseBody
-    @RequestMapping(path = "/uploadAvatar", method = RequestMethod.POST)
+    @RequestMapping("/uploadAvatar")
     public String uploadAvatar(HttpServletRequest request){
         return upload(1, null, null, request);
     }
@@ -55,7 +55,7 @@ public class FileController {
      * @param isFirst 是否首图
      */
     @ResponseBody
-    @RequestMapping(path = "/uploadCar", method = RequestMethod.POST)
+    @RequestMapping("/uploadCar")
     public String uploadCar(Integer id, Integer isFirst, HttpServletRequest request){
         return upload(0, id, isFirst, request);
     }
