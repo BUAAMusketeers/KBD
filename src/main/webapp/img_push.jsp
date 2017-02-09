@@ -9,24 +9,37 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>发布车辆 | 卡布达</title>
+    <title>车辆图片 | 卡布达</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link href="css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/sell.css" />
     <link href="images/favicon.ico" rel="shortcut icon" />
+    <script src="js/utils.js"></script>
 </head>
 
 <body>
 <!--顶部-->
 <jsp:include page="base/head.jsp"></jsp:include>
 
-<div class="container kv-main">
-    <div class="row">
-        <div class="col-md-12 reg-head">
-            <h1>图片上传</h1>
-        </div>
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li><a href="user.jsp">个人信息</a></li>
+        <li><a href="carManage.jsp">车辆管理</a></li>
+        <script>
+            var id = getQueryString("vehicleId");
+            document.write("<li class='bread_li'><a href='vehicle_manage.jsp?vehicleId="+id+"'>车辆编辑</a></li>")
+        </script>
+        <%--<li><a href="vehicle_manage.jsp">车辆编辑</a></li>--%>
+        <li class="active">车辆图片</li>
+    </ol>
+    <div class="reg-head" style="margin-top: -50px">
+        <h1>车辆图片</h1>
     </div>
+</div>
+
+<div class="container kv-main">
     <form enctype="multipart/form-data">
         <div class="row" style="margin-top: 10px">
             <div class="form-group col-md-8 col-md-offset-2 clearfix">
@@ -41,7 +54,6 @@
 <script src="js/bootstrapValidator.min.js"></script>
 <script src="js/fileinput.min.js" type="text/javascript"></script>
 <script src="js/zh.js" type="text/javascript"></script>
-<script src="js/utils.js"></script>
 <script>
     initImg();
     function initImg(){
