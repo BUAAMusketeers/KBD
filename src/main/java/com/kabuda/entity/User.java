@@ -17,7 +17,7 @@ public class User implements Serializable {
     private List<String> modelNameList;     // 驾驶员所能驾驶的机型列表
     private int price;                      // 驾驶员价格   元/天
     private int drivingAge;                 // 驾驶年龄
-    private transient String locationCode;  // 驾驶员地址的代码
+    private String locationCode;            // 驾驶员地址的代码
     private String location;                // 驾驶员地址
     private String headPotrait;             // 用户头像的url
     private transient int userLevel;        // 用户等级，3代表普通用户，4代表高级用户，5代表管理员

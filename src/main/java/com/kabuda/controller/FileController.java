@@ -39,13 +39,37 @@ public class FileController {
     }
 
 
+    /**
+     *  用户头像上传
+     */
     @ResponseBody
-    @RequestMapping("/upload")
-    public String upload(Integer type, Integer id, Integer isFirst, HttpServletRequest request) {
+    @RequestMapping(path = "/uploadAvatar", method = RequestMethod.POST)
+    public String uploadAvatar(HttpServletRequest request){
+        return upload(1, null, null, request);
+    }
+
+
+    /**
+     * 车辆图片上传
+     * @param id 车辆id
+     * @param isFirst 是否首图
+     */
+    @ResponseBody
+    @RequestMapping(path = "/uploadCar", method = RequestMethod.POST)
+    public String uploadCar(Integer id, Integer isFirst, HttpServletRequest request){
+        return upload(0, id, isFirst, request);
+    }
+
+    /**
+     * 图片上传
+     * @param type 上传类型(车辆:0, 头像:1)
+     * @param id 车辆id
+     * @param isFirst 是否首图(不是:0，是:1)
+     */
+    private String upload(int type, Integer id, Integer isFirst, HttpServletRequest request) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            if (StringUtils.isEmpty(type) || type < 0 || type > 1 ||
-                    (type == 0 && (StringUtils.isEmpty(id) || StringUtils.isEmpty(isFirst)))) {
+            if (type == 0 && (StringUtils.isEmpty(id) || StringUtils.isEmpty(isFirst))) {
                 return gson.toJson(new Response(ResponseCode.R_1001));
             }
 
