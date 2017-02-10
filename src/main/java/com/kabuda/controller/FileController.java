@@ -177,7 +177,7 @@ public class FileController {
             initialPreviewConfig.add(map);
 
             result.put("initialPreviewConfig", initialPreviewConfig);
-            return gson.toJson(new Response<Map>(ResponseCode.R_1000, result));
+            return gson.toJson(result);
         }
     }
 
