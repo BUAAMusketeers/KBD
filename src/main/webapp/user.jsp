@@ -56,25 +56,25 @@
                     <div class="form-group">
                         <label for="userName_user" class="col-sm-2 control-label">真实姓名</label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="userName_user">李先生</p>
+                            <p class="form-control-static" id="userName_user"></p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="mobile_user" class="col-sm-2 control-label">手机号</label>
                         <div class="col-sm-10">
-                            <p class="form-control-static" id="mobile_user">18611255411</p>
+                            <p class="form-control-static" id="mobile_user"></p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="sex_user" class="col-sm-2 control-label">性别</label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="sex_user">男</p>
+                            <p class="form-control-static" id="sex_user"></p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="sex_user" class="col-sm-2 control-label">驾驶员注册</label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="ifDriver_user">是</p>
+                            <p class="form-control-static" id="ifDriver_user"></p>
                         </div>
                     </div>
                     <div class="form-group showForDriver">
@@ -89,19 +89,19 @@
                     <div class="form-group showForDriver">
                         <label for="YearsOfDriving_user" class="col-sm-2 control-label">驾龄</label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="YearsOfDriving_user">12年</p>
+                            <p class="form-control-static" id="YearsOfDriving_user"></p>
                         </div>
                     </div>
                     <div class="form-group showForDriver">
                         <label for="location_user" class="col-sm-2 control-label">驾驶地址</label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="location_user">北京市海淀区</p>
+                            <p class="form-control-static" id="location_user"></p>
                         </div>
                     </div>
                     <div class="form-group  showForDriver">
                         <label for="commission_user" class="col-sm-2 control-label">预期佣金</label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="commission_user">45元/天</p>
+                            <p class="form-control-static" id="commission_user"></p>
                         </div>
                     </div>
 
@@ -498,14 +498,16 @@
 
                     $("#mobile_user").html(data.phoneNumber);
                     $("#userName_user").html(data.name);
+                    $("#location_user").html(data.location);
                     $("#sex_user").html((data.sex==1)?"男":"女");
                     $("#ifDriver_user").html((data.isDriver==1)?"是":"否");
+
                     if(data.isDriver){
-                        $("#YearsOfDriving_user").html(data.drivingAge);
-                        $("#commission_user").html(data.drivingAge);
-                        if(data.model){
-                            for(var j=0;j<data.model.length;j++){
-                                var str = '<span class="label label-info function_label">' + data.model[j] + '</span>';
+                        $("#YearsOfDriving_user").html(data.drivingAge+"年");
+                        $("#commission_user").html(data.price+"元/天");
+                        if(data.modelNameList){
+                            for(var j=0;j<data.modelNameList.length;j++){
+                                var str = '<span class="label label-info function_label">' + data.modelNameList[j] + '</span>';
                                 $("#carType_user").append(str);
                             }
                         }
