@@ -24,6 +24,10 @@ public class PictureService {
         return pictureDao.getPictureByVehicleId(vehicleId);
     }
 
+    public Picture getPictureById(int id){
+        return pictureDao.getPictureById(id);
+    }
+
     public int insert(Picture picture){
         return pictureDao.insert(picture);
     }
