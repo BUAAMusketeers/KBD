@@ -211,7 +211,7 @@ public class FileController {
                 return gson.toJson(new Response(ResponseCode.R_1010));
             }
 
-            if(!userHasCar(user.getId(), id)){
+            if(!userHasPicture(user.getId(), id)){
                 return gson.toJson(new Response(ResponseCode.R_1011));
             }
 
@@ -243,7 +243,7 @@ public class FileController {
                 return gson.toJson(new Response(ResponseCode.R_1010));
             }
 
-            if(!userHasCar(user.getId(), vehicleId)){
+            if(!userHasCar(user.getId(), vehicleId) || !carHasPicture(vehicleId, pictureId)){
                 return gson.toJson(new Response(ResponseCode.R_1011));
             }
 
@@ -276,6 +276,35 @@ public class FileController {
         if(vehicleList != null){
             for(Vehicle vehicle : vehicleList){
                 if(vehicle.getId() == vehicleId)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 判断图片是否是该车的图片
+     * @param vehicleId 车辆id
+     * @param pictureId 图片id
+     */
+    private boolean carHasPicture(int vehicleId, int pictureId) {
+        Picture picture = pictureService.getPictureById(pictureId);
+        return picture != null && picture.getVehicleId() == vehicleId;
+    }
+
+
+    /**
+     * 判断图片是否属于用户所拥有的车辆
+     * @param userId 用户id
+     * @param pictureId 图片id
+     */
+    private boolean userHasPicture(int userId, int pictureId){
+        List<Vehicle> vehicleList = vehicleService.getVehicleListByUserId(userId);
+        Picture picture = pictureService.getPictureById(pictureId);
+        if(vehicleList != null && picture != null){
+            for(Vehicle vehicle : vehicleList){
+                if(vehicle.getId() == picture.getVehicleId())
                     return true;
             }
         }
