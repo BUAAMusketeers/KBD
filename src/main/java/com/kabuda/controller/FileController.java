@@ -230,7 +230,7 @@ public class FileController {
      * @param pictureId 车辆图片的id
      */
     @ResponseBody
-    @RequestMapping(path = "/setFirst ", method = RequestMethod.POST)
+    @RequestMapping(path = "/setFirst", method = RequestMethod.POST)
     public String setFirst(Integer vehicleId, Integer pictureId, HttpServletRequest request){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
