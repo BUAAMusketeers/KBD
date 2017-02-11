@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>车辆图片 | 卡布达</title>
+    <title>卡布达 | 车辆图片</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link href="css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/base.css" />
@@ -118,7 +118,7 @@
         }
         }).off('filepreupload').on('filepreupload', function() {
         }).on("fileuploaded", function(event, outData) {
-            console.log(outData.response);
+            //console.log(outData.response);
             addFirstImg();
             if(outData.error!=null){
                 alert(outData.error);
@@ -126,30 +126,45 @@
         });
         addFirstImg();
     }
-    function addFirstImg() {
+    function addFirstImg(a) {
         var $divList = $(".file-footer-buttons");
         $divList.each(function (i) {
-            console.log($(".file-footer-buttons").eq(i).children());
-            console.log("/n");
-            if ($(".file-footer-buttons").eq(i).children().length == 2) {
-                var key = $(".file-footer-buttons").eq(i).children().eq(0).data("key");
-                var array = key.split(",");
-                var str;
-                if (array[1] == "0") {
-                    str = '<button type="button" class="kv-file-remove btn btn-xs btn-default setFirst" title="设为首图" data-url="/file/setFirst" data-key="' + array[0] + '">设为首图</button>';
-                    $(".file-footer-buttons").eq(i).append(str);
-                } else {
-                    str = '<button type="button" class="kv-file-remove btn btn-xs btn-default setFirst" title="首图" data-url="" data-key="' + array[0] + '">首图</button>';
-                    $(".file-footer-buttons").eq(i).append(str);
+//            console.log($(".file-footer-buttons").eq(i).children());
+//            console.log("/n");
+                if ($(".file-footer-buttons").eq(i).children().length == 2) {
+                    var key = $(".file-footer-buttons").eq(i).children().eq(0).data("key");
+                    var array = key.split(",");
+                    var str;
+                    if (array[1] == "0") {
+                        str = '<button type="button" class=" btn btn-xs btn-default setFirst" title="设为首图" data-url="/file/setFirst" data-key="' + array[0] + '">设为首图</button>';
+                        $(".file-footer-buttons").eq(i).append(str);
+                    } else {
+                        str = '<button type="button" class=" btn btn-xs btn-default setFirst" title="首图" data-url="/file/setFirst" data-key="' + array[0] + '">首图</button>';
+                        $(".file-footer-buttons").eq(i).append(str);
+                    }
+                }
+            if(a!=null){
+                var $btn = $(".file-footer-buttons").eq(i).children().eq(2);
+                if($btn.attr("title")=="首图"){
+                    $btn.text("设为首图");
+                    $btn.attr("title","设为首图");
                 }
             }
         });
+        $(a).text("首图");
+        $(a).attr("title","首图");
+
         $(".setFirst").click(function () {
             var key = $(this).data("key");
             var url = $(this).data("url");
+            //$(this).text("首图");
+            var b = this;
+            //console.log(this);
+            //$(this).attr("title","首图");
             $.ajax({
                 type: "post",
                 url: url,
+                async: true,
                 data:{vehicleId:id,
                         pictureId:key},
                 success: function(data){
@@ -157,7 +172,8 @@
                         data = JSON.parse(data);
                     }
                     if(data.status==1000){
-                       addFirstImg();
+                       addFirstImg(b);
+                        //console.log(this); ajax 里面自带this 对象
                     }
                 },
                 error:function(error){
@@ -166,6 +182,9 @@
             });
         });
     }
+    $(".fileinput-remove").click(function () {
+       addFirstImg();
+    });
 </script>
 </body>
 </html>
