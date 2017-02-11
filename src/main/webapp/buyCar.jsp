@@ -120,7 +120,7 @@
     <!--排序方式-->
     <div class="seqBox clearfix">
         <p class="fr seqP">
-            共找到<b>456</b>辆
+            共找到<b id="carAmount"></b>辆
         </p>
         <div class="fl seqDiv">
             <div class="btn-group">
@@ -229,6 +229,7 @@
                 }
                 if (data.status == 1000) {
                     $("#carListBox").empty();
+                    $("#carAmount").html(data.result.total);
                     if (data.result.total) {
 
                         var total_page = Math.ceil(data.result.total / global["limit"]);
@@ -246,7 +247,7 @@
                             var str=''+
                             '<div class="col-sm-6 col-md-3 listBox">' +
                             '<div class="thumbnail">' +
-                            '<img src="'+result[i].pictureUrl+" alt="图片">' +
+                            '<img src="'+result[i].pictureUrl+'" alt="picture">' +
                             '<div class="infoDiv">' +
                             '<p class="infoBox"><a>'+result[i].brand+result[i].model+'</a></p>' +
                             '<p class="infoGray">' +
