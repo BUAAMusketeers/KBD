@@ -50,7 +50,7 @@
         <li role="presentation" ><a id="info_2" href="user.jsp?id=2" >修改个人信息</a></li>
         <li role="presentation" ><a id="info_3" href="user.jsp?id=3" >头像上传</a></li>
         <li role="presentation" ><a id="info_4" href="user.jsp?id=4" >修改密码</a></li>
-        <li role="presentation" ><a id="info_5" href="#manageCar" >车辆管理</a></li>
+        <li role="presentation" ><a id="info_5" href="#manageCar" aria-controls="user-information" role="tab" data-toggle="tab">车辆管理</a></li>
     </ul>
     <div class="tab-content">
 
@@ -58,7 +58,7 @@
             <h4 class="userpage_title">车辆管理<small><a class="fr"  href="sell.jsp"><span class="glyphicon glyphicon-plus"></span>添加车辆</a></small></h4>
             <div class="">
                 <div class="table-responsive ">
-                    <table id="carList" class="table table-condensed table-hover ">
+                    <table id="carList" class="table table-condensed table-hover " >
                         <tr>
                             <th class="col-xs-1">#</th>
                             <th class="col-xs-2">类型</th>

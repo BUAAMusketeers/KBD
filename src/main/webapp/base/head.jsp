@@ -41,8 +41,8 @@ User user = (User)request.getSession().getAttribute("user");
                     <li><a href="index.html"> 首页</a></li>
                     <li><a href="buyCar.jsp">买车</a></li>
                     <li><a href="#">租车</a></li>
-                    <li><a href="#">买挖掘机</a></li>
-                    <li><a href="#">租挖掘机</a></li>
+                    <li><a href="#">找驾驶员</a></li>
+                    <li><a href="#">租拖车</a></li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
