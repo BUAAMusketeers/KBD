@@ -182,6 +182,9 @@
             });
         });
     }
+    $(".fileinput-remove").click(function () {
+       addFirstImg();
+    });
 </script>
 </body>
 </html>
