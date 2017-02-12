@@ -136,7 +136,7 @@
                                '<td>'+data[i].model+'</td>'+
                                '<td>'+data[i].brand+'</td>'+
                                '<td>'+str1+str2+'</td>'+
-                               '<td><a onclick="editCar('+data[i].id+')">编辑</a></td>'+
+                               '<td><a href="vehicle_detail.jsp?vehicleId?='+data[i].id+'">编辑</a></td>'+
                                '<td><a onclick="deleteCar('+data[i].id+')"><span class="glyphicon glyphicon-remove delete_x"></span></a></td>'+
                                '</tr>';
                             $("#carList").append(str);
@@ -162,7 +162,7 @@
                 }
                 if (data.status == 1000) {
 
-                    
+
 
                 }
 
