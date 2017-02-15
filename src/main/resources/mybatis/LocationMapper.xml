@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kabuda.dao.LocationDao">
     
-    <select id="getProvinceList" resultType="com.kabuda.entity.Location">
+    <select id="listProvince" resultType="com.kabuda.entity.Location">
         SELECT
             id,
             location_code AS locationCode,
@@ -13,7 +13,7 @@
         FROM location WHERE location_level = '1'
     </select>
 
-    <select id="getCityList" resultType="com.kabuda.entity.Location">
+    <select id="listCity" resultType="com.kabuda.entity.Location">
          SELECT
             id,
             location_code AS locationCode,
@@ -25,7 +25,7 @@
         WHERE location_level = '2' AND province = #{parentProvince}
     </select>
 
-    <select id="getCountyList" resultType="com.kabuda.entity.Location">
+    <select id="listCounty" resultType="com.kabuda.entity.Location">
         SELECT
             id,
             location_code AS locationCode,

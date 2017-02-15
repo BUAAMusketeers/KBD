@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kabuda.dao.VehicleDao">
 
-    <select id="getVehicleCount" resultType="java.lang.Integer">
+    <select id="countVehicle" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM vehicle
         <if test="_parameter == 1">
             WHERE sell = '1' AND sell_state = '0'
@@ -13,13 +13,14 @@
     </select>
 
 
-    <select id="getVehicleList" resultType="com.kabuda.entity.domain.VehicleBean">
+    <select id="listVehicle" resultType="com.kabuda.entity.domain.VehicleBean">
         SELECT
             vehicle.id AS id,
             user_id AS userId,
             brand.brand_name AS brandName,
             model.model_name AS modelName,
             vehicle.location_code AS locationCode,
+            location.city AS location,
             used_hours AS usedHours,
             vehicle_age AS vehicleAge,
             equipment_number AS equipmentNumber,
@@ -40,7 +41,7 @@
         LEFT JOIN brand ON vehicle.brand_id = brand.id
         LEFT JOIN location ON vehicle.location_code = location.location_code
         WHERE vehicle.brand_id = #{brand} AND vehicle.model_id = #{model}
-            AND vehicle.location_code = #{city}
+            AND location.city = #{city}
         <if test="sellOrRent == 1">
             AND vehicle.sell = 1 AND vehicle.sell_state = 0
         </if>
@@ -68,7 +69,7 @@
     </select>
 
 
-    <select id="getVehicleListByUserId" resultType="com.kabuda.entity.Vehicle">
+    <select id="listVehicleByUserId" resultType="com.kabuda.entity.Vehicle">
         SELECT
             id,
             user_id AS userId,
@@ -154,7 +155,7 @@
         FROM vehicle WHERE id = #{id}
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveVehicle" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO vehicle
         (user_id, model_id, brand_id, location_code, used_hours, vehicle_age, equipment_number, description, contact,
         contact_phone, tonnage, sell, rent, sell_state, rent_state, sell_price, rent_price, release_date, update_date)
@@ -164,7 +165,7 @@
         #{releaseDate}, #{updateDate})
     </insert>
 
-    <update id="update">
+    <update id="updateVehicle">
         UPDATE vehicle SET
             user_id = #{userId},
             model_id = #{modelId},

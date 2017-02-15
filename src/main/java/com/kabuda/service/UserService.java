@@ -30,22 +30,22 @@ public class UserService {
     }
 
     public void insert(User user){
-        userDao.insert(user);
+        userDao.saveUser(user);
     }
 
     public void update(User user){
-        userDao.update(user);
+        userDao.updateUser(user);
     }
 
     public void delete(User user){
-        userDao.delete(user);
+        userDao.removeUser(user);
     }
 
     public int getUserCarsCount(int id){
-        return userDao.getUserCarsCount(id);
+        return userDao.countUserCars(id);
     }
 
     public List<VehicleBean> getUserCarsList(int id){
-        return userDao.getUserCarsList(id);
+        return userDao.listUserCars(id);
     }
 }

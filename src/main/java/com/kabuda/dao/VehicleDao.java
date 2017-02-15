@@ -16,14 +16,14 @@ public interface VehicleDao extends Dao<Vehicle>{
      * @param type 0表示全部，1表示出售的，2表示出租的
      * @return 车辆数量
      */
-    int getVehicleCount(int type);
+    int countVehicle(int type);
 
-    List<VehicleBean> getVehicleList(VehicleRequest vehicleRequest); //int city, int brand, int model, int sort, int limit, int offset, String keyword, int isSell
+    List<VehicleBean> listVehicle(VehicleRequest vehicleRequest); //int city, int brand, int model, int sort, int limit, int offset, String keyword, int isSell
 
     /**
      * 根据用户id获取车辆列表
      */
-    List<Vehicle> getVehicleListByUserId(int userId);
+    List<Vehicle> listVehicleByUserId(int userId);
 
     VehicleBean getVehicleInfoById(int id);
 
@@ -32,7 +32,7 @@ public interface VehicleDao extends Dao<Vehicle>{
 
     Vehicle getVehicleById(int id);
 
-    int insert(Vehicle vehicle);
+    int saveVehicle(Vehicle vehicle);
 
-    void update(Vehicle vehicle);
+    void updateVehicle(Vehicle vehicle);
 }

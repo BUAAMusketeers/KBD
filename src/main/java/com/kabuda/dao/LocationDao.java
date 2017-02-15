@@ -10,11 +10,11 @@ import java.util.List;
 @MyBatisDao
 public interface LocationDao extends Dao<Location>{
 
-    List<Location> getProvinceList();
+    List<Location> listProvince();
 
-    List<Location> getCityList(String parentProvince);
+    List<Location> listCity(String parentProvince);
 
-    List<Location> getCountyList(String parentCity);
+    List<Location> listCounty(String parentCity);
 
     Location getCityByName(String curCity);
 

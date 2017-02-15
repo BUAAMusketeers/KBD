@@ -14,13 +14,13 @@ public interface UserDao extends Dao<User> {
 
     User getUserByPhoneNumber(String phoneNumber);
 
-    int insert(User user);
+    int saveUser(User user);
 
-    void update(User user);
+    void updateUser(User user);
 
-    void delete(User user);
+    void removeUser(User user);
 
-    int getUserCarsCount(int id);
+    int countUserCars(int id);
 
-    List<VehicleBean> getUserCarsList(int id);
+    List<VehicleBean> listUserCars(int id);
 }

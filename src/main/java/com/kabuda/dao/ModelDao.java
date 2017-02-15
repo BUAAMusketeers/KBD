@@ -12,7 +12,7 @@ public interface ModelDao extends Dao<Model> {
 
     Model getModelById(int id);
 
-    List<Model> getModelList();
+    List<Model> listModel();
 
-    List<Model> getModelListByLetter(String firstLetter);
+    List<Model> listModelByLetter(String firstLetter);
 }

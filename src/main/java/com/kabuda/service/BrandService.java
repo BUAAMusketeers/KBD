@@ -20,11 +20,11 @@ public class BrandService {
     }
 
     public List<Brand> getBrandList(){
-        return brandDao.getBrandList();
+        return brandDao.listBrand();
     }
 
     public List<Brand> getBrandListByLetter(String firstLetter){
-        return brandDao.getBrandListByLetter(firstLetter);
+        return brandDao.listBrandByLetter(firstLetter);
     }
 
     public Brand getBrandById(int id){

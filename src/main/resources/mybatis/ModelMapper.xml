@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kabuda.dao.ModelDao">
 
-    <select id="getModelList" resultType="com.kabuda.entity.Model">
+    <select id="listModel" resultType="com.kabuda.entity.Model">
         SELECT
             id,
             first_letter AS "firstLetter",
@@ -10,7 +10,7 @@
         FROM model
     </select>
 
-    <select id="getModelListByLetter" resultType="com.kabuda.entity.Model">
+    <select id="listModelByLetter" resultType="com.kabuda.entity.Model">
         SELECT
             id,
             first_letter AS "firstLetter",

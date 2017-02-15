@@ -21,15 +21,15 @@ public class LocationService {
     }
 
     public List<Location> getProvinceList(){
-        return locationDao.getProvinceList();
+        return locationDao.listProvince();
     }
 
     public List<Location> getCityList(String parentProvince){
-        return locationDao.getCityList(parentProvince);
+        return locationDao.listCity(parentProvince);
     }
 
     public List<Location> getCountyList(String parentCity){
-        return locationDao.getCountyList(parentCity);
+        return locationDao.listCounty(parentCity);
     }
 
     public Location getCityByName(String curCity){

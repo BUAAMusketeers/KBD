@@ -83,15 +83,15 @@ public class VehicleController {
             city = city.trim();
             keyword = StringUtils.isEmpty(keyword)? keyword : keyword.trim();
 
-            Location cityByName = locationService.getCityByName(city);
-            if(cityByName == null){
-                return gson.toJson(new Response(ResponseCode.R_1008));
-            }
-            String cityCode = cityByName.getLocationCode();
+//            Location cityByName = locationService.getCityByName(city);
+//            if(cityByName == null){
+//                return gson.toJson(new Response(ResponseCode.R_1008));
+//            }
+//            String cityCode = cityByName.getLocationCode();
 
             //int vehicleCount = vehicleService.getVehicleCount(sellOrRent);
             int offset = (page - 1) * limit;
-            VehicleRequest vehicleRequest = new VehicleRequest(cityCode, brand, model, sort, keyword, offset, limit, sellOrRent);
+            VehicleRequest vehicleRequest = new VehicleRequest(city, brand, model, sort, keyword, offset, limit, sellOrRent);
             List<VehicleBean> carList = vehicleService.getVehicleList(vehicleRequest);
             int vehicleCount = 0;
             if(carList != null){

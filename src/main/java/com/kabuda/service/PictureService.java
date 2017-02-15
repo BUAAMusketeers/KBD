@@ -29,14 +29,14 @@ public class PictureService {
     }
 
     public int insert(Picture picture){
-        return pictureDao.insert(picture);
+        return pictureDao.savePicture(picture);
     }
 
     public void update(Picture picture){
-        pictureDao.update(picture);
+        pictureDao.updatePicture(picture);
     }
 
     public void delete(int id){
-        pictureDao.delete(id);
+        pictureDao.removePicture(id);
     }
 }

@@ -40,12 +40,12 @@
         FROM user LEFT JOIN location ON user.location_code = location.location_code WHERE phone_number = #{phoneNumber}
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveUser" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user (phone_number, password, name, sex, is_driver, model, price, driving_age, location_code, head_potrait, user_level, active)
         VALUES (#{phoneNumber}, #{password}, #{name}, #{sex}, #{isDriver}, #{model}, #{price}, #{drivingAge}, #{locationCode}, #{headPotrait}, #{userLevel}, #{isActive})
     </insert>
 
-    <update id="update">
+    <update id="updateUser">
         UPDATE user SET
           phone_number = #{phoneNumber},
           password = #{password},
@@ -62,18 +62,18 @@
         WHERE id = #{id}
     </update>
 
-    <update id="delete">
+    <update id="removeUser">
         UPDATE user SET
           active = #{isActive}
         WHERE id = #{id}
     </update>
 
 
-    <select id="getUserCarsCount" resultType="java.lang.Integer">
+    <select id="countUserCars" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM vehicle WHERE user_id = #{id}
     </select>
 
-    <select id="getUserCarsList" resultType="com.kabuda.entity.domain.VehicleBean">
+    <select id="listUserCars" resultType="com.kabuda.entity.domain.VehicleBean">
         SELECT
             vehicle.id AS id,
             user_id AS userId,

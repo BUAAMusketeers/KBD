@@ -23,15 +23,15 @@ public class VehicleService {
     }
 
     public int getVehicleCount(int type) {
-        return vehicleDao.getVehicleCount(type);
+        return vehicleDao.countVehicle(type);
     }
 
     public List<VehicleBean> getVehicleList(VehicleRequest vehicleRequest) {
-        return vehicleDao.getVehicleList(vehicleRequest);
+        return vehicleDao.listVehicle(vehicleRequest);
     }
 
     public  List<Vehicle> getVehicleListByUserId(int userId){
-        return vehicleDao.getVehicleListByUserId(userId);
+        return vehicleDao.listVehicleByUserId(userId);
     }
 
     public VehicleBean getVehicleInfoById(int id){
@@ -48,10 +48,10 @@ public class VehicleService {
     }
 
     public int insert(Vehicle vehicle){
-        return vehicleDao.insert(vehicle);
+        return vehicleDao.saveVehicle(vehicle);
     }
 
     public void update(Vehicle vehicle){
-        vehicleDao.update(vehicle);
+        vehicleDao.updateVehicle(vehicle);
     }
 }

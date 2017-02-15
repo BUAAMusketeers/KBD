@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kabuda.dao.BrandDao">
 
-    <select id="getBrandList" resultType="com.kabuda.entity.Brand">
+    <select id="listBrand" resultType="com.kabuda.entity.Brand">
         SELECT
             id,
             first_letter AS firstLetter,
@@ -10,7 +10,7 @@
         FROM brand
     </select>
 
-    <select id="getBrandListByLetter" resultType="com.kabuda.entity.Brand">
+    <select id="listBrandByLetter" resultType="com.kabuda.entity.Brand">
         SELECT
             id,
             first_letter AS firstLetter,

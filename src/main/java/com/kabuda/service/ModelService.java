@@ -25,10 +25,10 @@ public class ModelService {
     }
 
     public List<Model> getModelList(){
-        return modelDao.getModelList();
+        return modelDao.listModel();
     }
 
     public List<Model> getModelListByLetter(String firstLetter){
-        return modelDao.getModelListByLetter(firstLetter);
+        return modelDao.listModelByLetter(firstLetter);
     }
 }

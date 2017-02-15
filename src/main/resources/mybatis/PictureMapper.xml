@@ -27,13 +27,13 @@
     </select>
 
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="savePicture" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO picture (is_first, vehicle_id, url, name, size)
         VALUES (#{isFirst}, #{vehicleId}, #{url}, #{name}, #{size})
     </insert>
 
 
-    <update id="update">
+    <update id="updatePicture">
         UPDATE picture SET
             is_first = #{isFirst},
             vehicle_id = #{vehicleId},
@@ -44,7 +44,7 @@
     </update>
 
 
-    <delete id="delete">
+    <delete id="removePicture">
         DELETE FROM picture WHERE id = #{id}
     </delete>
 

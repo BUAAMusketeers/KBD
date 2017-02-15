@@ -9,9 +9,9 @@ import java.util.List;
 @MyBatisDao
 public interface BrandDao extends Dao<Brand>{
 
-    List<Brand> getBrandList();
+    List<Brand> listBrand();
 
-    List<Brand> getBrandListByLetter(String firstLetter);
+    List<Brand> listBrandByLetter(String firstLetter);
 
     Brand getBrandById(int id);
 }
