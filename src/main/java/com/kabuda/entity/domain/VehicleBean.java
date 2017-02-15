@@ -27,6 +27,7 @@ public class VehicleBean implements Serializable {
     private int tonnage;              // 吨位，单位吨
     private String location;          // 地址
     private String locationCode;      // 所属地址code
+    private String pictureUrl;        // 该车所对应图片的首图
     @SerializedName("sell")
     private int isSell;               // 出售,0代表不出售，1代表出售
     @SerializedName("rent")
@@ -145,6 +146,14 @@ public class VehicleBean implements Serializable {
 
     public void setTonnage(int tonnage) {
         this.tonnage = tonnage;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     public int getIsSell() {

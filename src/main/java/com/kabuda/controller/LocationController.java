@@ -31,6 +31,9 @@ public class LocationController {
     }
 
 
+    /**
+     * @return 获取省份列表
+     */
     @ResponseBody
     @RequestMapping(path = "/getProvinceList", method = RequestMethod.POST)
     public String getProvinceList(){
@@ -44,8 +47,7 @@ public class LocationController {
             }
         }).setPrettyPrinting().create();
         try {
-
-            List<Location> provinceList = locationService.getProvinceList();
+            List<Location> provinceList = locationService.listProvince();
             int total = 0;
             if(provinceList != null){
                 total = provinceList.size();
@@ -58,9 +60,13 @@ public class LocationController {
     }
 
 
+    /**
+     * @param province 省份名字
+     * @return 该省份的市列表
+     */
     @ResponseBody
     @RequestMapping(path = "/getCityList", method = RequestMethod.POST)
-    public String getCityList (String province){
+    public String getCityList(String province) {
         Gson gson = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
             public boolean shouldSkipField(FieldAttributes f) {
                 return f.getName().equals("province") || f.getName().equals("county");
@@ -70,15 +76,16 @@ public class LocationController {
                 return false;
             }
         }).setPrettyPrinting().create();
-        try {
-            if(StringUtils.isEmpty(province)){
-                return gson.toJson(new Response(ResponseCode.R_1001));
-            }
-            province = province.trim();
 
-            List<Location> cityList = locationService.getCityList(province);
+        if (StringUtils.isEmpty(province)) {
+            return gson.toJson(new Response(ResponseCode.R_1001));
+        }
+        province = province.trim();
+
+        try {
+            List<Location> cityList = locationService.listCity(province);
             int total = 0;
-            if(cityList != null){
+            if (cityList != null) {
                 total = cityList.size();
             }
             return gson.toJson(new LocationResponse(ResponseCode.R_1000, total, cityList));
@@ -89,6 +96,10 @@ public class LocationController {
     }
 
 
+    /**
+     * @param city 市名字
+     * @return 该市的县级行政单位列表
+     */
     @ResponseBody
     @RequestMapping(path = "/getCountyList", method = RequestMethod.POST)
     public String getCountyList  (String city){
@@ -101,18 +112,42 @@ public class LocationController {
                 return false;
             }
         }).setPrettyPrinting().create();
-        try {
-            if(StringUtils.isEmpty(city)){
-                return gson.toJson(new Response(ResponseCode.R_1001));
-            }
-            city = city.trim();
 
-            List<Location> countyList = locationService.getCountyList(city);
+        if(StringUtils.isEmpty(city)){
+            return gson.toJson(new Response(ResponseCode.R_1001));
+        }
+        city = city.trim();
+
+        try {
+            List<Location> countyList = locationService.listCounty(city);
             int total = 0;
-            if(countyList != null){
+            if (countyList != null) {
                 total = countyList.size();
             }
             return gson.toJson(new LocationResponse(ResponseCode.R_1000, total, countyList));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(ResponseCode.R_1100));
+        }
+    }
+
+
+    /**
+     * @param locationCode 地区代码
+     * @return 对应的地址信息
+     */
+    @ResponseBody
+    @RequestMapping(path = "/getLocation", method = RequestMethod.POST)
+    public String getLocationByLC(String locationCode) {
+        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+
+        if (StringUtils.isEmpty(locationCode)) {
+            return gson.toJson(new Response(ResponseCode.R_1001));
+        }
+
+        try {
+            Location location = locationService.getLocationByLC(locationCode);
+            return gson.toJson(new Response<Location>(ResponseCode.R_1000, location));
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(ResponseCode.R_1100));

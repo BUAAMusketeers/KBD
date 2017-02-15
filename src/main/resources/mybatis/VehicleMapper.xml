@@ -28,6 +28,7 @@
             contact,
             contact_phone AS contactPhone,
             tonnage,
+            picture.url AS pictureUrl,
             sell AS isSell,
             rent AS isRent,
             sell_state AS sellState,
@@ -40,8 +41,14 @@
         LEFT JOIN model ON vehicle.model_id = model.id
         LEFT JOIN brand ON vehicle.brand_id = brand.id
         LEFT JOIN location ON vehicle.location_code = location.location_code
-        WHERE vehicle.brand_id = #{brand} AND vehicle.model_id = #{model}
-            AND location.city = #{city}
+        LEFT JOIN picture ON vehicle.id = picture.vehicle_id
+        WHERE location.city = #{city} AND picture.is_first = '1'
+        <if test="brand != 0">
+            AND vehicle.brand_id = #{brand}
+        </if>
+        <if test="model != 0">
+            AND vehicle.model_id = #{model}
+        </if>
         <if test="sellOrRent == 1">
             AND vehicle.sell = 1 AND vehicle.sell_state = 0
         </if>
