@@ -269,7 +269,7 @@ body {
 }
 /*selectBox*/
 .selectBox{width:380px;border:1px solid #B3CDC0;overflow:hidden;box-shadow:2px 2px 3px rgba(0,0,0,0.3); font:12px/1.5 tahoma,arial,\5b8b\4f53;background:#fff;text-align:left;
-    z-index: 999;position:absolute; top:20px; left:400px; display:none;}
+     top:20px;  }
 .selectBox ul{margin:0;padding:0;overflow:hidden;}
 .selectBox ul li:first-child{margin-left:5px;}
 .selectBox ul li{float:left;list-style:none;padding:5px;border-bottom:1px solid #DDD;cursor:pointer;display:inline;color:#FD6F1A;}

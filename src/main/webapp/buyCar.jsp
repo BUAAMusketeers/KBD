@@ -48,13 +48,13 @@
                 </div>
 
                 <a>
-                    <div class="dropdown">
-                        <a id="brandAll" class="showBox">
+                    <div class="dropdown " >
+                        <a id="brandAll" href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             全部
                             <span class="caret"></span>
                         </a>
 
-                        <div class="selectBox " id="brandAllBox">
+                        <div class="dropdown-menu selectBox" aria-labelledby="brandAll" id="brandAllBox">
                             <div class="itemListBox">
                                 <%--<div class="itemBox">
                                     <dl>
@@ -85,14 +85,13 @@
                 <a class="" href="/bj/buy/" rel="nofollow">宝马</a>
                 <a class="" href="/bj/buy/" rel="nofollow">奔驰</a>--%>
                 </div>
-                <a>
-                    <div class="dropdown">
-                        <a id="typeAll" class="showBox">
+                <div class="dropdown "  >
+                    <a id="typeAll"  href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             全部
                             <span class="caret"></span>
-                        </a>
+                    </a>
 
-                        <div class="selectBox " id="typeAllBox">
+                    <div class="dropdown-menu selectBox" aria-labelledby="typeAll" id="typeAllBox">
                             <div class="itemListBox">
                                 <%--<div class="itemBox">
                                     <dl>
@@ -110,9 +109,9 @@
                                 </div>--%>
 
                             </div>
-                        </div>
                     </div>
-                </a>
+                </div>
+
             </dd>
         </dl>
     </div>
@@ -191,21 +190,19 @@
         loadType();
         getBrandList();
         getTypeList();
-        $(".showBox").hover(function(){
+        /*$(".showBox").hover(function(){
             var boxName=this.id+"Box";
             var div=document.getElementById(boxName);
             div.style.display="block";
         },function(){
             var boxName=this.id+"Box";
             var div=document.getElementById(boxName);
-            if(div.contains(window.event.srcElement)){
-                div.style.display="none";
+            div.style.display="none";
 
-            }
         })
         $(".selectBox").mouseleave(function () {
             this.style.display="none";
-        })
+        })*/
     });
 
 
@@ -249,7 +246,7 @@
                             '<div class="thumbnail">' +
                             '<img src="'+result[i].pictureUrl+'" alt="picture">' +
                             '<div class="infoDiv">' +
-                            '<p class="infoBox"><a>'+result[i].brand+result[i].model+'</a></p>' +
+                            '<p class="infoBox"><a href="vehicle_detail.jsp?vehicleId='+result[i].id+'">'+result[i].brand+result[i].model+'</a></p>' +
                             '<p class="infoGray">' +
                             '<span>'+result[i].vehicleAge+'年上牌</span>' +
                             '<em class="verticalLine">|</em>' +
