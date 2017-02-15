@@ -501,7 +501,7 @@
                     $("#location_user").html(data.location);
                     $("#sex_user").html((data.sex==1)?"男":"女");
                     $("#ifDriver_user").html((data.isDriver==1)?"是":"否");
-
+                    $("#user_img").attr("src",data.headPotrait);
                     if(data.isDriver){
                         $("#YearsOfDriving_user").html(data.drivingAge+"年");
                         $("#commission_user").html(data.price+"元/天");
@@ -639,7 +639,7 @@
             success:function(data) {
                 if (data.status == 1000) {
                     //$("#user_img").attr("src",root+'/ePlanFileSys'+data.result.info.path);
-                    modifyPortrait(data.result.info.path);
+                    topAlert("头像上传成功","success");
                 }
             },
 
