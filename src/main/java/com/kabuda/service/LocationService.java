@@ -32,8 +32,9 @@ public class LocationService {
         return locationDao.listCounty(parentCity);
     }
 
-    public Location getCityByName(String curCity){
-        return locationDao.getCityByName(curCity);
+
+    public Location getLocationById(int id){
+        return locationDao.getLocationById(id);
     }
 
     /**
@@ -41,5 +42,13 @@ public class LocationService {
      */
     public Location getLocationByLC(String LocationCode){
         return locationDao.getLocationByLC(LocationCode);
+    }
+
+    public Location getCityByName(String curCity){
+        return locationDao.getLocationByCity(curCity);
+    }
+
+    public Location getLocationByCounty(String curCounty){
+        return locationDao.getLocationByCounty(curCounty);
     }
 }

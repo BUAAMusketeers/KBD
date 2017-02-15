@@ -2,62 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kabuda.dao.LocationDao">
     
-    <select id="listProvince" resultType="com.kabuda.entity.Location">
-        SELECT
-            id,
-            location_code AS locationCode,
-            province,
-            city,
-            county,
-            location_level AS locationLevel
-        FROM location WHERE location_level = '1'
-    </select>
-
-    <select id="listCity" resultType="com.kabuda.entity.Location">
-         SELECT
-            id,
-            location_code AS locationCode,
-            province,
-            city,
-            county,
-            location_level AS locationLevel
-        FROM location
-        WHERE location_level = '2' AND province = #{parentProvince}
-    </select>
-
-    <select id="listCounty" resultType="com.kabuda.entity.Location">
-        SELECT
-            id,
-            location_code AS locationCode,
-            province,
-            city,
-            county,
-            location_level AS locationLevel
-        FROM location
-        WHERE location_level = '3' AND city = #{parentCity}
-    </select>
-    
-    <select id="getCityByName" resultType="com.kabuda.entity.Location">
-        SELECT
-            id,
-            location_code AS locationCode,
-            province,
-            city,
-            county,
-            location_level AS locationLevel
-        FROM location
-        WHERE location_level = '2' AND city = #{curCity}
-    </select>
-
-    <select id="getLocationByLC" resultType="com.kabuda.entity.Location">
-        SELECT
+    <sql id="locationColumns">
         id,
         location_code AS locationCode,
         province,
         city,
         county,
         location_level AS locationLevel
+    </sql>
+
+
+    <select id="listProvince" resultType="com.kabuda.entity.Location">
+        SELECT
+            <include refid="locationColumns" />
+        FROM location WHERE location_level = '1'
+    </select>
+
+
+    <select id="listCity" resultType="com.kabuda.entity.Location">
+        SELECT
+            <include refid="locationColumns" />
+        FROM location
+        WHERE location_level = '2' AND province = #{parentProvince}
+    </select>
+
+
+    <select id="listCounty" resultType="com.kabuda.entity.Location">
+        SELECT
+            <include refid="locationColumns" />
+        FROM location
+        WHERE location_level = '3' AND city = #{parentCity}
+    </select>
+
+
+    <select id="getLocationById" resultType="com.kabuda.entity.Location">
+        SELECT
+            <include refid="locationColumns" />
+        FROM location
+        WHERE id = #{id}
+    </select>
+
+
+    <select id="getLocationByLC" resultType="com.kabuda.entity.Location">
+        SELECT
+            <include refid="locationColumns" />
         FROM location
         WHERE location_code = #{LocationCode}
+    </select>
+
+
+    <select id="getLocationByCity" resultType="com.kabuda.entity.Location">
+        SELECT
+            <include refid="locationColumns" />
+        FROM location
+        WHERE location_level = '2' AND city = #{curCity}
+    </select>
+
+
+    <select id="getLocationByCounty" resultType="com.kabuda.entity.Location">
+        SELECT
+        <include refid="locationColumns" />
+        FROM location
+        WHERE location_level = '3' AND county = #{curCounty}
     </select>
 </mapper>

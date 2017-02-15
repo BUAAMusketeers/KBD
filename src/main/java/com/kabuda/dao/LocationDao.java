@@ -16,8 +16,12 @@ public interface LocationDao extends Dao<Location>{
 
     List<Location> listCounty(String parentCity);
 
-    Location getCityByName(String curCity);
+    Location getLocationById(int id);
 
     Location getLocationByLC(String LocationCode);
+
+    Location getLocationByCity(String curCity);
+
+    Location getLocationByCounty(String curCounty);
 
 }
