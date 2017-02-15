@@ -4,8 +4,8 @@ package com.kabuda.entity.domain;
 public class VehicleRequest {
 
     private String city;
-    private int brand;
-    private int model;
+    private int brand;       // 0 表示全部
+    private int model;       // 0 表示全部
     private int sort;        // 排序方式 0默认 1价格升序 2价格降序 3使用时间升序 4车龄升序
     private String keyword;
     private int offset;

@@ -309,11 +309,6 @@ public class VehicleController {
                 return gson.toJson(new Response(ResponseCode.R_1001));
             }
 
-            User user = (User) request.getSession().getAttribute("user");
-            if(user == null){
-                return gson.toJson(new Response(ResponseCode.R_1010));
-            }
-
             List<Picture> pictures = pictureService.getPictureByVehicleId(id);
             int total = 0;
             if(pictures != null){
