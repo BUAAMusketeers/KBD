@@ -3,7 +3,6 @@ target/
 
 .project/
 .classpath
-kabuda.properties
 
 .idea/
 *.iml
