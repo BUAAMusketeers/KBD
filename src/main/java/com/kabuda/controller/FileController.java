@@ -153,13 +153,35 @@ public class FileController {
             file.transferTo(localFile);
 
             // 插入数据库表picture
+            isFirst = (isFirst == null) ? 0 : isFirst;
+            boolean vehicleHasFirst = false;
+            List<Picture> pictureList = pictureService.getPictureByVehicleId(id);
+            for(Picture p : pictureList){
+                if(p.getIsFirst() == 1){
+                    vehicleHasFirst = true;
+                    break;
+                }
+            }
+            if(!vehicleHasFirst){
+                isFirst= 1;
+            } else{
+                if(isFirst == 1){
+                    for(Picture p : pictureList){
+                        if(p.getIsFirst() == 1){
+                            p.setIsFirst(0);
+                            pictureService.update(p);
+                        }
+                    }
+                }
+            }
             Picture picture = new Picture();
-            picture.setIsFirst(isFirst == null ? 0 : isFirst);
+            picture.setIsFirst(isFirst) ;
             picture.setVehicleId(id);
             picture.setUrl(relativePath);
             picture.setName(myFileName);
             picture.setSize(file.getSize());
             pictureService.insert(picture);
+
 
             // 返回的数据
             Map<String, Object> result = new HashMap<String, Object>();
@@ -195,28 +217,48 @@ public class FileController {
 
 
     /**
-     *  删除车辆图片接口
+     * 删除车辆图片接口
+     * @param id 车辆图片id
      */
     @ResponseBody
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
-    public String delete(Integer id, HttpServletRequest request){
+    public String delete(Integer id, HttpServletRequest request) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        if (StringUtils.isEmpty(id)) {
+            return gson.toJson(new Response(ResponseCode.R_1001));
+        }
+
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return gson.toJson(new Response(ResponseCode.R_1010));
+        }
+
         try {
-            if (StringUtils.isEmpty(id)) {
-                return gson.toJson(new Response(ResponseCode.R_1001));
-            }
+            //判断图片是否属于用户所拥有的车辆
+            List<Vehicle> vehicleList = vehicleService.getVehicleListByUserId(user.getId());
+            Picture picture = pictureService.getPictureById(id);
+            if (vehicleList != null && picture != null) {
+                for (Vehicle vehicle : vehicleList) {
+                    //如果图片属于用户所拥有的车辆
+                    if (vehicle.getId() == picture.getVehicleId()) {
+                        //如果所删除的图片是是首图，则随机设置另一张首图
+                        if (picture.getIsFirst() == 0) {
+                            pictureService.delete(id);
+                        } else {
+                            pictureService.delete(id);
+                            List<Picture> pictureList = pictureService.getPictureByVehicleId(vehicle.getId());
+                            if (pictureList != null) {
+                                pictureList.get(0).setIsFirst(1);
+                                pictureService.update(pictureList.get(0));
+                            }
+                        }
+                        return gson.toJson(new Response(ResponseCode.R_1000));
+                    }
 
-            User user = (User) request.getSession().getAttribute("user");
-            if (user == null) {
-                return gson.toJson(new Response(ResponseCode.R_1010));
+                }
             }
-
-            if(!userHasPicture(user.getId(), id)){
-                return gson.toJson(new Response(ResponseCode.R_1011));
-            }
-
-            pictureService.delete(id);
-            return gson.toJson(new Response(ResponseCode.R_1000));
+            return gson.toJson(new Response(ResponseCode.R_1011));
         } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(new Response(ResponseCode.R_1100));
