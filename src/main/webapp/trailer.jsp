@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: skyxi
-  Date: 2017/1/15
-  Time: 13:56
+  Date: 2017/2/16
+  Time: 19:46
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>买车</title>
+    <title>拖车</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/cityselect.css">
@@ -32,7 +32,7 @@
     <!--导航-->
     <ol class="breadcrumb">
         <li><a href="#">首页</a></li>
-        <li class="active">买车</li>
+        <li class="active">拖车</li>
     </ol>
     <!--条件过滤-->
     <div class="fliterBox">
@@ -42,9 +42,6 @@
                 <div id="hotBrandList">
 
 
-                    <%--
-                    <a class="" href="#" rel="nofollow">宝马</a>
-                    <a class="" href="#" rel="nofollow">奔驰</a>--%>
                 </div>
 
                 <a>
@@ -56,20 +53,6 @@
 
                         <div class="dropdown-menu selectBox" aria-labelledby="brandAll" id="brandAllBox">
                             <div class="itemListBox">
-                                <%--<div class="itemBox">
-                                    <dl>
-                                        <dt>A</dt>
-                                        <dd>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">阿斯顿马丁</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                        </dd>
-                                    </dl>
-                                </div>--%>
 
                             </div>
                         </div>
@@ -77,43 +60,7 @@
                 </a>
             </dd>
         </dl>
-        <dl class="fliter-bd clearfix">
-            <dt>机型：</dt>
-            <dd class="clickBrandWidget">
-                <div id="hotTypeList">
-                <%--<a class="on" href="/bj/buy/" rel="nofollow">不限</a>
-                <a class="" href="/bj/buy/" rel="nofollow">宝马</a>
-                <a class="" href="/bj/buy/" rel="nofollow">奔驰</a>--%>
-                </div>
-                <div class="dropdown "  >
-                    <a id="typeAll"  href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            全部
-                            <span class="caret"></span>
-                    </a>
 
-                    <div class="dropdown-menu selectBox" aria-labelledby="typeAll" id="typeAllBox">
-                            <div class="itemListBox">
-                                <%--<div class="itemBox">
-                                    <dl>
-                                        <dt>A</dt>
-                                        <dd>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">阿斯顿马丁</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                        </dd>
-                                    </dl>
-                                </div>--%>
-
-                            </div>
-                    </div>
-                </div>
-
-            </dd>
-        </dl>
     </div>
 
     <!--排序方式-->
@@ -172,7 +119,7 @@
 
 
     var brand=0;
-    var carType=0;
+    var carType=48;
     var root="";
     var sort=0;
     var global = {
@@ -191,18 +138,18 @@
         getBrandList();
         getTypeList();
         /*$(".showBox").hover(function(){
-            var boxName=this.id+"Box";
-            var div=document.getElementById(boxName);
-            div.style.display="block";
-        },function(){
-            var boxName=this.id+"Box";
-            var div=document.getElementById(boxName);
-            div.style.display="none";
+         var boxName=this.id+"Box";
+         var div=document.getElementById(boxName);
+         div.style.display="block";
+         },function(){
+         var boxName=this.id+"Box";
+         var div=document.getElementById(boxName);
+         div.style.display="none";
 
-        })
-        $(".selectBox").mouseleave(function () {
-            this.style.display="none";
-        })*/
+         })
+         $(".selectBox").mouseleave(function () {
+         this.style.display="none";
+         })*/
     });
 
 
@@ -218,7 +165,7 @@
         //console.log(keyword);
         $.ajax({
             type: "POST",
-            url:  "/car/getSellList",
+            url:  "/car/getRentList",
             data: {city:city,brand:brand,model:carType,sort:sort, keyword:keyword,limit:global["limit"], page:global["selectedPage"]},
             success:function(data) {
                 if (typeof data == "string") {
@@ -242,24 +189,24 @@
                         var length = result.length;
                         for (var i = 0; i < length; i++) {
                             var str=''+
-                            '<div class="col-sm-6 col-md-3 listBox">' +
-                            '<div class="thumbnail">' +
-                            '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].pictureUrl+'" alt="picture"></a>' +
-                            '<div class="infoDiv">' +
-                            '<p class="infoBox"><a href="vehicle_detail.jsp?vehicleId='+result[i].id+'">'+result[i].brand+result[i].model+'</a></p>' +
-                            '<p class="infoGray">' +
-                            '<span>'+result[i].vehicleAge+'年上牌</span>' +
-                            '<em class="verticalLine">|</em>' +
-                            '<span>使用'+result[i].usedHours+'小时</span>' +
-                            '<em class="verticalLine">|</em>' +
-                            '<span>'+result[i].tonnage+'吨</span>' +
-                            '</p>' +
-                            '<p class="infoPrice"> 价格：' +
-                            '<span>'+result[i].sellPrice+'万</span>' +
-                            '</p>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
+                                '<div class="col-sm-6 col-md-3 listBox">' +
+                                '<div class="thumbnail">' +
+                                '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].pictureUrl+'" alt="picture"></a>' +
+                                '<div class="infoDiv">' +
+                                '<p class="infoBox"><a href="vehicle_detail.jsp?vehicleId='+result[i].id+'">'+result[i].brand+result[i].model+'</a></p>' +
+                                '<p class="infoGray">' +
+                                '<span>'+result[i].vehicleAge+'年上牌</span>' +
+                                '<em class="verticalLine">|</em>' +
+                                '<span>使用'+result[i].usedHours+'小时</span>' +
+                                '<em class="verticalLine">|</em>' +
+                                '<span>'+result[i].tonnage+'吨</span>' +
+                                '</p>' +
+                                '<p class="infoPrice"> 价格：' +
+                                '<span>'+result[i].rentPrice+'元/每天</span>' +
+                                '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
                             $("#carListBox").append(str);
                         }
 
@@ -284,19 +231,19 @@
                 }
                 if (data.status == 1000) {
 
-                        var result = data.data;
-                        for (var i = 0; i < 26; i++) {
-                            var letterPre=letter[i];
-                            var str='';
-                            for(var j=0;j<result[i].length;j++){
-                                str+='<a id="brandClick_'+result[i][j].id+'" onclick="brandClick('+result[i][j].id+')">'+result[i][j].name+'</a>';
+                    var result = data.data;
+                    for (var i = 0; i < 26; i++) {
+                        var letterPre=letter[i];
+                        var str='';
+                        for(var j=0;j<result[i].length;j++){
+                            str+='<a id="brandClick_'+result[i][j].id+'" onclick="brandClick('+result[i][j].id+')">'+result[i][j].name+'</a>';
 
-                            }
-                            if(result[i].length){
-                                var str0='<div class="itemBox"><dl><dt>'+letterPre+'</dt><dd>'+str+'</dd></dl></div>';
-                                $("#brandAllBox .itemListBox").append(str0)
-                            }
                         }
+                        if(result[i].length){
+                            var str0='<div class="itemBox"><dl><dt>'+letterPre+'</dt><dd>'+str+'</dd></dl></div>';
+                            $("#brandAllBox .itemListBox").append(str0)
+                        }
+                    }
 
 
 
@@ -307,7 +254,7 @@
         });
     }
     /*获取类型列表*/
-    function getTypeList(){
+    /*function getTypeList(){
         $.ajax({
             type: "POST",
             url:  root+"/car/getModelList",
@@ -317,18 +264,18 @@
                 }
                 if (data.status == 1000) {
 
-                        var result = data.data;
-                        for (var i = 0; i < 26; i++) {
-                            var letterPre=letter[i];
-                            var str='';
-                            for(var j=0;j<result[i].length;j++){
-                                str+='<a id="typeClick_'+result[i][j].id+'" onclick="typeClick('+result[i][j].id+')">'+result[i][j].name+'</a>';
-                            }
-                            if(result[i].length) {
-                                var str0 = '<div class="itemBox"><dl><dt>' + letterPre + '</dt><dd>' + str + '</dd></dl></div>';
-                                $("#typeAllBox .itemListBox").append(str0);
-                            }
+                    var result = data.data;
+                    for (var i = 0; i < 26; i++) {
+                        var letterPre=letter[i];
+                        var str='';
+                        for(var j=0;j<result[i].length;j++){
+                            str+='<a id="typeClick_'+result[i][j].id+'" onclick="typeClick('+result[i][j].id+')">'+result[i][j].name+'</a>';
                         }
+                        if(result[i].length) {
+                            var str0 = '<div class="itemBox"><dl><dt>' + letterPre + '</dt><dd>' + str + '</dd></dl></div>';
+                            $("#typeAllBox .itemListBox").append(str0);
+                        }
+                    }
 
 
 
@@ -336,7 +283,7 @@
                 }
             },
         });
-    }
+    }*/
     /*热门品牌*/
     function loadBrand(){
         var length=hotBrand.length;
@@ -365,7 +312,7 @@
         brandChange(id);
     }
     /*热门类型*/
-    function loadType(){
+    /*function loadType(){
         var length=hotType.length;
         var str='<a class="on hotTypeA" href="#" id="typeId_0" onclick="typeChange(0)">'+hotType[0]+'</a>';
         $("#hotTypeList").append(str);
@@ -390,7 +337,7 @@
 
         }
         typeChange(id);
-    }
+    }*/
     /*排序变化*/
     function sortChange(self) {
         sort=Number(self.id.slice(-1));
