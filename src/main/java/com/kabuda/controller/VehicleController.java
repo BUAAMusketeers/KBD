@@ -4,12 +4,10 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kabuda.entity.Location;
 import com.kabuda.entity.Picture;
 import com.kabuda.entity.User;
 import com.kabuda.entity.Vehicle;
 import com.kabuda.entity.domain.*;
-import com.kabuda.service.LocationService;
 import com.kabuda.service.PictureService;
 import com.kabuda.service.VehicleService;
 import com.kabuda.util.ResponseCode;
@@ -28,14 +26,11 @@ public class VehicleController {
 
     private final VehicleService vehicleService;
 
-    private final LocationService locationService;
-
     private final PictureService pictureService;
 
     @Autowired
-    public VehicleController(VehicleService vehicleService, LocationService locationService, PictureService pictureService) {
+    public VehicleController(VehicleService vehicleService, PictureService pictureService) {
         this.vehicleService = vehicleService;
-        this.locationService = locationService;
         this.pictureService = pictureService;
     }
 
@@ -83,13 +78,6 @@ public class VehicleController {
             city = city.trim();
             keyword = StringUtils.isEmpty(keyword)? keyword : keyword.trim();
 
-//            Location cityByName = locationService.getCityByName(city);
-//            if(cityByName == null){
-//                return gson.toJson(new Response(ResponseCode.R_1008));
-//            }
-//            String cityCode = cityByName.getLocationCode();
-
-            //int vehicleCount = vehicleService.getVehicleCount(sellOrRent);
             int offset = (page - 1) * limit;
             VehicleRequest vehicleRequest = new VehicleRequest(city, brand, model, sort, keyword, offset, limit, sellOrRent);
             List<VehicleBean> carList = vehicleService.getVehicleList(vehicleRequest);
