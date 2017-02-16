@@ -194,7 +194,7 @@ public class FileController {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("caption", myFileName);
             map.put("url", "/file/delete");
-            map.put("key", picture.getId());
+            map.put("key", picture.getId()+","+"0");
             map.put("size", file.getSize());
             initialPreviewConfig.add(map);
 

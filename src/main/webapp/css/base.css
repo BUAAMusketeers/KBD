@@ -227,14 +227,14 @@ body {
 }*/
 /*--底部--*/
 .foot {
-    min-height: 140px;
-    background-color: #333;
-    padding-top: 20px;
-    margin-top:40px;
+    background-color: #FD6F1A;
+    padding-top: 15px;
+    padding-bottom: 1px;
+    margin-top: 40px;
 }
 .foot p {
     text-align: center;
-    color: #bac1c8;
+    color: #fff;
     font-size:16px;
 }
 .foot ul {

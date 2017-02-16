@@ -45,14 +45,17 @@
             <div class="form-group col-md-8 col-md-offset-2 clearfix">
                 <input type="file" class="file" id="upload" name="upload[]"multiple>
             </div>
+            <input type="hidden" id="flag" value="0">
         </div>
     </form>
 </div>
 <!--底部-->
+<jsp:include page="base/footer.jsp"></jsp:include>
 <script src="js/jquery-2.1.1.min.js"></script>
 <script src="js/fileinput.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/zh.js" type="text/javascript"></script>
+<script src="js/login.js" ></script>
 <script>
     $("#upload").fileinput('clear');
     $("#upload").fileinput('destroy');
@@ -93,6 +96,7 @@
         $("#upload").fileinput({
         uploadUrl: '/file/uploadCar', //上传
         deleteUrl: "/site/file-delete",//删除
+        //uploadsync:false,
         initialPreviewAsData: true,//允许初始化数据
         allowedFileExtensions : ['jpg', 'png','gif'],//允许的图片格式
         overwriteInitial: false,//false 初始化的数据不会被覆盖
@@ -100,7 +104,7 @@
         showCancel:false,
         initialCaption: "请上传车辆照片",
         maxFileSize: 1000,
-        maxFilesNum: 10,
+        maxFilesNum: 20,
         showZoom: false,
         showCaption:true,//是否显示背景字幕,efault：true
         showPreview: true,
@@ -117,11 +121,15 @@
             return filename.replace('(', '_').replace(']', '_');
         }
         }).off('filepreupload').on('filepreupload', function() {
+            addFirstImg();
         }).on("fileuploaded", function(event, outData) {
-            //console.log(outData.response);
             addFirstImg();
             if(outData.error!=null){
                 alert(outData.error);
+            }
+            var flag=$("#flag").val();
+            if(flag==1){
+                history.go(0);
             }
         });
         addFirstImg();
@@ -129,9 +137,10 @@
     function addFirstImg(a) {
         var $divList = $(".file-footer-buttons");
         $divList.each(function (i) {
-//            console.log($(".file-footer-buttons").eq(i).children());
-//            console.log("/n");
+            console.log($(".file-footer-buttons").eq(i).children());
+            console.log("/n");
                 if ($(".file-footer-buttons").eq(i).children().length == 2) {
+                    console.log("tre");
                     var key = $(".file-footer-buttons").eq(i).children().eq(0).data("key");
                     var array = key.split(",");
                     var str;
@@ -183,8 +192,12 @@
         });
     }
     $(".fileinput-remove").click(function () {
-       addFirstImg();
+        addFirstImg();
     });
+    $(".fileinput-upload").click(function () {
+        $("#flag").val("1");
+    });
+
 </script>
 </body>
 </html>

@@ -187,7 +187,7 @@
                 </div>
                 <div class="form-group btn-area row">
                     <button type="submit" class="btn btn-primary btn-sm  col-md-4 col-md-offset-1" id="update-btn">确认修改</button>
-                    <button type="input" class="btn btn-primary btn-sm  col-md-4 col-md-offset-1" id="img-btn" onclick="showImg()">车辆图片</button>
+                    <input type="button" class="btn btn-primary btn-sm  col-md-4 col-md-offset-1" id="img-btn" onclick="showImg()" value="车辆图片">
                 </div>
             </form>
         </div>
@@ -195,6 +195,7 @@
 </div>
 
 <!--底部-->
+<jsp:include page="base/footer.jsp"></jsp:include>
 <script src="js/jquery-2.1.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrapValidator.min.js"></script>
@@ -203,6 +204,7 @@
 <script src="js/jquery.form.js"></script>
 <script type="text/javascript" src="js/jquery.form.js"></script>
 <script src="js/sell.js" ></script>
+<script src="js/login.js" ></script>
 <script>
     $(function(){
         for(var i=1997; i<=2017;i++){

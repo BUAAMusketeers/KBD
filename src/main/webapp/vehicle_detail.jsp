@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>卡布达 | 车辆详情</title>
+    <title>车辆详情 | 卡布达</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/cityselect.css">
@@ -111,10 +111,12 @@
 </div>
 
 <!--底部-->
+<jsp:include page="base/footer.jsp"></jsp:include>
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/cityselect.js"></script>
 <script src="js/utils.js"></script>
+<script src="js/login.js" ></script>
 <script >
     $(function(){
         var now=0;
@@ -175,7 +177,23 @@
                         $("span[name='contact']").text(data.data.contact);
                         $("span[name='contact_phone']").text(data.data.contactPhone);
                         $("p[name='description']").text(data.data.description);
+                        $.ajax({
+                            type: "post",
+                            url: "/location/getLocation",
+                            data:{"locationCode":data.data.locationCode},
+                            success: function(data1){
+                                if (typeof data1 == "string") {
+                                    data1 = JSON.parse(data1);
+                                }
+                                if(data1.status==1000) {
+                                    $("div[name='location']").text(data1.data.province+" "+data1.data.city+" "+data1.data.county);
+                                }
 
+                            },
+                            error:function(error){
+                                alert("connection error!");
+                            }
+                        });
                     }
 
                 },

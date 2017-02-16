@@ -23,7 +23,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>test</title>
+    <title>用户管理 | 卡布达</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/cityselect.css"/>
@@ -87,6 +87,7 @@
 
 
 <!--底部-->
+<jsp:include page="base/footer.jsp"></jsp:include>
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/cityselect.js"></script>
