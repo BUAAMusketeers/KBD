@@ -212,7 +212,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(path = "/user/update", method = RequestMethod.POST)
-    public String update(String name, Integer sex, Integer isDriver, String model, Integer price, Integer drivingAge,
+    public String update(String name, Integer sex, String phoneNumber, Integer isDriver, String model, Integer price, Integer drivingAge,
                          @RequestParam(value = "location", required = false) String locationCode, HttpServletRequest request) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
@@ -223,6 +223,7 @@ public class UserController {
 
             if (!StringUtils.isEmpty(name)) user.setName(name.trim());
             if (!StringUtils.isEmpty(sex)) user.setSex(sex);
+            if (!StringUtils.isEmpty(phoneNumber)) user.setPhoneNumber(phoneNumber.trim());
             if (!StringUtils.isEmpty(isDriver)) {
                 user.setIsDriver(isDriver);
                 if (isDriver == 1) {
