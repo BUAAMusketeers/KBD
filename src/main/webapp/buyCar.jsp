@@ -134,7 +134,7 @@
     <!--图片展示-->
     <div class="list">
         <div class="row carList" id="carListBox">
-            <div class="col-sm-6 col-md-3 listBox">
+           <%-- <div class="col-sm-6 col-md-3 listBox">
                 <div class="thumbnail">
                     <img src="images/demo.jpg" alt="...">
                     <div class="infoDiv">
@@ -152,7 +152,7 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
         <!--分页-->
         <div class="page" id="id_set_page">
@@ -182,7 +182,7 @@
     $(document).ready(function(){
         var test=new Vcity.CitySelector({input:'citySelect'});
         var city=getQueryString("city")?getQueryString("city"):"成都市";
-        var keywords=getQueryString("keyword")?getQueryString("keyword"):"";
+        var keywords=getQueryString("keywords")?getQueryString("keywords"):"";
         $("#cityInput").val(keywords);
         $("#citySelect").val(city);
         getCarList();
@@ -244,7 +244,9 @@
                             var str=''+
                             '<div class="col-sm-6 col-md-3 listBox">' +
                             '<div class="thumbnail">' +
+                            '<div class="imgDiv">' +
                             '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].pictureUrl+'" alt="picture"></a>' +
+                            '</div>' +
                             '<div class="infoDiv">' +
                             '<p class="infoBox"><a href="vehicle_detail.jsp?vehicleId='+result[i].id+'">'+result[i].brand+result[i].model+'</a></p>' +
                             '<p class="infoGray">' +

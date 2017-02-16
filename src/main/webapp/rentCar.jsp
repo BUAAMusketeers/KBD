@@ -244,7 +244,9 @@
                             var str=''+
                                 '<div class="col-sm-6 col-md-3 listBox">' +
                                 '<div class="thumbnail">' +
-                                '<img src="'+result[i].pictureUrl+'" alt="picture">' +
+                                '<div class="imgDiv">' +
+                                '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].pictureUrl+'" alt="picture"></a>' +
+                                '</div>' +
                                 '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].pictureUrl+'" alt="picture"></a>' +
                                 '<p class="infoBox"><a href="vehicle_detail.jsp?vehicleId='+result[i].id+'">'+result[i].brand+result[i].model+'</a></p>' +
                                 '<p class="infoGray">' +

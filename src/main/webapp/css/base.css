@@ -288,3 +288,7 @@ p.tip{color:#999;line-height:20px;padding:5px;margin:0;text-indent:3px;}
     color:#c03;
 }
 
+.imgDiv{
+    overflow:hidden;
+    max-height:210px;
+}
