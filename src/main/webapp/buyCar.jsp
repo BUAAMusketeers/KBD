@@ -168,6 +168,9 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/page.js"></script>
 <script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript" src="js/buyCar.js"></script>
+
+
 <script >
 
 

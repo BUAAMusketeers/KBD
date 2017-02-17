@@ -203,6 +203,8 @@
 <script src="js/jquery.form.js"></script>
 <script type="text/javascript" src="js/jquery.form.js"></script>
 <script src="js/sell.js" ></script>
+<script type="text/javascript" src="js/buyCar.js"></script>
+
 <script>
     $(function(){
         for(var i=1997; i<=2017;i++){

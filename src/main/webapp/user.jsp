@@ -306,6 +306,8 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script src="js/bootstrap-filestyle.js"></script>
 <script src="js/login.js"></script>
+<script type="text/javascript" src="js/buyCar.js"></script>
+
 <script >
 
     var tabId=getQueryString("id")?getQueryString("id"):1;

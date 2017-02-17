@@ -81,7 +81,7 @@
     <!--图片展示-->
     <div class="list">
         <div class="row carList" id="carListBox">
-            <div class="col-sm-6 col-md-3 listBox">
+            <%--<div class="col-sm-6 col-md-3 listBox">
                 <div class="thumbnail">
                     <img src="images/demo.jpg" alt="...">
                     <div class="infoDiv">
@@ -99,7 +99,7 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
         <!--分页-->
         <div class="page" id="id_set_page">
@@ -117,7 +117,11 @@
 <script type="text/javascript" src="js/login.js"></script>
 <script >
 
-
+    $("#searchCarBtn").click(function () {
+        var keywords=$("#cityInput").val();
+        var city=$("#citySelect").val();
+        window.location.href="trailer.jsp?city="+city+"&keywords="+keywords;
+    });
     var brand=0;
     var carType=48;
     var root="";

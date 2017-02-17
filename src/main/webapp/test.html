@@ -13,7 +13,16 @@
 
 <body>
 
+<div class="dropdown">
+    <a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        Dropdown trigger
+        <span class="caret"></span>
+    </a>
 
+    <ul class="dropdown-menu" aria-labelledby="dLabel">
+        ...
+    </ul>
+</div>
 
 <!--顶部-->
 <div class="head-body">
@@ -125,13 +134,13 @@
                 <a class="" href="/bj/buy/" rel="nofollow">奔驰</a>
                 </div>
                 <a>
-                    <div class="dropdown">
-                        <a id="kwy" class="showBox">
+                    <div class="dropdown"  >
+                        <a id="dLabel"  href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             全部
                             <span class="caret"></span>
                         </a>
 
-                        <div class="selectBox " id="kwyBox">
+                        <ul  class="dropdown-menu selectBox" aria-labelledby="dLabel" >
                             <div class="itemListBox">
                                 <div class="itemBox">
                                     <dl>
@@ -178,7 +187,7 @@
 
 
                             </div>
-                        </div>
+                        </ul>
                     </div>
                 </a>
             </dd>
@@ -238,7 +247,31 @@
         <div class="row carList">
             <div class="col-sm-6 col-md-3 listBox">
                 <div class="thumbnail">
-                    <img src="images/demo.jpg" alt="...">
+                    <div>
+                    <a href="user.html"><img class="img-responsive" src="images/2.jpg" alt="..."></a>
+                    </div>
+                    <div class="infoDiv">
+                        <p class="infoBox"><a>蒋名义</a><em class="verticalLine">|</em>
+                            <span classs="infoGray">挖掘机</span></p>
+                        <p class="infoGray">
+                            <span>5年驾龄</span>
+                            <em class="verticalLine">|</em>
+                            <span>挖掘机</span>
+                            <em class="verticalLine">|</em>
+                            <span>联系电话：14533432423432</span>
+                        </p>
+                        <p class="infoPrice">
+                            价格：
+                            <span>14.6万</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3 listBox">
+                <div class="thumbnail">
+                    <div>
+                        <a href="user.html"><img class="img-responsive" src="images/1.png" alt="..."></a>
+                    </div>
                     <div class="infoDiv">
                         <p class="infoBox"><a>T现代车两全开T现代车两全开那个in爱姑娘IGN那个in爱姑娘IGN</a></p>
                         <p class="infoGray">
@@ -273,14 +306,7 @@
 <script src="js/login.js"></script>
 <script >
     var test=new Vcity.CitySelector({input:'citySelect'});
-    $(".showBox").hover(function(){
-        var boxName=this.id+"Box";
-        var div=document.getElementById(boxName);
-        div.style.display="block";
-    })
-    $(".selectBox").mouseleave(function () {
-        this.style.display="none";
-    })
+
 
     var pagecallback = function(p) {
         /*global["selectedPage"] = Number(p);

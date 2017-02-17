@@ -115,6 +115,8 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/cityselect.js"></script>
 <script src="js/utils.js"></script>
+<script type="text/javascript" src="js/buyCar.js"></script>
+
 <script >
     $(function(){
         var now=0;
