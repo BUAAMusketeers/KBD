@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.kabuda.entity.Location;
 import com.kabuda.entity.Model;
 import com.kabuda.entity.User;
+import com.kabuda.entity.domain.ListResponse;
 import com.kabuda.entity.domain.Response;
 import com.kabuda.entity.domain.VehicleBean;
 import com.kabuda.entity.domain.VehicleResponse;
@@ -26,7 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -327,6 +330,64 @@ public class UserController {
             }
         }
         return modelNameList;
+    }
+
+
+    /**
+     * 获取驾驶员列表
+     * @param city 城市名字
+     * @param drivingAge 驾龄(0:不限，1:0-3年，2:4-6年，3:7-9年，4:10年及以上)
+     * @param sort 排序方式(0:默认，1:按驾龄升序，2:驾龄降序)
+     * @param keyword 搜索关键字
+     * @param limit 每一页的个数
+     * @param page 第几页
+     * @param modelId 机型的id
+     */
+    @ResponseBody
+    @RequestMapping(path = "/user/getDrivers", method = RequestMethod.POST)
+    public String listDrivers(String city, Integer drivingAge, Integer sort, String keyword, Integer limit, Integer page,
+                              @RequestParam(value = "model", required = false) Integer modelId){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        if(StringUtils.isEmpty(drivingAge) || StringUtils.isEmpty(sort) || StringUtils.isEmpty(limit)
+                || StringUtils.isEmpty(page)){
+            return gson.toJson(new Response(ResponseCode.R_1001));
+        }
+        city = StringUtils.isEmpty(city)? city : city.trim();
+        keyword = StringUtils.isEmpty(keyword)? keyword : keyword.trim();
+
+        int offset = (page - 1) * limit;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("city", city);
+        map.put("drivingAge", drivingAge);
+        map.put("sort", sort);
+        map.put("keyword", keyword);
+        map.put("modelId", modelId);
+        map.put("limit", limit);
+        map.put("offset", offset);
+        try {
+            List<User> driverList = userService.listDrivers(map);
+            int total = 0;
+            if(driverList != null){
+                total = driverList.size();
+
+                List<Model> modelList = modelService.listModel();
+                for(User u : driverList){
+                    String[] models = u.getModel().split(",");
+                    List<String> modelNameList = new ArrayList<String>();
+                    for (String m : models){
+                        if(!StringUtils.isEmpty(m.trim())){
+                            modelNameList.add(modelList.get(Integer.valueOf(m) - 1).getModelName());
+                        }
+                    }
+                    u.setModelNameList(modelNameList);
+                }
+            }
+            return new GsonBuilder().serializeNulls().setPrettyPrinting().create()
+                    .toJson(new ListResponse<User>(ResponseCode.R_1000, total, driverList));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(ResponseCode.R_1100));
+        }
     }
 
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("userService")
 @Transactional
@@ -47,5 +48,9 @@ public class UserService {
 
     public List<VehicleBean> getUserCarsList(int id){
         return userDao.listUserCars(id);
+    }
+
+    public List<User> listDrivers(Map map){
+        return userDao.listDrivers(map);
     }
 }

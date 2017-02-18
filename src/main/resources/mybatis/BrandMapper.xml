@@ -7,7 +7,7 @@
             id,
             first_letter AS firstLetter,
             brand_name AS brandName
-        FROM brand
+        FROM brand ORDER BY id
     </select>
 
     <select id="listBrandByLetter" resultType="com.kabuda.entity.Brand">
