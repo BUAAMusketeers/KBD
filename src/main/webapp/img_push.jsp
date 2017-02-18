@@ -57,6 +57,7 @@
 <script src="js/zh.js" type="text/javascript"></script>
 <script src="js/login.js" ></script>
 <script>
+    var test=new Vcity.CitySelector({input:'citySelect'});
     $("#upload").fileinput('clear');
     $("#upload").fileinput('destroy');
     initImg();

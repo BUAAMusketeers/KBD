@@ -119,6 +119,7 @@
 <script src="js/login.js" ></script>
 <script >
     $(function(){
+        var test=new Vcity.CitySelector({input:'citySelect'});
         var now=0;
         var sum=0;
         $(".dt-sumpic").hover(function () {

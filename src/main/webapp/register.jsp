@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/sell.css" />
+    <link rel="stylesheet" href="css/cityselect.css">
     <link href="images/favicon.ico" rel="shortcut icon" />
 </head>
 
@@ -181,11 +182,13 @@
 <script src="js/utils.js"></script>
 <script src="js/bootstrap-filestyle.js"></script>
 <script src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/cityselect.js"></script>
 <script src="js/login.js"></script>
 <script type="text/javascript" src="js/buyCar.js"></script>
 
 <script>
     $(function(){
+        var test=new Vcity.CitySelector({input:'citySelect'});
         $.ajax({
             type: "post",
             url: "/car/getModelList",

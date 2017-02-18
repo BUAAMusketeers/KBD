@@ -38,7 +38,7 @@ User user = (User)request.getSession().getAttribute("user");
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation"aria-expanded="false">
             <div class="container">
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a href="index.html"> 首页</a></li>
+                    <li><a href="index.jsp"> 首页</a></li>
                     <li><a href="buyCar.jsp">买车</a></li>
                     <li><a href="rentCar.jsp">租车</a></li>
                     <li><a href="seekDriver.jsp">找驾驶员</a></li>
