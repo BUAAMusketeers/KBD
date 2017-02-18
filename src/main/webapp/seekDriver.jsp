@@ -152,7 +152,6 @@
     });
 
     var driveYears=0;
-    var carType=0;
     var root="";
     var sort=0;
     var global = {
@@ -163,9 +162,13 @@
         var test=new Vcity.CitySelector({input:'citySelect'});
         var city=getQueryString("city")?getQueryString("city"):"成都市";
         var keywords=getQueryString("keyword")?getQueryString("keyword"):"";
+        carType=getQueryString("model")?getQueryString("model"):0;
         $("#cityInput").val(keywords);
         $("#citySelect").val(city);
-        getDrivers();
+        if(!carType){
+            getDrivers();
+
+        }
         loadType();
         getTypeList();
         /*$(".showBox").hover(function(){
@@ -281,6 +284,9 @@
                             var str0 = '<div class="itemBox"><dl><dt>' + letterPre + '</dt><dd>' + str + '</dd></dl></div>';
                             $("#typeAllBox .itemListBox").append(str0);
                         }
+                    }
+                    if(carType){
+                        typeClick(carType);
                     }
 
 
