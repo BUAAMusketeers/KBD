@@ -5,6 +5,9 @@
 body {
     padding:0;
 }
+body>.container{
+    min-height:600px;
+}
 .hide{
     display:none;
 }
@@ -230,7 +233,6 @@ body {
     padding-top: 15px;
     padding-bottom: 1px;
     margin-top: 40px;
-    position: absolute;
     bottom: 0px;
     left: 0px;
     width: 100%;
