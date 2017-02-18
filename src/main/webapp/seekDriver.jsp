@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>租车</title>
+    <title>找驾驶员</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/cityselect.css">
@@ -32,49 +32,22 @@
     <!--导航-->
     <ol class="breadcrumb">
         <li><a href="#">首页</a></li>
-        <li class="active">租车</li>
+        <li class="active">找驾驶员</li>
     </ol>
     <!--条件过滤-->
     <div class="fliterBox">
         <dl class="fliter-bd clearfix">
-            <dt>品牌：</dt>
+            <dt>驾龄：</dt>
             <dd class="clickBrandWidget">
-                <div id="hotBrandList">
+                <div >
 
-
-                    <%--
-                    <a class="" href="#" rel="nofollow">宝马</a>
-                    <a class="" href="#" rel="nofollow">奔驰</a>--%>
+                    <a class="on driveYears" href="#" id="driveYearsId_0" onclick="driveYearsChange(0)">不限</a>
+                    <a class=" driveYears" href="#" id="driveYearsId_1" onclick="driveYearsChange(1)">0-3年</a>
+                    <a class=" driveYears" href="#" id="driveYearsId_2" onclick="driveYearsChange(2)">4-6年</a>
+                    <a class=" driveYears" href="#" id="driveYearsId_3" onclick="driveYearsChange(3)">7-9年</a>
+                    <a class=" driveYears" href="#" id="driveYearsId_4" onclick="driveYearsChange(4)">10年以上</a>
                 </div>
 
-                <a>
-                    <div class="dropdown " >
-                        <a id="brandAll" href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            全部
-                            <span class="caret"></span>
-                        </a>
-
-                        <div class="dropdown-menu selectBox" aria-labelledby="brandAll" id="brandAllBox">
-                            <div class="itemListBox">
-                                <%--<div class="itemBox">
-                                    <dl>
-                                        <dt>A</dt>
-                                        <dd>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">阿斯顿马丁</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                            <a href="#">宝马</a>
-                                        </dd>
-                                    </dl>
-                                </div>--%>
-
-                            </div>
-                        </div>
-                    </div>
-                </a>
             </dd>
         </dl>
         <dl class="fliter-bd clearfix">
@@ -124,10 +97,8 @@
         <div class="fl seqDiv">
             <div class="btn-group">
                 <button type="button" id="seqId_1" onclick="sortChange(this)" class="btn btn-default seqBtn selected">默认排序</button>
-                <button type="button" id="seqId_2" onclick="sortChange(this)" class="btn btn-default seqBtn">价格<span class="glyphicon glyphicon-arrow-up"></span></button>
-                <button type="button" id="seqId_4" onclick="sortChange(this)" class="btn btn-default seqBtn">价格<span class="glyphicon glyphicon-arrow-down"></span></button>
-                <button type="button" id="seqId_5" onclick="sortChange(this)" class="btn btn-default seqBtn">车龄<span class="glyphicon glyphicon-arrow-up"></button>
-                <button type="button" id="seqId_6" onclick="sortChange(this)" class="btn btn-default seqBtn">使用小时<span class="glyphicon glyphicon-arrow-up"></button>
+                <button type="button" id="seqId_2" onclick="sortChange(this)" class="btn btn-default seqBtn">驾龄<span class="glyphicon glyphicon-arrow-up"></span></button>
+                <button type="button" id="seqId_4" onclick="sortChange(this)" class="btn btn-default seqBtn">驾龄<span class="glyphicon glyphicon-arrow-down"></span></button>
             </div>
         </div>
     </div>
@@ -138,7 +109,7 @@
                 <div class="thumbnail">
                     <img src="images/demo.jpg" alt="...">
                     <div class="infoDiv">
-                        <p class="infoBox"><a>T现代车两全开T现代车两全开那个in爱姑娘IGN那个in爱姑娘IGN</a></p>
+                        <p class="infoBox"><a>蒋名义</a></p>
                         <p class="infoGray">
                             <span>2015年上牌</span>
                             <em class="verticalLine">|</em>
@@ -173,9 +144,10 @@
     $("#searchCarBtn").click(function () {
         var keywords=$("#cityInput").val();
         var city=$("#citySelect").val();
-        window.location.href="rentCar.jsp?city="+city+"&keywords="+keywords;
+        window.location.href="seekDriver.jsp?city="+city+"&keywords="+keywords;
     });
-    var brand=0;
+
+    var driveYears=0;
     var carType=0;
     var root="";
     var sort=0;
@@ -189,10 +161,8 @@
         var keywords=getQueryString("keyword")?getQueryString("keyword"):"";
         $("#cityInput").val(keywords);
         $("#citySelect").val(city);
-        getCarList();
-        loadBrand();
+        getDrivers();
         loadType();
-        getBrandList();
         getTypeList();
         /*$(".showBox").hover(function(){
          var boxName=this.id+"Box";
@@ -212,18 +182,18 @@
 
     var pagecallback = function(p) {
         global["selectedPage"] = Number(p);
-        getCarList();
+        getDrivers();
     }
 
 
-    function getCarList(){
+    function getDrivers(){
         var keyword=$("#cityInput").val();
         var city=$("#citySelect").val();
         //console.log(keyword);
         $.ajax({
             type: "POST",
-            url:  "/car/getRentList",
-            data: {city:city,brand:brand,model:carType,sort:sort, keyword:keyword,limit:global["limit"], page:global["selectedPage"]},
+            url:  "/user/getDrivers",
+            data: {city:city,drivingAge:driveYears,model:carType,sort:sort, keyword:keyword,limit:global["limit"], page:global["selectedPage"]},
             success:function(data) {
                 if (typeof data == "string") {
                     data = JSON.parse(data);
@@ -245,22 +215,28 @@
                         var result = data.result.data;
                         var length = result.length;
                         for (var i = 0; i < length; i++) {
+
+                            if(result.drivingAge<10){
+                                var drivingAge=result[i].drivingAge+"年";
+                            }else {
+                                var drivingAge="10年以上"
+                            }
+                            var model='<span>驾驶机型：'+result[i].model[0]+'</span>';
+                            for(var j=1;j<model.length;j++){
+                                model+='<em class="verticalLine">|</em>'+'<span>'+result[i].model[j]+'</span>' ;
+                            }
                             var str=''+
                                 '<div class="col-sm-6 col-md-3 listBox">' +
                                 '<div class="thumbnail">' +
                                 '<div class="imgDiv">' +
-                                '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].pictureUrl+'" alt="picture"></a>' +
+                                '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].headPotrait+'" alt="picture"></a>' +
                                 '</div>' +
-                                '<p class="infoBox"><a href="vehicle_detail.jsp?vehicleId='+result[i].id+'">'+result[i].brand+result[i].model+'</a></p>' +
+                                '<p class="infoBox"><a href="#">'+result[i].name+'</a><span class="driveYearSpan">'+drivingAge+'驾龄</span></p>' +
                                 '<p class="infoGray">' +
-                                '<span>'+result[i].vehicleAge+'年上牌</span>' +
-                                '<em class="verticalLine">|</em>' +
-                                '<span>使用'+result[i].usedHours+'小时</span>' +
-                                '<em class="verticalLine">|</em>' +
-                                '<span>'+result[i].tonnage+'吨</span>' +
+                                model+
                                 '</p>' +
-                                '<p class="infoPrice"> 价格：' +
-                                '<span>'+result[i].rentPrice+'元/每天</span>' +
+                                '<p class="infoGray"> 联系方式：' +
+                                '<span>'+result[i].phoneNumber+'</span>' +
                                 '</p>' +
                                 '</div>' +
                                 '</div>' +
@@ -278,39 +254,7 @@
             datatype:"json"
         });
     }
-    /*获取品牌列表*/
-    function getBrandList(){
-        $.ajax({
-            type: "POST",
-            url:  root+"/car/getBrandList",
-            success:function(data) {
-                if (typeof data == "string") {
-                    data = JSON.parse(data);
-                }
-                if (data.status == 1000) {
 
-                    var result = data.data;
-                    for (var i = 0; i < 26; i++) {
-                        var letterPre=letter[i];
-                        var str='';
-                        for(var j=0;j<result[i].length;j++){
-                            str+='<a id="brandClick_'+result[i][j].id+'" onclick="brandClick('+result[i][j].id+')">'+result[i][j].name+'</a>';
-
-                        }
-                        if(result[i].length){
-                            var str0='<div class="itemBox"><dl><dt>'+letterPre+'</dt><dd>'+str+'</dd></dl></div>';
-                            $("#brandAllBox .itemListBox").append(str0)
-                        }
-                    }
-
-
-
-
-                }
-            },
-            datatype:"json"
-        });
-    }
     /*获取类型列表*/
     function getTypeList(){
         $.ajax({
@@ -343,32 +287,16 @@
         });
     }
     /*热门品牌*/
-    function loadBrand(){
-        var length=hotBrand.length;
-        var str='<a class="on hotBrandA" href="#" id="brandId_0" onclick="brandChange(0)">'+hotBrand[0]+'</a>';
-        $("#hotBrandList").append(str);
-        for(var i=1;i<length;i++){
-            var str='<a class="hotBrandA" href="#" id="brandId_'+i+'" onclick="brandChange('+i+')">'+hotBrand[i]+'</a>';
-            $("#hotBrandList").append(str);
-        }
-    }
-    function brandChange(id) {
 
-        $(".hotBrandA").removeClass("on");
-        $("#brandId_"+id).addClass("on");
-        brand=id;
-        getCarList();
+    function driveYearsChange(id) {
+
+        $(".driveYears").removeClass("on");
+        $("#driveYearsId_"+id).addClass("on");
+        driveYears=id;
+        getDrivers();
 
     }
-    function brandClick(id) {
-        var name=$("#brandClick_"+id).html();
-        if(id>=hotBrand.length){
-            var str='<a class="on hotBrandA" href="#" id="brandId_'+id+'" >'+name+'</a>';
-            $("#hotBrandList").append(str);
 
-        }
-        brandChange(id);
-    }
     /*热门类型*/
     function loadType(){
         var length=hotType.length;
@@ -384,7 +312,7 @@
         $(".hotTypeA").removeClass("on");
         $("#typeId_"+id).addClass("on");
         carType=id;
-        getCarList();
+        getDrivers();
 
     }
     function typeClick(id) {
@@ -401,7 +329,7 @@
         sort=Number(self.id.slice(-1));
         $(".seqBtn").removeClass("selected");
         $(self).addClass("selected");
-        getCarList();
+        getDrivers();
 
     }
 

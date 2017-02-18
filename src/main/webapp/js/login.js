@@ -9,11 +9,7 @@ $(document).ready(function() {
             hidePC();
         }
     });*/
-    $("#searchCarBtn").click(function () {
-        var keywords=$("#cityInput").val();
-        var city=$("#citySelect").val();
-        window.location.href="buyCar.jsp?city="+city+"&keywords="+keywords;
-    });
+
     //登录
     $('#login-btn').click(function() {
         var username = document.getElementById('username').value;
