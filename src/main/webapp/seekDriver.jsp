@@ -92,7 +92,7 @@
     <!--排序方式-->
     <div class="seqBox clearfix">
         <p class="fr seqP">
-            共找到<b id="carAmount"></b>辆
+            共找到<b id="carAmount"></b>位
         </p>
         <div class="fl seqDiv">
             <div class="btn-group">
