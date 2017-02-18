@@ -227,41 +227,20 @@ body {
 }*/
 /*--底部--*/
 .foot {
-    background-color: #FD6F1A;
     padding-top: 15px;
     padding-bottom: 1px;
     margin-top: 40px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
 }
 .foot p {
     text-align: center;
-    color: #fff;
+    color: #999;
     font-size:16px;
 }
-.foot ul {
-    text-align: center;
-    padding:0;
-    margin-top:15px;
-}
-.foot li {
-    display:inline;
-    color: #bac1c8;
-    padding-left: 5px;
-}
-.foot li a{
-    color: #bac1c8;
-    transition: all 0.2s ease-in-out;
-    font-size:16px;
-}
-.foot li a:hover{
-    color: #5adae2;
-    text-decoration: none;
-}
-.foot img {
-    width:180px;
-}
-.foot>.container-fluid>.col-md-1 {
-    text-align: center;
-}
+
 
 /*导航*/
 .breadcrumb{
