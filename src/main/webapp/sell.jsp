@@ -183,6 +183,7 @@
 <script src="js/bootstrap-filestyle.js"></script>
 <script src="js/jquery.form.js"></script>
 <script type="text/javascript" src="js/jquery.form.js"></script>
+<script src="js/buyCar.js"></script>
 <script src="js/sell.js" ></script>
 <script>
     $(function(){

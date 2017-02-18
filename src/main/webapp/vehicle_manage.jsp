@@ -205,6 +205,7 @@
 <script type="text/javascript" src="js/jquery.form.js"></script>
 <script src="js/sell.js" ></script>
 <script src="js/login.js" ></script>
+<script src="js/buyCar.js"></script>
 <script>
     $(function(){
         var test=new Vcity.CitySelector({input:'citySelect'});

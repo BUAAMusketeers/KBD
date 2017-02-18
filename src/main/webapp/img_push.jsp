@@ -56,6 +56,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/zh.js" type="text/javascript"></script>
 <script src="js/login.js" ></script>
+<script src="js/buyCar.js"></script>
 <script>
     var test=new Vcity.CitySelector({input:'citySelect'});
     $("#upload").fileinput('clear');
