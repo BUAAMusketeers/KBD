@@ -164,7 +164,12 @@
                 if (data.status == 1000) {
 
 
+                    topAlert('删除成功','success')
+                }
+                else {
 
+
+                    topAlert('删除失败','error')
                 }
 
             },
