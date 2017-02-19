@@ -121,9 +121,10 @@ public class UserController {
                 userService.insert(user);
             }
 
-            Location locationByLC = locationService.getLocationByLC(locationCode);
-            user.setLocation(locationByLC.getCity());
-
+            if(!StringUtils.isEmpty(locationCode)){
+                Location locationByLC = locationService.getLocationByLC(locationCode);
+                user.setLocation(locationByLC.getCity());
+            }
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(1800); // 30 minutes
             return gson.toJson(new Response(ResponseCode.R_1000));
