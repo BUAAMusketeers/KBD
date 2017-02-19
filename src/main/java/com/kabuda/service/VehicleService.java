@@ -22,8 +22,22 @@ public class VehicleService {
         this.vehicleDao = vehicleDao;
     }
 
-    public int getVehicleCount(int type) {
+    public int countVehicle(int type) {
         return vehicleDao.countVehicle(type);
+    }
+
+    /**
+     *  正在出售的车辆数量
+     */
+    public int countSellingVehicle(){
+        return vehicleDao.countSellingVehicle();
+    }
+
+    /**
+     * 已经售出的车辆数量
+     */
+    public int countSoldVehicle(){
+        return vehicleDao.countSoldVehicle();
     }
 
     public List<VehicleBean> getVehicleList(VehicleRequest vehicleRequest) {

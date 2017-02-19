@@ -25,5 +25,7 @@ public interface UserDao extends Dao<User> {
 
     List<VehicleBean> listUserCars(int id);
 
+    int countDrivers();
+
     List<User> listDrivers(Map map);
 }

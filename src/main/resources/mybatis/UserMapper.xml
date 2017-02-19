@@ -150,4 +150,9 @@
         </if>
         LIMIT #{offset}, #{limit}
     </select>
+
+
+    <select id="countDrivers" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user WHERE is_driver = '1'
+    </select>
 </mapper>

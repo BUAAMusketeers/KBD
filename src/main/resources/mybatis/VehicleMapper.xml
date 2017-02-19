@@ -3,13 +3,21 @@
 <mapper namespace="com.kabuda.dao.VehicleDao">
 
     <select id="countVehicle" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM vehicle
+        SELECT COUNT(*) FROM vehicle
         <if test="_parameter == 1">
             WHERE sell = '1' AND sell_state = '0'
         </if>
         <if test="_parameter == 2">
             WHERE rent = '1' AND rent_state = '0'
         </if>
+    </select>
+
+    <select id="countSellingVehicle" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM vehicle WHERE sell = '1' AND sell_state = '0'
+    </select>
+
+    <select id="countSoldVehicle" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM vehicle WHERE sell = '1' AND sell_state = '1'
     </select>
 
 

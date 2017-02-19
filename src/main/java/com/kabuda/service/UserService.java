@@ -50,6 +50,10 @@ public class UserService {
         return userDao.listUserCars(id);
     }
 
+    public int countDrivers(){
+        return userDao.countDrivers();
+    }
+
     public List<User> listDrivers(Map map){
         return userDao.listDrivers(map);
     }

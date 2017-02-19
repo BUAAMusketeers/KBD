@@ -18,6 +18,10 @@ public interface VehicleDao extends Dao<Vehicle>{
      */
     int countVehicle(int type);
 
+    int countSellingVehicle();
+
+    int countSoldVehicle();
+
     List<VehicleBean> listVehicle(VehicleRequest vehicleRequest); //String city, int brand, int model, int sort, int limit, int offset, String keyword, int isSell
 
     /**

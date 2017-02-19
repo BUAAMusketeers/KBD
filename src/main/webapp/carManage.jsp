@@ -155,7 +155,7 @@
     function deleteCar(id) {
         $.ajax({
             type: "POST",
-            url:  "/user/deleteCar",
+            url:  "/car/deleteCar",
             data: {id:id},
             success:function(data) {
                 if (typeof data == "string") {

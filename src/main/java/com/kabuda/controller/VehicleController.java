@@ -9,6 +9,7 @@ import com.kabuda.entity.User;
 import com.kabuda.entity.Vehicle;
 import com.kabuda.entity.domain.*;
 import com.kabuda.service.PictureService;
+import com.kabuda.service.UserService;
 import com.kabuda.service.VehicleService;
 import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,13 @@ public class VehicleController {
 
     private final PictureService pictureService;
 
+    private final UserService userService;
+    
     @Autowired
-    public VehicleController(VehicleService vehicleService, PictureService pictureService) {
+    public VehicleController(VehicleService vehicleService, PictureService pictureService, UserService userService) {
         this.vehicleService = vehicleService;
         this.pictureService = pictureService;
+        this.userService = userService;
     }
 
     /**
@@ -357,5 +361,30 @@ public class VehicleController {
             }
         }
         return false;
+    }
+
+
+    /**
+     * 获取车辆数量，在售车辆数量，驾驶员数量等
+     */
+    @ResponseBody
+    @RequestMapping(path = "/car/getNum", method = RequestMethod.POST)
+    public String getNum(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            int sumNum = vehicleService.countVehicle(0);
+            int sellingNum = vehicleService.countSellingVehicle();
+            int soldNum = vehicleService.countSoldVehicle();
+            int driverNum = userService.countDrivers();
+            Map<String, Integer> map = new HashMap<String, Integer>();
+            map.put("sumNum", sumNum);
+            map.put("sellingNum", sellingNum);
+            map.put("soldNum", soldNum);
+            map.put("driverNum", driverNum);
+            return gson.toJson(new Response<Map>(ResponseCode.R_1000, map));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(ResponseCode.R_1100));
+        }
     }
 }
