@@ -121,13 +121,13 @@
             active AS isActive
         FROM user LEFT JOIN location ON user.location_code = location.location_code
         WHERE is_driver = '1'
-        <if test="city != null">
+        <if test="city != null and city != '全国'">
             AND location.city = #{city}
         </if>
         <if test="keyword != null">
             AND user.name LIKE CONCAT('%', #{keyword}, '%')
         </if>
-        <if test="modelId != null">
+        <if test="modelId != null and modelId != 0">
             AND user.model LIKE CONCAT('%', #{modelId}, '%')
         </if>
         <if test="drivingAge == 1">
