@@ -35,4 +35,6 @@ public interface VehicleDao extends Dao<Vehicle>{
     int saveVehicle(Vehicle vehicle);
 
     void updateVehicle(Vehicle vehicle);
+
+    void removeVehicle(int id);
 }

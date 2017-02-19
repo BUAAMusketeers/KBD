@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.List;
 
 @Service("pictureService")
@@ -20,8 +21,8 @@ public class PictureService {
         this.pictureDao = pictureDao;
     }
 
-    public List<Picture> getPictureByVehicleId(int vehicleId){
-        return pictureDao.getPictureByVehicleId(vehicleId);
+    public List<Picture> listPictureByVehicleId(int vehicleId){
+        return pictureDao.listPictureByVehicleId(vehicleId);
     }
 
     public Picture getPictureById(int id){
@@ -36,7 +37,12 @@ public class PictureService {
         pictureDao.updatePicture(picture);
     }
 
-    public void delete(int id){
+    public void removePicture(int id){
         pictureDao.removePicture(id);
     }
+
+    public void removePictureByVehicleId(int vehicleId){
+        pictureDao.removePictureByVehicleId(vehicleId);
+    }
+
 }

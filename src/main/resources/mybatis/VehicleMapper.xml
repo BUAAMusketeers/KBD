@@ -195,4 +195,8 @@
             update_date = #{updateDate}
         WHERE id = #{id}
     </update>
+
+    <delete id="removeVehicle">
+        DELETE FROM vehicle WHERE id = #{id}
+    </delete>
 </mapper>
