@@ -27,9 +27,7 @@
             <h1>注册</h1>
         </div>
     </div>
-</div>
 
-<div class="container">
     <div class="row">
         <div class="col-md-4 reg-body" style="">
             <div class="choose-head">
@@ -391,8 +389,11 @@
                                 window.location.href="user.jsp";
                             }else if(data.status==1001){
                                 alert("手机号已注册！");
+                                $('#register-form').bootstrapValidator('resetForm',false);
                             }else{
                                 alert("信息不完整！");
+                                $('#register-form').bootstrapValidator('resetForm',false);
+
                             }
                         },
                         error:function(error){

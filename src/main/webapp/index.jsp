@@ -70,116 +70,64 @@
         </div>
 
         <div class="col-md-3 my-container" >
-            <h3><span class="glyphicon glyphicon-plane"></span>系统概况</h3>
+            <h3><span class="glyphicon glyphicon-bookmark"></span>系统概况</h3>
             <div class="info-con col-md-6">
-                <h3>333台</h3>
+                <h3 name="sum_num">333台</h3>
                 <p>车辆总数</p>
             </div>
             <div class="info-con col-md-6">
-                <h3>333台</h3>
+                <h3 name="selling_num">333台</h3>
                 <p>在售车辆</p>
             </div>
             <div class="info-con col-md-6">
-                <h3>333台</h3>
+                <h3 name="sold_num">333台</h3>
                 <p>已售车辆</p>
             </div>
             <div class="info-con col-md-6">
-                <h3>333名</h3>
+                <h3 name="driver_num">333名</h3>
                 <p>注册驾驶员</p>
             </div>
         </div>
     </div>
-</div>
-<div class="container">
+<div class="row">
     <h4>
         <i class="deck"></i>
         最新车辆
     </h4>
     <div class="list">
         <div class="row carList" id="carListBox">
-            <div class="col-sm-6 col-md-3 listBox">
-             <div class="thumbnail">
-                <img src="/file/vehicle/1487167365503_085eb2ab570ccf3749008c1385fa08c2.png" alt="picture">
-                <div class="infoDiv">
-                    <p class="infoBox">
-                        <a href="vehicle_detail.jsp?vehicleId=7">阿帕奇挖掘机</a>
-                    </p>
-                    <p class="infoGray">
-                        <span>1997年上牌</span>
-                        <em class="verticalLine">|</em>
-                        <span>使用13小时</span>
-                        <em class="verticalLine">|</em>
-                        <span>12吨</span>
-                    </p>
-                    <p class="infoPrice"> 价格：<span>23万</span>
-                    </p>
-                </div>
-            </div>
-            </div>
-            <div class="col-sm-6 col-md-3 listBox">
-                <div class="thumbnail">
-                    <img src="/file/vehicle/1487167365503_085eb2ab570ccf3749008c1385fa08c2.png" alt="picture">
-                    <div class="infoDiv">
-                        <p class="infoBox">
-                            <a href="vehicle_detail.jsp?vehicleId=7">阿帕奇挖掘机</a>
-                        </p>
-                        <p class="infoGray">
-                            <span>1997年上牌</span>
-                            <em class="verticalLine">|</em>
-                            <span>使用13小时</span>
-                            <em class="verticalLine">|</em>
-                            <span>12吨</span>
-                        </p>
-                        <p class="infoPrice"> 价格：<span>23万</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 listBox">
-                <div class="thumbnail">
-                    <img src="/file/vehicle/1487167365503_085eb2ab570ccf3749008c1385fa08c2.png" alt="picture">
-                    <div class="infoDiv">
-                        <p class="infoBox">
-                            <a href="vehicle_detail.jsp?vehicleId=7">阿帕奇挖掘机</a>
-                        </p>
-                        <p class="infoGray">
-                            <span>1997年上牌</span>
-                            <em class="verticalLine">|</em>
-                            <span>使用13小时</span>
-                            <em class="verticalLine">|</em>
-                            <span>12吨</span>
-                        </p>
-                        <p class="infoPrice"> 价格：<span>23万</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 listBox">
-                <div class="thumbnail">
-                    <img src="/file/vehicle/1487167365503_085eb2ab570ccf3749008c1385fa08c2.png" alt="picture">
-                    <div class="infoDiv">
-                        <p class="infoBox">
-                            <a href="vehicle_detail.jsp?vehicleId=7">阿帕奇挖掘机</a>
-                        </p>
-                        <p class="infoGray">
-                            <span>1997年上牌</span>
-                            <em class="verticalLine">|</em>
-                            <span>使用13小时</span>
-                            <em class="verticalLine">|</em>
-                            <span>12吨</span>
-                        </p>
-                        <p class="infoPrice"> 价格：<span>23万</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
     <h4>
         <i class="deck"></i>
         驾驶员推荐
     </h4>
+    <div class="list">
+    <div class="row carList" id="carListBox">
+        <<div class="col-sm-6 col-md-3 listBox">
+            <div class="thumbnail">
+                <img src="images/demo.jpg" alt="...">
+                <div class="infoDiv">
+                    <p class="infoBox"><a>T现代车两全开T现代车两全开那个in爱姑娘IGN那个in爱姑娘IGN</a></p>
+                    <p class="infoGray">
+                        <span>2015年上牌</span>
+                        <em class="verticalLine">|</em>
+                        <span>使用25小时</span>
+                        <em class="verticalLine">|</em>
+                        <span>45吨</span>
+                    </p>
+                    <p class="infoPrice">
+                        价格：
+                        <span>14.6万</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
 </div>
+    </div>
 
 <!--底部-->
 <jsp:include page="base/footer.jsp"></jsp:include>
@@ -215,6 +163,51 @@
             }
         });
         initProvinceList();
+        $.ajax({
+            type: "POST",
+            url:  "/car/getSellList",
+            data: {city:"全国",brand:0,model:0,sort:0,limit:4, page:1},
+            success:function(data) {
+                if (typeof data == "string") {
+                    data = JSON.parse(data);
+                }
+                if (data.status == 1000) {
+                    $("#carListBox").empty();
+                    if (data.result.total) {
+                        var result = data.result.data;
+                        var length = result.length;
+                        for (var i = 0; i < length; i++) {
+                            var str=''+
+                                    '<div class="col-sm-6 col-md-3 listBox">' +
+                                    '<div class="thumbnail">' +
+                                    '<img src="'+result[i].pictureUrl+'" alt="picture">' +
+                                    '<div class="infoDiv">' +
+                                    '<p class="infoBox"><a href="vehicle_detail.jsp?vehicleId='+result[i].id+'">'+result[i].brand+result[i].model+'</a></p>' +
+                                    '<p class="infoGray">' +
+                                    '<span>'+result[i].vehicleAge+'年上牌</span>' +
+                                    '<em class="verticalLine">|</em>' +
+                                    '<span>使用'+result[i].usedHours+'小时</span>' +
+                                    '<em class="verticalLine">|</em>' +
+                                    '<span>'+result[i].tonnage+'吨</span>' +
+                                    '</p>' +
+                                    '<p class="infoPrice"> 价格：' +
+                                    '<span>'+result[i].sellPrice+'万</span>' +
+                                    '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                            $("#carListBox").append(str);
+                        }
+                    }
+                    else {
+                        $("#id_set_page").hide();
+                    }
+                }
+            },
+            error:function(error){
+                alert("connection error!");
+            }
+        });
         $("#inquiry").click(function () {
             var city=$('select[name="city"] option:selected').text();
             var cityVal=$('select[name="city"] option:selected').val();

@@ -27,9 +27,7 @@
         <%--<li><a href="carManage.jsp">车辆信息</a></li>--%>
         <li class="active">车辆信息</li>
     </ol>
-</div>
 
-<div class="container">
     <div class="row">
         <div class="col-md-6">
             <div class="det-sumleft slideshow">

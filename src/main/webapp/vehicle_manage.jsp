@@ -30,9 +30,7 @@
     <div class="reg-head" style="margin-top: -50px">
         <h1>更新车辆</h1>
     </div>
-</div>
 
-<div class="container">
     <div class="row">
         <div class="col-md-6 sell-body col-md-offset-3">
             <form id="register-form" class="form-horizontal">
@@ -205,6 +203,7 @@
 <script type="text/javascript" src="js/jquery.form.js"></script>
 <script src="js/sell.js" ></script>
 <script src="js/login.js" ></script>
+<script type="text/javascript" src="js/cityselect.js"></script>
 <script src="js/buyCar.js"></script>
 <script>
     $(function(){
