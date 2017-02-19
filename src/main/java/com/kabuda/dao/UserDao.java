@@ -6,6 +6,7 @@ import com.kabuda.entity.User;
 import com.kabuda.entity.domain.VehicleBean;
 
 import java.util.List;
+import java.util.Map;
 
 @MyBatisDao
 public interface UserDao extends Dao<User> {
@@ -23,4 +24,6 @@ public interface UserDao extends Dao<User> {
     int countUserCars(int id);
 
     List<VehicleBean> listUserCars(int id);
+
+    List<User> listDrivers(Map map);
 }

@@ -42,7 +42,10 @@
         LEFT JOIN brand ON vehicle.brand_id = brand.id
         LEFT JOIN location ON vehicle.location_code = location.location_code
         LEFT JOIN picture ON vehicle.id = picture.vehicle_id
-        WHERE location.city = #{city} AND picture.is_first = '1'
+        WHERE picture.is_first = '1'
+        <if test="city != '全国'">
+            AND location.city = #{city}
+        </if>
         <if test="brand != 0">
             AND vehicle.brand_id = #{brand}
         </if>
@@ -57,6 +60,9 @@
         </if>
         <if test="keyword != null">
             AND ((brand.brand_name LIKE CONCAT('%', #{keyword}, '%')) OR (model.model_name LIKE CONCAT('%', #{keyword}, '%')) OR (vehicle.description LIKE CONCAT('%', #{keyword}, '%')))
+        </if>
+        <if test="sort == 0">
+            ORDER BY update_date DESC
         </if>
         <if test="sort == 1">
             <if test="sellOrRent == 1"> ORDER BY sell_price ASC </if>
@@ -195,4 +201,8 @@
             update_date = #{updateDate}
         WHERE id = #{id}
     </update>
+
+    <delete id="removeVehicle">
+        DELETE FROM vehicle WHERE id = #{id}
+    </delete>
 </mapper>

@@ -3,7 +3,7 @@
 <mapper namespace="com.kabuda.dao.PictureDao">
 
 
-    <select id="getPictureByVehicleId" resultType="com.kabuda.entity.Picture">
+    <select id="listPictureByVehicleId" resultType="com.kabuda.entity.Picture">
         SELECT
             id,
             is_first    AS isFirst,
@@ -46,6 +46,11 @@
 
     <delete id="removePicture">
         DELETE FROM picture WHERE id = #{id}
+    </delete>
+
+
+    <delete id="removePictureByVehicleId">
+        DELETE FROM picture WHERE vehicle_id = #{vehicleId}
     </delete>
 
 </mapper>

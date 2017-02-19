@@ -285,6 +285,39 @@ public class VehicleController {
 
 
     /**
+     * 删除车辆
+     * @param id 车辆的id
+     */
+    @ResponseBody
+    @RequestMapping(path = "/car/deleteCar", method = RequestMethod.POST)
+    public String deleteCar(Integer id, HttpServletRequest request){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        if(StringUtils.isEmpty(id)){
+            return gson.toJson(new Response(ResponseCode.R_1001));
+        }
+
+        User user = (User) request.getSession().getAttribute("user");
+        if(user == null){
+            return gson.toJson(new Response(ResponseCode.R_1010));
+        }
+
+        if(!userHasCar(user.getId(), id)){
+            return gson.toJson(new Response(ResponseCode.R_1011));
+        }
+
+        try {
+            vehicleService.removeVehicle(id);
+            pictureService.removePictureByVehicleId(id);
+            // TODO: 2017/2/18 删除该车辆的图片文件
+            return gson.toJson(new Response(ResponseCode.R_1000));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson(new Response(ResponseCode.R_1100));
+        }
+    }
+
+
+    /**
      * 获取车辆图片
      * @param id 车辆id
      */
@@ -297,7 +330,7 @@ public class VehicleController {
                 return gson.toJson(new Response(ResponseCode.R_1001));
             }
 
-            List<Picture> pictures = pictureService.getPictureByVehicleId(id);
+            List<Picture> pictures = pictureService.listPictureByVehicleId(id);
             int total = 0;
             if(pictures != null){
                 total = pictures.size();
@@ -307,5 +340,22 @@ public class VehicleController {
             e.printStackTrace();
             return gson.toJson(new Response(ResponseCode.R_1100));
         }
+    }
+
+
+    /**
+     * 判断用户是否拥有对应车辆
+     * @param userId 用户id
+     * @param vehicleId 车辆id
+     */
+    private boolean userHasCar(int userId, int vehicleId){
+        List<Vehicle> vehicleList = vehicleService.getVehicleListByUserId(userId);
+        if(vehicleList != null){
+            for(Vehicle vehicle : vehicleList){
+                if(vehicle.getId() == vehicleId)
+                    return true;
+            }
+        }
+        return false;
     }
 }

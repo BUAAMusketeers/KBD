@@ -5,9 +5,9 @@
     <select id="listModel" resultType="com.kabuda.entity.Model">
         SELECT
             id,
-            first_letter AS "firstLetter",
-            model_name AS "modelName"
-        FROM model
+            first_letter AS firstLetter,
+            model_name AS modelName
+        FROM model ORDER BY id
     </select>
 
     <select id="listModelByLetter" resultType="com.kabuda.entity.Model">

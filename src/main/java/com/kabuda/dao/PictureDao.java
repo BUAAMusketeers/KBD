@@ -9,7 +9,7 @@ import java.util.List;
 @MyBatisDao
 public interface PictureDao extends Dao<Picture>{
 
-    List<Picture> getPictureByVehicleId(int vehicleId);
+    List<Picture> listPictureByVehicleId(int vehicleId);
 
     Picture getPictureById(int id);
 
@@ -18,4 +18,6 @@ public interface PictureDao extends Dao<Picture>{
     void updatePicture(Picture picture);
 
     void removePicture(int id);
+
+    void removePictureByVehicleId(int vehicleId);
 }

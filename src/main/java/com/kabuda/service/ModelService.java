@@ -24,7 +24,7 @@ public class ModelService {
         return modelDao.getModelById(id);
     }
 
-    public List<Model> getModelList(){
+    public List<Model> listModel(){
         return modelDao.listModel();
     }
 

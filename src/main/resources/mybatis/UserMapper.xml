@@ -101,4 +101,53 @@
         LEFT JOIN location ON vehicle.location_code = location.location_code
         WHERE vehicle.user_id = #{id}
     </select>
+
+
+    <select id="listDrivers" resultType="com.kabuda.entity.User">
+        SELECT
+            user.id AS id,
+            phone_number AS phoneNumber,
+            password,
+            name,
+            sex,
+            is_driver AS isDriver,
+            model,
+            price,
+            driving_age AS drivingAge,
+            city AS location,
+            user.location_code AS locationCode,
+            head_potrait AS headPotrait,
+            user_level AS userLevel,
+            active AS isActive
+        FROM user LEFT JOIN location ON user.location_code = location.location_code
+        WHERE is_driver = '1'
+        <if test="city != null">
+            AND location.city = #{city}
+        </if>
+        <if test="keyword != null">
+            AND user.name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="modelId != null">
+            AND user.model LIKE CONCAT('%', #{modelId}, '%')
+        </if>
+        <if test="drivingAge == 1">
+            AND user.driving_age &gt;= '0' AND user.driving_age &lt;= '3'
+        </if>
+        <if test="drivingAge == 2">
+            AND user.driving_age &gt;= '4' AND user.driving_age &lt;= '6'
+        </if>
+        <if test="drivingAge == 3">
+            AND user.driving_age &gt;= '7' AND user.driving_age &lt;= '9'
+        </if>
+        <if test="drivingAge == 4">
+            AND user.driving_age &gt;= '10'
+        </if>
+        <if test="sort == 1">
+            ORDER BY user.driving_age ASC
+        </if>
+        <if test="sort == 2">
+            ORDER BY user.driving_age DESC
+        </if>
+        LIMIT #{offset}, #{limit}
+    </select>
 </mapper>

@@ -54,4 +54,8 @@ public class VehicleService {
     public void update(Vehicle vehicle){
         vehicleDao.updateVehicle(vehicle);
     }
+
+    public void removeVehicle(int id){
+        vehicleDao.removeVehicle(id);
+    }
 }

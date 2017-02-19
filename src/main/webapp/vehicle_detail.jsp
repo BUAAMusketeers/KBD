@@ -27,9 +27,7 @@
         <%--<li><a href="carManage.jsp">车辆信息</a></li>--%>
         <li class="active">车辆信息</li>
     </ol>
-</div>
 
-<div class="container">
     <div class="row">
         <div class="col-md-6">
             <div class="det-sumleft slideshow">
@@ -117,6 +115,7 @@
 <script type="text/javascript" src="js/cityselect.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/login.js" ></script>
+<script src="js/buyCar.js"></script>
 <script >
     $(function(){
         var test=new Vcity.CitySelector({input:'citySelect'});

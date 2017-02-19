@@ -37,18 +37,19 @@
     <div class="reg-head" style="margin-top: -50px">
         <h1>车辆图片</h1>
     </div>
+    <div class="row kv-main">
+        <form enctype="multipart/form-data">
+            <div class="row" style="margin-top: 10px">
+                <div class="form-group col-md-8 col-md-offset-2 clearfix">
+                    <input type="file" class="file" id="upload" name="upload[]"multiple>
+                </div>
+                <input type="hidden" id="flag" value="0">
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="container kv-main">
-    <form enctype="multipart/form-data">
-        <div class="row" style="margin-top: 10px">
-            <div class="form-group col-md-8 col-md-offset-2 clearfix">
-                <input type="file" class="file" id="upload" name="upload[]"multiple>
-            </div>
-            <input type="hidden" id="flag" value="0">
-        </div>
-    </form>
-</div>
+
 <!--底部-->
 <jsp:include page="base/footer.jsp"></jsp:include>
 <script src="js/jquery-2.1.1.min.js"></script>
@@ -56,6 +57,8 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/zh.js" type="text/javascript"></script>
 <script src="js/login.js" ></script>
+<script type="text/javascript" src="js/cityselect.js"></script>
+<script src="js/buyCar.js"></script>
 <script>
     var test=new Vcity.CitySelector({input:'citySelect'});
     $("#upload").fileinput('clear');

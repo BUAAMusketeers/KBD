@@ -155,7 +155,7 @@ public class FileController {
             // 插入数据库表picture
             isFirst = (isFirst == null) ? 0 : isFirst;
             boolean vehicleHasFirst = false;
-            List<Picture> pictureList = pictureService.getPictureByVehicleId(id);
+            List<Picture> pictureList = pictureService.listPictureByVehicleId(id);
             for(Picture p : pictureList){
                 if(p.getIsFirst() == 1){
                     vehicleHasFirst = true;
@@ -244,10 +244,10 @@ public class FileController {
                     if (vehicle.getId() == picture.getVehicleId()) {
                         //如果所删除的图片是是首图，则随机设置另一张首图
                         if (picture.getIsFirst() == 0) {
-                            pictureService.delete(id);
+                            pictureService.removePicture(id);
                         } else {
-                            pictureService.delete(id);
-                            List<Picture> pictureList = pictureService.getPictureByVehicleId(vehicle.getId());
+                            pictureService.removePicture(id);
+                            List<Picture> pictureList = pictureService.listPictureByVehicleId(vehicle.getId());
                             if (pictureList != null) {
                                 pictureList.get(0).setIsFirst(1);
                                 pictureService.update(pictureList.get(0));
@@ -289,7 +289,7 @@ public class FileController {
                 return gson.toJson(new Response(ResponseCode.R_1011));
             }
 
-            List<Picture> pictureList = pictureService.getPictureByVehicleId(vehicleId);
+            List<Picture> pictureList = pictureService.listPictureByVehicleId(vehicleId);
             for(Picture picture : pictureList){
                 if(picture.getIsFirst() == 1){
                     picture.setIsFirst(0);
