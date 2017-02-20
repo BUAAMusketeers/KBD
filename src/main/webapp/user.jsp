@@ -578,6 +578,30 @@
 
 
                     }else{
+                        $.ajax({
+                            type: "post",
+                            url: "/car/getModelList",
+                            success: function(data){
+                                if (typeof data == "string") {
+                                    data = JSON.parse(data);
+                                }
+                                if(data.status==1000){
+                                    var result = data.data;
+                                    for (var i = 0; i < 26; i++) {
+                                        var str='';
+                                        for(var j=0;j<result[i].length;j++){
+                                            str="<li><a onclick='addfunction(this)' value="+result[i][j].id+">"+result[i][j].name+"</a></li>";
+                                            $("#model ul").append(str);
+                                        }
+                                    }
+                                }
+                            },
+                            error:function(error){
+                                alert("connection error!");
+                            }
+                        });
+                        initProvinceList();
+
                         $(".showForDriver").hide();
                     }
 
