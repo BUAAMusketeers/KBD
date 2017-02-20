@@ -228,9 +228,10 @@
                             }else {
                                 var drivingAge="10年以上"
                             }
-                            var model='<span>驾驶机型：'+result[i].model[0]+'</span>';
-                            for(var j=1;j<model.length;j++){
-                                model+='<em class="verticalLine">|</em>'+'<span>'+result[i].model[j]+'</span>' ;
+                            var model='<span>驾驶机型：'+result[i].modelNameList[0]+'</span>';
+                            var modelNameList = result[i].modelNameList;
+                            for(var j=1;j<modelNameList.length;j++){
+                                model+='<em class="verticalLine">|</em>'+'<span>'+result[i].modelNameList[j]+'</span>' ;
                             }
                             var str=''+
                                 '<div class="col-sm-6 col-md-3 listBox">' +
