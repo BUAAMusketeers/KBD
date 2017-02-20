@@ -223,7 +223,7 @@
                         var length = result.length;
                         for (var i = 0; i < length; i++) {
 
-                            if(result.drivingAge<10){
+                            if(result[i].drivingAge<10){
                                 var drivingAge=result[i].drivingAge+"年";
                             }else {
                                 var drivingAge="10年以上"

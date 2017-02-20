@@ -89,7 +89,7 @@
             </div>
         </div>
     </div>
-<div class="row">
+<div class="row" style="margin-top: 22px">
     <h4>
         <i class="deck"></i>
         最新车辆
@@ -220,10 +220,10 @@
                         var length = result.length;
                         for (var i = 0; i < length; i++) {
 
-                            if(result.drivingAge<10){
+                            if(result[i].drivingAge<10){
                                 var drivingAge=result[i].drivingAge+"年";
                             }else {
-                                var drivingAge="10年以上"
+                                var drivingAge="10年以上";
                             }
                             var model='<span>驾驶机型：'+result[i].modelNameList[0]+'</span>';
                             var modelNameList = result[i].modelNameList;
