@@ -211,7 +211,7 @@
         $.ajax({
             type: "POST",
             url:  "/user/getDrivers",
-            data: {city:"湘西土家族苗族自治州",drivingAge:0,sort:0,limit:4, page:0},
+            data: {city:"全国",drivingAge:0,sort:0,limit:4, page:0},
             success:function(data) {
                 if (typeof data == "string") {
                     data = JSON.parse(data);
