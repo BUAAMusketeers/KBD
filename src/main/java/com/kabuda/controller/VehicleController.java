@@ -11,6 +11,7 @@ import com.kabuda.entity.domain.*;
 import com.kabuda.service.PictureService;
 import com.kabuda.service.UserService;
 import com.kabuda.service.VehicleService;
+import com.kabuda.util.FileHelper;
 import com.kabuda.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -311,8 +312,14 @@ public class VehicleController {
 
         try {
             vehicleService.removeVehicle(id);
+
+            //删除车辆对应的图片
+            List<Picture> pictureList = pictureService.listPictureByVehicleId(id);
             pictureService.removePictureByVehicleId(id);
-            // TODO: 2017/2/18 删除该车辆的图片文件
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            for (Picture picture : pictureList){
+                FileHelper.deleteFile(realPath + picture.getUrl());
+            }
             return gson.toJson(new Response(ResponseCode.R_1000));
         } catch (Exception e) {
             e.printStackTrace();
