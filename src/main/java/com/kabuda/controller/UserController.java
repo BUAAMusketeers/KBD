@@ -374,14 +374,16 @@ public class UserController {
 
                 List<Model> modelList = modelService.listModel();
                 for(User u : driverList){
-                    String[] models = u.getModel().split(",");
-                    List<String> modelNameList = new ArrayList<String>();
-                    for (String m : models){
-                        if(!StringUtils.isEmpty(m.trim())){
-                            modelNameList.add(modelList.get(Integer.valueOf(m) - 1).getModelName());
+                    if(u.getModel() != null){
+                        String[] models = u.getModel().split(",");
+                        List<String> modelNameList = new ArrayList<String>();
+                        for (String m : models){
+                            if(!StringUtils.isEmpty(m.trim())){
+                                modelNameList.add(modelList.get(Integer.valueOf(m) - 1).getModelName());
+                            }
                         }
+                        u.setModelNameList(modelNameList);
                     }
-                    u.setModelNameList(modelNameList);
                 }
             }
             return new GsonBuilder().serializeNulls().setPrettyPrinting().create()
