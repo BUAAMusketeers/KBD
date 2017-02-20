@@ -74,6 +74,11 @@ public class UserController {
             if (!isUserExist.getPassword().equals(password))
                 return gson.toJson(new Response(ResponseCode.R_1003));
 
+            if(!StringUtils.isEmpty(isUserExist.getLocationCode())){
+                Location location = locationService.getLocationByLC(isUserExist.getLocationCode());
+                isUserExist.setLocation(location.getProvince() + " " + location.getCity() + " " + location.getCounty());
+            }
+
             session.setAttribute("user", isUserExist);
             session.setMaxInactiveInterval(1800); // 30 minutes
             return getResponse(isUserExist);
@@ -123,8 +128,8 @@ public class UserController {
             }
 
             if(!StringUtils.isEmpty(locationCode)){
-                Location locationByLC = locationService.getLocationByLC(locationCode);
-                user.setLocation(locationByLC.getCity());
+                Location location = locationService.getLocationByLC(locationCode);
+                user.setLocation(location.getProvince() + " " + location.getCity() + " " + location.getCounty());
             }
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(1800); // 30 minutes
@@ -238,7 +243,7 @@ public class UserController {
                     if (!StringUtils.isEmpty(locationCode)) {
                         user.setLocationCode(locationCode);
                         Location location = locationService.getLocationByLC(locationCode);
-                        user.setLocation(location.getCity());
+                        user.setLocation(location.getProvince() + " " + location.getCity() + " " + location.getCounty());
                     }
                 } else {
                     user.setModel(null);
@@ -254,7 +259,7 @@ public class UserController {
                     if (!StringUtils.isEmpty(locationCode)) {
                         user.setLocationCode(locationCode);
                         Location location = locationService.getLocationByLC(locationCode);
-                        user.setLocation(location.getCity());
+                        user.setLocation(location.getProvince() + " " + location.getCity() + " " + location.getCounty());
                     }
 
                 }
