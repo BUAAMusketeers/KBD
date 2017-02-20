@@ -109,6 +109,7 @@ public class UserController {
 
             String password = Encrypt.SHA256(unencrypted);
             User user = new User(phoneNumber, password, name, sex, isDriver, 3, 1);
+            user.setHeadPotrait("/images/default_avatar.png");
             if (isDriver == 0) {
                 user.setPrice(-1);   // -1表示非驾驶员
                 user.setDrivingAge(-1);   // -1表示非驾驶员

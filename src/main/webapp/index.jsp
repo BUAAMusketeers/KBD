@@ -234,7 +234,7 @@
                                     '<div class="col-sm-6 col-md-3 listBox">' +
                                     '<div class="thumbnail">' +
                                     '<div class="imgDiv">' +
-                                    '<img src="'+result[i].headPotrait+'" alt="picture">' +
+                                    '<img style="height: 100%; width: 100%" src="'+result[i].headPotrait+'" alt="picture">' +
                                     '</div>' +
                                     '<p class="infoBox"><a href="#">'+result[i].name+'</a><span class="driveYearSpan">'+drivingAge+'驾龄</span></p>' +
                                     '<p class="infoGray">' +
