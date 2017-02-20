@@ -24,7 +24,7 @@
 
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="#">首页</a></li>
+        <li><a href="index.jsp">首页</a></li>
         <li><a href="user.jsp">个人信息</a></li>
         <li><a href="carManage.jsp">车辆管理</a></li>
         <script>

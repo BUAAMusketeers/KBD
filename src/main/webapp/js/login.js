@@ -34,6 +34,10 @@ $(document).ready(function() {
                     }
                     if (data.status == 1000) {
                         location.reload();
+                    }else if(data.status==1001){
+                        alert("参数为空");
+                    }else{
+                        alert("手机号与密码不匹配！");
                     }
                 },
 

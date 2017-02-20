@@ -31,7 +31,7 @@
 <div  class="container">
     <!--导航-->
     <ol class="breadcrumb">
-        <li><a href="#">首页</a></li>
+        <li><a href="index.jsp">首页</a></li>
         <li class="active">买车</li>
     </ol>
     <!--条件过滤-->

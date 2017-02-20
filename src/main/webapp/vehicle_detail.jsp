@@ -22,7 +22,7 @@
 <jsp:include page="base/head.jsp"></jsp:include>
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="#">首页</a></li>
+        <li><a href="index.jsp">首页</a></li>
         <li><a href="buyCar.jsp">买车</a></li>
         <%--<li><a href="carManage.jsp">车辆信息</a></li>--%>
         <li class="active">车辆信息</li>
@@ -219,7 +219,7 @@
                                 var str='<li data-role="img" style="display: block;">'+
                                 '<img src="'+result.data[i].url+'" alt="'+result.data[i].caption+'"></li>';
                                 $('.det-picside').append(str);
-                                str = '<div class="col-md-6">'+
+                                str = '<div class="col-md-6" style="margin-top:10px">'+
                                         '<img width="100%" height="370px"  class="js-lazy-load" src="'+result.data[i].url+'" >'+
                                         '</div>';
                                 $("div[name='vehicle-imgs']").append(str);

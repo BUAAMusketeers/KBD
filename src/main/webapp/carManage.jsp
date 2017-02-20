@@ -42,7 +42,7 @@
 <div class="container">
     <!--导航-->
     <ol class="breadcrumb">
-        <li><a href="#">首页</a></li>
+        <li><a href="index.jsp">首页</a></li>
         <li class="active">个人信息</li>
     </ol>
     <ul class="nav nav-pills nav-stacked col-md-2 col-xs-12">

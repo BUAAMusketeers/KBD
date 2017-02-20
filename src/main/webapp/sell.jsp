@@ -182,6 +182,7 @@
 <script src="js/jquery.form.js"></script>
 <script type="text/javascript" src="js/jquery.form.js"></script>
 <script src="js/buyCar.js"></script>
+<script type="text/javascript" src="js/cityselect.js"></script>
 <script src="js/sell.js" ></script>
 <script>
     $(function(){

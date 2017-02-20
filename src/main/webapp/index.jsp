@@ -104,28 +104,8 @@
         驾驶员推荐
     </h4>
     <div class="list">
-    <div class="row carList" id="carListBox">
-        <<div class="col-sm-6 col-md-3 listBox">
-            <div class="thumbnail">
-                <img src="images/demo.jpg" alt="...">
-                <div class="infoDiv">
-                    <p class="infoBox"><a>T现代车两全开T现代车两全开那个in爱姑娘IGN那个in爱姑娘IGN</a></p>
-                    <p class="infoGray">
-                        <span>2015年上牌</span>
-                        <em class="verticalLine">|</em>
-                        <span>使用25小时</span>
-                        <em class="verticalLine">|</em>
-                        <span>45吨</span>
-                    </p>
-                    <p class="infoPrice">
-                        价格：
-                        <span>14.6万</span>
-                    </p>
-                </div>
-            </div>
-        </div>
+        <div class="row carList" id="driverListBox"></div>
     </div>
-        </div>
 </div>
     </div>
 
@@ -162,6 +142,24 @@
                 alert("connection error!");
             }
         });
+        $.ajax({
+            type: "post",
+            url: "/car/getNum",
+            success: function(data){
+                if (typeof data == "string") {
+                    data = JSON.parse(data);
+                }
+                if(data.status==1000){
+                    $("h3[name='sum_num']").text(data.data.sumNum+"台");
+                    $("h3[name='selling_num']").text(data.data.sellingNum+"台");
+                    $("h3[name='sold_num']").text(data.data.soldNum+"台");
+                    $("h3[name='driver_num']").text(data.data.driverNum+"名");
+                }
+            },
+            error:function(error){
+                alert("connection error!");
+            }
+        });
         initProvinceList();
         $.ajax({
             type: "POST",
@@ -180,7 +178,9 @@
                             var str=''+
                                     '<div class="col-sm-6 col-md-3 listBox">' +
                                     '<div class="thumbnail">' +
-                                    '<img src="'+result[i].pictureUrl+'" alt="picture">' +
+                                    '<div class="imgDiv">' +
+                                    '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].pictureUrl+'" alt="picture"></a>' +
+                                    '</div>' +
                                     '<div class="infoDiv">' +
                                     '<p class="infoBox"><a href="vehicle_detail.jsp?vehicleId='+result[i].id+'">'+result[i].brand+result[i].model+'</a></p>' +
                                     '<p class="infoGray">' +
@@ -201,6 +201,57 @@
                     }
                     else {
                         $("#id_set_page").hide();
+                    }
+                }
+            },
+            error:function(error){
+                alert("connection error!");
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url:  "/user/getDrivers",
+            data: {city:"湘西土家族苗族自治州",drivingAge:0,sort:0,limit:4, page:0},
+            success:function(data) {
+                if (typeof data == "string") {
+                    data = JSON.parse(data);
+                }
+                if (data.status == 1000) {
+                    $("#driverListBox").empty();
+                    if (data.result.total) {
+                        var result = data.result.data;
+                        var length = result.length;
+                        for (var i = 0; i < length; i++) {
+
+                            if(result.drivingAge<10){
+                                var drivingAge=result[i].drivingAge+"年";
+                            }else {
+                                var drivingAge="10年以上"
+                            }
+                            var model='<span>驾驶机型：'+result[i].model[0]+'</span>';
+                            for(var j=1;j<model.length;j++){
+                                model+='<em class="verticalLine">|</em>'+'<span>'+result[i].model[j]+'</span>' ;
+                            }
+                            var str=''+
+                                    '<div class="col-sm-6 col-md-3 listBox">' +
+                                    '<div class="thumbnail">' +
+                                    '<div class="imgDiv">' +
+                                    '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].headPotrait+'" alt="picture"></a>' +
+                                    '</div>' +
+                                    '<p class="infoBox"><a href="#">'+result[i].name+'</a><span class="driveYearSpan">'+drivingAge+'驾龄</span></p>' +
+                                    '<p class="infoGray">' +
+                                    model+
+                                    '</p>' +
+                                    '<p class="infoGray"> 联系方式：' +
+                                    '<span>'+result[i].phoneNumber+'</span>' +
+                                    '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                            $("#carListBox").append(str);
+                        }
+
+
                     }
                 }
             },
