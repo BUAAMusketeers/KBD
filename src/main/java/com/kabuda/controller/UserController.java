@@ -235,7 +235,11 @@ public class UserController {
                     if (!StringUtils.isEmpty(model)) user.setModel(model.trim());
                     if (!StringUtils.isEmpty(price)) user.setPrice(price);
                     if (!StringUtils.isEmpty(drivingAge)) user.setDrivingAge(drivingAge);
-                    if (!StringUtils.isEmpty(locationCode)) user.setLocationCode(locationCode);
+                    if (!StringUtils.isEmpty(locationCode)) {
+                        user.setLocationCode(locationCode);
+                        Location location = locationService.getLocationByLC(locationCode);
+                        user.setLocation(location.getCity());
+                    }
                 } else {
                     user.setModel(null);
                     user.setPrice(-1);
@@ -247,7 +251,12 @@ public class UserController {
                     if (!StringUtils.isEmpty(model)) user.setModel(model.trim());
                     if (!StringUtils.isEmpty(price)) user.setPrice(price);
                     if (!StringUtils.isEmpty(drivingAge)) user.setDrivingAge(drivingAge);
-                    if (!StringUtils.isEmpty(locationCode)) user.setLocationCode(locationCode);
+                    if (!StringUtils.isEmpty(locationCode)) {
+                        user.setLocationCode(locationCode);
+                        Location location = locationService.getLocationByLC(locationCode);
+                        user.setLocation(location.getCity());
+                    }
+
                 }
             }
             userService.update(user);
