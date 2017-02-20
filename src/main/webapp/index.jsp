@@ -196,7 +196,7 @@
                                     '</div>' +
                                     '</div>' +
                                     '</div>';
-                            $("#driverListBox").append(str);
+                            $("#carListBox").append(str);
                         }
                     }
                 }
@@ -234,7 +234,7 @@
                                     '<div class="col-sm-6 col-md-3 listBox">' +
                                     '<div class="thumbnail">' +
                                     '<div class="imgDiv">' +
-                                    '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].headPotrait+'" alt="picture"></a>' +
+                                    '<img src="'+result[i].headPotrait+'" alt="picture">' +
                                     '</div>' +
                                     '<p class="infoBox"><a href="#">'+result[i].name+'</a><span class="driveYearSpan">'+drivingAge+'驾龄</span></p>' +
                                     '<p class="infoGray">' +
@@ -246,10 +246,8 @@
                                     '</div>' +
                                     '</div>' +
                                     '</div>';
-                            $("#carListBox").append(str);
+                            $("#driverListBox").append(str);
                         }
-
-
                     }
                 }
             },
