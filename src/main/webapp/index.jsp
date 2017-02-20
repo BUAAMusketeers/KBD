@@ -196,11 +196,8 @@
                                     '</div>' +
                                     '</div>' +
                                     '</div>';
-                            $("#carListBox").append(str);
+                            $("#driverListBox").append(str);
                         }
-                    }
-                    else {
-                        $("#id_set_page").hide();
                     }
                 }
             },
