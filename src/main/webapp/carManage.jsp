@@ -96,6 +96,7 @@
 <script src="js/bootstrap-filestyle.js"></script>
 <script src="js/login.js"></script>
 <script>
+    initCity();
     $("#info_5").trigger("click");
     var id=<%=user.getId() %>;
     getOwnCarList(id);

@@ -4,6 +4,14 @@
 <%
 User user = (User)request.getSession().getAttribute("user");
 %>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>卡布达</title>
+</head>
+<body>
 <div class="head-body">
     <div class="container">
         <div class="row">
@@ -97,4 +105,5 @@ User user = (User)request.getSession().getAttribute("user");
         </div>
     </div>
 </div>
+</body>
 

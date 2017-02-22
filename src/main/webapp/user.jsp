@@ -314,6 +314,7 @@
 <script >
 
     var tabId=getQueryString("id")?getQueryString("id"):1;
+    initCity();
     //var tabInfo=document.getElementById("info_"+tabId);
     $("#info_"+tabId).trigger("click");
     var id=<%=user.getId() %>;

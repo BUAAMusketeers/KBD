@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/buyCar.css">
     <link href="images/favicon.ico" rel="shortcut icon" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=h4WM3d6QBFogI4hv6ZGcR4WLi1OYOcQF"></script>
 </head>
 
 <body>
@@ -119,7 +120,7 @@
 <script src="js/buyCar.js"></script>
 <script>
     $(function(){
-        var test=new Vcity.CitySelector({input:'citySelect'});
+        initCity();
         $.ajax({
             type: "post",
             url: "/car/getModelList",

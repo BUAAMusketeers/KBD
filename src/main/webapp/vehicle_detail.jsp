@@ -118,7 +118,7 @@
 <script src="js/buyCar.js"></script>
 <script >
     $(function(){
-        var test=new Vcity.CitySelector({input:'citySelect'});
+        initCity();
         var now=0;
         var sum=0;
         $(".dt-sumpic").hover(function () {

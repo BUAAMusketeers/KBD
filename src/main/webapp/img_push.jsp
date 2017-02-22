@@ -60,7 +60,7 @@
 <script type="text/javascript" src="js/cityselect.js"></script>
 <script src="js/buyCar.js"></script>
 <script>
-    var test=new Vcity.CitySelector({input:'citySelect'});
+    initCity();
     $("#upload").fileinput('clear');
     $("#upload").fileinput('destroy');
     initImg();

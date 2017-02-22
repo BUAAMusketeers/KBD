@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/cityselect.css">
     <link rel="stylesheet" href="css/buyCar.css"/>
     <link href="images/favicon.ico" rel="shortcut icon" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=h4WM3d6QBFogI4hv6ZGcR4WLi1OYOcQF"></script>
 </head>
 
 <body>
@@ -184,19 +185,16 @@
         "selectedPage": 1
     };
     $(document).ready(function(){
-        var test=new Vcity.CitySelector({input:'citySelect'});
-        var city=getQueryString("city")?getQueryString("city"):"成都市";
+        initCity();
         var keywords=getQueryString("keyword")?getQueryString("keyword"):"";
          carType=getQueryString("model")?getQueryString("model"):0;
         $("#cityInput").val(keywords);
-        $("#citySelect").val(city);
         loadBrand();
         loadType();
         getBrandList();
         getTypeList();
         if(!carType){
             getCarList();
-
         }
 
 
@@ -254,7 +252,9 @@
                             var str=''+
                             '<div class="col-sm-6 col-md-3 listBox">' +
                             '<div class="thumbnail">' +
-                            '<img src="'+result[i].pictureUrl+'" alt="picture">' +
+                                    '<div class="imgDiv">' +
+                                    '<a href="vehicle_detail.jsp?vehicleId='+result[i].id+'"><img src="'+result[i].pictureUrl+'" alt="picture"></a>' +
+                                    '</div>' +
                             '<div class="infoDiv">' +
                             '<p class="infoBox"><a href="vehicle_detail.jsp?vehicleId='+result[i].id+'">'+result[i].brand+result[i].model+'</a></p>' +
                             '<p class="infoGray">' +

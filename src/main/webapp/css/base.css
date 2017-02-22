@@ -271,7 +271,7 @@ p.tip{color:#999;line-height:20px;padding:5px;margin:0;text-indent:3px;}
 
 .imgDiv{
     overflow:hidden;
-    max-height:210px;
+    height:210px;
 }
 .driveYearSpan{
     color:#999;

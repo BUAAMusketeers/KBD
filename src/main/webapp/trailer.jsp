@@ -134,11 +134,9 @@
         "selectedPage": 1
     };
     $(document).ready(function(){
-        var test=new Vcity.CitySelector({input:'citySelect'});
-        var city=getQueryString("city")?getQueryString("city"):"成都市";
+        initCity();
         var keywords=getQueryString("keyword")?getQueryString("keyword"):"";
         $("#cityInput").val(keywords);
-        $("#citySelect").val(city);
         getCarList();
         loadBrand();
         loadType();

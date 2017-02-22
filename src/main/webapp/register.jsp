@@ -186,7 +186,7 @@
 
 <script>
     $(function(){
-        var test=new Vcity.CitySelector({input:'citySelect'});
+        initCity();
         $.ajax({
             type: "post",
             url: "/car/getModelList",

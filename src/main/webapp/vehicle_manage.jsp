@@ -207,7 +207,7 @@
 <script src="js/buyCar.js"></script>
 <script>
     $(function(){
-        var test=new Vcity.CitySelector({input:'citySelect'});
+        initCity();
         for(var i=1997; i<=2017;i++){
             var str = "<option value='"+i+"'>"+i+"</option>";
             $("select[name='vehicleAge']").append(str);

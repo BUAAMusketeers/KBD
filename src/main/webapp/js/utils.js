@@ -248,3 +248,50 @@ function initProvinceList(){
         }
     });
 }
+//设置或添加cookie time为小时数
+function setCookie(name,value,time){
+    var str = name + "=" + escape(value);
+    if(time > 0){
+        var date = new Date();
+        var ms = time*3600*1000;
+        date.setTime(date.getTime() + ms);
+        str += "; expires=" + date.toGMTString();
+    }
+    document.cookie = str;
+}
+//获取cookie
+function getCookie(name){
+    //cookie中的数据都是以分号加空格区分开
+    var arr = document.cookie.split("; ");
+    for(var i=0; i<arr.length; i++){
+        if(arr[i].split("=")[0] == name){
+            return unescape(arr[i].split("=")[1]);
+        }
+    }
+    //未找到对应的cookie则返回空字符串
+    return '';
+}
+//删除cookie
+function removeCookie(name){
+    document.cookie = name+"=;expires="+(new Date(0)).toGMTString();
+}
+function initCity() {
+    var test=new Vcity.CitySelector({input:'citySelect'});
+    var city =getCookie("city");
+    if(getQueryString("city")){
+        $("#citySelect").val(getQueryString("city"));
+    }
+    else if(city!=""){
+       //city = decodeURIComponent(getCookie("city"));
+        $("#citySelect").val(city);
+    }
+    else{
+        var myCity = new BMap.LocalCity();
+        myCity.get(myFun);
+    }
+    function myFun(result){
+        var city = result.name;
+        $("#citySelect").val(city);
+        setCookie("city",city);
+    }
+}
